@@ -1,0 +1,64 @@
+{#
+/**
+ * Retour plugin for Craft CMS
+ *
+ * RetourFieldType HTML
+ *
+ * @author    Andrew Welch
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   Retour
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% set disableFields = values.redirectChangeable ? false : true %}
+<div id="{{ id }}" class="retour-field">
+
+    <div class="retour-field-title">
+        <img class="retour-icon" src="{{ resourceUrl('retour/icon.svg') }}" width="16px" height="auto" /><span>&nbsp;Retour Redirect</span>
+    </div>
+
+    <div class="field first">
+        <div class="heading">
+            <div class="instructions"><p>{{ "Retour will look for 404 (Not Found) URLs that match the Legacy Pattern below, and redirect them to this entry's URL." |t |raw}}</p></div>
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="heading">
+            <label for= id ~ "redirectSrcUrl">{{ "Legacy Pattern"|t}}</label>
+            <div class="instructions"><p>{{ "Enter the pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below." |t |raw}}</p></div>
+        </div>
+       {{ forms.textField({
+            fieldClass: 'nomarginfield',
+            id: id ~ "redirectSrcUrl",
+            class: 'nicetext',
+            name: name ~ "[redirectSrcUrl]",
+            value: values.redirectSrcUrl,
+            maxlength: 255,
+            showCharsLeft: true,
+            required: true,
+            disabled: disableFields,
+        }) }}
+    </div>
+
+    <div class="field">
+        <div class="heading">
+            <label for= id ~ "redirectMatchType">{{ "Pattern Match Type"|t}}</label>
+            <div class="instructions"><p>{{ "What type of matching should be done with the Legacy URL." |t |raw}}</p></div>
+        </div>
+        {{ forms.selectField({
+            fieldClass: 'nomarginfield',
+            class: 'selectField',
+            id: id ~ "redirectMatchType",
+            options: matchList,
+            name: name ~ "[redirectMatchType]",
+            value: values.redirectMatchType,
+            disabled: disableFields,
+        }) }}
+    </div>
+
+</div>

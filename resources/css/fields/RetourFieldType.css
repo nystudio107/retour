@@ -1,0 +1,43 @@
+/**
+ * Retour plugin for Craft CMS
+ *
+ * RetourFieldType CSS
+ *
+ * @author    Andrew Welch
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   Retour
+ * @since     1.0.0
+ */
+
+div.retour-field {
+    border: 1px solid #e3e5e8;
+    margin-bottom: 10px;
+    padding: 7px 14px 14px;
+    border-radius: 3px;
+    background: #f9fafa;
+}
+
+div.retour-field-title {
+    background: #eef0f1;
+    color: #8f98a3;
+    margin: -7px -14px 14px;
+    padding: 7px 14px 7px 14px;
+    width: calc(100% + 28px);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 2px 2px 0 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: normal;
+    cursor: default;
+}
+
+img.retour-field-icon {
+    display: inline-block;
+    width: 16px;
+    height: auto;
+    padding-right: 7px;
+}

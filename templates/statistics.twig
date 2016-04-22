@@ -1,0 +1,65 @@
+{% extends "_layouts/cp" %}
+{% import '_includes/forms' as forms %}
+
+{% includeCssResource "retour/css/style.css" %}
+{% includeJsResource "retour/js/script.js" %}
+
+{% set title = "Retour · Statistics"|t %}
+
+{% set fullPageForm = true %}
+
+{% set docsUrl = "https://github.com/nystudio107/retour/wiki" %}
+
+{% set retourSections = {
+    redirects:      { label: "Redirects"|t, url: url('retour/redirects') },
+    statistics:     { label: "Statistics"|t, url: url('retour/statistics') },
+} %}
+
+{% if craft.app.version < 2.5 %}
+    {% set tabs = retourSections %}
+    {% set selectedTab = 'statistics' %}
+{% else %}
+    {% set subnav = retourSections %}
+    {% set selectedSubnavItem = 'statistics' %}
+{% endif %}
+
+{% set content %}
+
+<!-- Needed for for Craft < 2.5 -->
+
+    {% if craft.app.version < 2.5 %}
+    <form id="creator-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
+    {% endif %}
+
+    <input type="hidden" name="action" value="retour/saveCreator" />
+    <input type="hidden" name="redirect" value="retour/statistics" />
+    {{ getCsrfInput() }}
+
+        {% if tabs is defined %}
+            {% include "_includes/tabs" %}
+        {% endif %}
+
+<!-- Site Creatorship -->
+
+        <h1>{{ "Hello, world" |t }}</h1>
+
+<!-- Needed for for Craft < 2.5 -->
+
+        {% if craft.app.version < 2.5 %}
+        <div class="item" data-position="left" data-colspan="1">
+            <div class="buttons">
+                <div class="btngroup submit first">
+                    <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+<!-- Needed for for Craft < 2.5 -->
+
+    {% if craft.app.version < 2.5 %}
+    </form>
+    {% endif %}
+
+{% endset %}

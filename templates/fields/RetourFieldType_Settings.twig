@@ -1,0 +1,58 @@
+{#
+/**
+ * Retour plugin for Craft CMS
+ *
+ * RetourFieldType_Settings HTML
+ *
+ * @author    Andrew Welch
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   Retour
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+<div>
+
+    <div id ="defaultRedirectSrcUrl-wrapper" class="field">
+        <div class="heading">
+            <label for="defaultRedirectMatchType">{{ "Legacy URL"|t}}</label>
+            <div class="instructions"><p>{{ "blah blah blah." |t |raw}}</p></div>
+        </div>
+       {{ forms.textField({
+            fieldClass: 'nomarginfield',
+            id: 'defaultRedirectSrcUrl',
+            class: 'nicetext',
+            name: 'defaultRedirectSrcUrl',
+            value: settings.defaultRedirectSrcUrl,
+            maxlength: 255,
+            showCharsLeft: true,
+            required: true,
+        }) }}
+    </div>
+
+    <div class="field">
+        <div class="heading">
+            <label for="defaultRedirectMatchType">{{ "Pattern Match Type"|t}}</label>
+            <div class="instructions"><p>{{ "Set what type of pattern matching should be set as a default for this field." |t |raw}}</p></div>
+        </div>
+        {{ forms.selectField({
+            fieldClass: 'nomarginfield',
+            class: 'selectField',
+            id: 'defaultRedirectMatchType',
+            options: matchList,
+            name: 'defaultRedirectMatchType',
+            value: settings.defaultRedirectMatchType,
+        }) }}
+    </div>
+
+    {{ forms.lightswitchField({
+        label: "Redirect Changeable"|t,
+        name: 'redirectChangeable',
+        instructions: "Whether to allow the user to change the redirect while editing the entry"|t,
+        on: settings.redirectChangeable,
+    }) }}
+
+</div>

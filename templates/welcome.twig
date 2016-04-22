@@ -1,0 +1,27 @@
+{% extends '_layouts/cp' %}
+{% set title = 'Welcome to Retour!' %}
+
+{% includeCssResource "retour/css/style.css" %}
+{% includeJsResource "retour/js/script.js" %}
+
+{% set linkGetStarted = url('retour/redirects') %}
+{% set docsUrl = "https://github.com/nystudio107/retour/wiki" %}
+
+{% set content %}
+	<div style="text-align:center; margin:0 auto; padding: 5% 10%;">
+		<img src="{{ resourceUrl('retour/icon.svg') }}" width="30%" height="auto" />
+		<h2>Thanks for using Retour!</h2>
+		<p>Cool stuff goes here.</p>
+		<p>
+			&nbsp;
+		</p>
+		<p>
+			<a href="{{ linkGetStarted }}"><button class="btn submit">Get Started</button></a>
+		</p>
+	</div>
+	<div style="text-align:center; margin:0 auto; padding: 0;">
+		<p class="instructions">
+			Brought to you by <a href="http://nystudio107.com" target="_blank">nystudio107</a>
+		</p>
+	</div>
+{% endset %}
