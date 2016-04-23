@@ -4,24 +4,6 @@
  *
  * Retour_Redirects Record
  *
- * --snip--
- * Active record models (or “records”) are like models, except with a database-facing layer built on top. On top of
- * all the things that models can do, records can:
- *
- * - Define database table schemas
- * - Represent rows in the database
- * - Find, alter, and delete rows
- *
- * Note: Records’ ability to modify the database means that they should never be used to transport data throughout
- * the system. Their instances should be contained to services only, so that services remain the one and only place
- * where system state changes ever occur.
- *
- * When a plugin is installed, Craft will look for any records provided by the plugin, and automatically create the
- * database tables for them.
- *
- * https://craftcms.com/docs/plugins/records
- * --snip--
- *
  * @author    Andrew Welch
  * @copyright Copyright (c) 2016 nystudio107
  * @link      http://nystudio107.com
@@ -53,7 +35,26 @@ class Retour_RedirectsRecord extends BaseRecord
    protected function defineAttributes()
     {
         return array(
-            'someField'     => array(AttributeType::String, 'default' => ''),
+            'redirectSrcUrl'    => array(AttributeType::String, 'default' => ''),
+            'redirectMatchType' => array(AttributeType::String, 'default' => 'match'),
+            'redirectDestUrl'   => array(AttributeType::String, 'default' => ''),
+            /* defined in defineRelations()
+            'associatedEntryId'   => array(AttributeType::Number, 'default' => 0),
+            'locale'    => array(AttributeType::Locale, 'required' => true, 'primaryKey' => true),
+            */
+        );
+    }
+
+    /**
+     * Define fields that should be indexed
+     * @return array
+     */
+
+    public function defineIndexes()
+    {
+        return array(
+            array('columns' => array('locale', 'associatedEntryId')),
+            array('columns' => array('redirectSrcUrl'), 'unique' => true)
         );
     }
 
@@ -65,6 +66,8 @@ class Retour_RedirectsRecord extends BaseRecord
     public function defineRelations()
     {
         return array(
+            'associatedEntry'   => array(static::BELONGS_TO, 'EntryRecord', 'required' => true, 'onDelete' => static::CASCADE),
+            'locale'            => array(static::BELONGS_TO, 'LocaleRecord', 'locale', 'required' => true, 'onDelete' => static::CASCADE, 'onUpdate' => static::CASCADE)
         );
     }
 }

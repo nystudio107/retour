@@ -26,6 +26,7 @@ class Retour_RedirectsModel extends BaseModel
             'redirectSrcUrl'    => array(AttributeType::String, 'default' => ''),
             'redirectMatchType' => array(AttributeType::String, 'default' => 'match'),
             'redirectDestUrl'   => array(AttributeType::String, 'default' => ''),
+            'associatedEntryId'   => array(AttributeType::Number, 'default' => 0),
         ));
     }
 
