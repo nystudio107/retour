@@ -35,12 +35,16 @@ class Retour_RedirectsRecord extends BaseRecord
    protected function defineAttributes()
     {
         return array(
-            'redirectSrcUrl'    => array(AttributeType::String, 'default' => ''),
-            'redirectMatchType' => array(AttributeType::String, 'default' => 'match'),
-            'redirectDestUrl'   => array(AttributeType::String, 'default' => ''),
+            'redirectSrcUrl'        => array(AttributeType::String, 'default' => ''),
+            'redirectSrcUrlParsed'  => array(AttributeType::String, 'default' => ''),
+            'redirectMatchType'     => array(AttributeType::String, 'default' => 'match'),
+            'redirectDestUrl'       => array(AttributeType::String, 'default' => ''),
+            'redirectHttpCode'      => array(AttributeType::Number, 'default' => 301),
+            'hitCount'              => array(AttributeType::Number, 'default' => 0),
+            'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
+            'locale'                => array(AttributeType::Locale, 'required' => true)
             /* defined in defineRelations()
-            'associatedEntryId'   => array(AttributeType::Number, 'default' => 0),
-            'locale'    => array(AttributeType::Locale, 'required' => true, 'primaryKey' => true),
+            'associatedEntryId'     => array(AttributeType::Number, 'default' => 0),
             */
         );
     }
@@ -66,8 +70,8 @@ class Retour_RedirectsRecord extends BaseRecord
     public function defineRelations()
     {
         return array(
-            'associatedEntry'   => array(static::BELONGS_TO, 'EntryRecord', 'required' => true, 'onDelete' => static::CASCADE),
-            'locale'            => array(static::BELONGS_TO, 'LocaleRecord', 'locale', 'required' => true, 'onDelete' => static::CASCADE, 'onUpdate' => static::CASCADE)
+            'locale'            => array(static::BELONGS_TO, 'LocaleRecord', 'locale', 'required' => true, 'onDelete' => static::CASCADE, 'onUpdate' => static::CASCADE),
+            'associatedEntry'   => array(static::BELONGS_TO, 'EntryRecord', 'required' => true, 'onDelete' => static::CASCADE)
         );
     }
 }

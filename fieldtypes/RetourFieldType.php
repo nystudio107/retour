@@ -23,7 +23,7 @@ class RetourFieldType extends BaseFieldType
     public function getName()
     {
         return Craft::t('Retour Redirect');
-    }
+    } /* -- getName */
 
     /**
      * Returns the content attribute config.
@@ -32,8 +32,8 @@ class RetourFieldType extends BaseFieldType
      */
     public function defineContentAttribute()
     {
-        return AttributeType::Mixed;
-    }
+        return false;
+    } /* -- defineContentAttribute */
 
     /**
      * Returns the field's input HTML.
@@ -82,7 +82,7 @@ class RetourFieldType extends BaseFieldType
             );
 
         return craft()->templates->render('retour/fields/RetourFieldType.twig', $variables);
-    }
+    } /* -- getInputHtml */
 
     /**
      * Define our FieldType's settings
@@ -95,7 +95,7 @@ class RetourFieldType extends BaseFieldType
             'defaultRedirectMatchType' => array(AttributeType::String, 'default' => 'match'),
             'redirectChangeable' => array(AttributeType::Bool, 'default' => 1),
         );
-    }
+    } /* -- getSettingsHtml */
 
     /**
      * Render the field settings
@@ -117,7 +117,7 @@ class RetourFieldType extends BaseFieldType
             'matchList'     => $matchList,
             'settings'      => $this->getSettings()
         ));
-   }
+   } /* -- getSettingsHtml */
 
     /**
      * Returns the input value as it should be saved to the database.
@@ -137,8 +137,23 @@ class RetourFieldType extends BaseFieldType
         {
             $result = new Retour_RedirectsFieldModel($value);
         }
+        $result->redirectDestUrl = $this->element->url;
+        $result->associatedEntryId = $this->element->id;
+        $result->locale = $this->element->locale;
+        $result->redirectSrcUrl = '/' . ltrim($result->redirectSrcUrl, '/');
+
+        try
+        {
+            $result->redirectSrcUrlParsed = craft()->templates->renderObjectTemplate($result->redirectSrcUrl, $this->element);
+        }
+        catch (Exception $e)
+        {
+            RetourPlugin::log("Template error in the `redirectSrcUrl` field.", LogLevel::Info, true);
+        }
+        craft()->retour->saveRedirect($result);
+
         return $result;
-    }
+    } /* -- prepValueFromPost */
 
     /**
      * Prepares the field's value for use.
@@ -151,13 +166,16 @@ class RetourFieldType extends BaseFieldType
         if (!$value)
         {
             $value = new Retour_RedirectsFieldModel();
+            $result = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
+            if ($result)
+                $value->setAttributes($result->getAttributes(), false);
+       }
 
-            $value->defaultRedirectSrcUrl = $this->getSettings()->defaultRedirectSrcUrl;
-            $value->defaultRedirectMatchType = $this->getSettings()->defaultRedirectMatchType;
-            $value->redirectChangeable = $this->getSettings()->redirectChangeable;
-        }
+        $value->defaultRedirectSrcUrl = $this->getSettings()->defaultRedirectSrcUrl;
+        $value->defaultRedirectMatchType = $this->getSettings()->defaultRedirectMatchType;
+        $value->redirectChangeable = $this->getSettings()->redirectChangeable;
 
         return $value;
-    }
+    } /* -- prepValue */
 
 }

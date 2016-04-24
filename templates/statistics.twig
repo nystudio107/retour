@@ -1,19 +1,25 @@
 {% extends "_layouts/cp" %}
 {% import '_includes/forms' as forms %}
 
-{% includeCssResource "retour/css/style.css" %}
-{% includeJsResource "retour/js/script.js" %}
+{% includeCssResource "retour/css/Retour.css" %}
+{% includeJsResource "retour/js/Retour.js" %}
 
-{% set title = "Retour · Statistics"|t %}
+{% set title = "Retour"|t %}
 
 {% set fullPageForm = true %}
 
-{% set docsUrl = "https://github.com/nystudio107/retour/wiki" %}
+{% set docsUrl = "https://github.com/nystudio107/retour/blob/master/README.md" %}
 
 {% set retourSections = {
     redirects:      { label: "Redirects"|t, url: url('retour/redirects') },
     statistics:     { label: "Statistics"|t, url: url('retour/statistics') },
+    settings:       { label: "Settings"|t, url: url('retour/settings') },
 } %}
+
+{% set crumbs = [
+    { label: "Retour"|t, url: url('retour') },
+    { label: "Statistics"|t, url: url('retour/statistics') },
+] %}
 
 {% if craft.app.version < 2.5 %}
     {% set tabs = retourSections %}

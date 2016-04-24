@@ -1,3 +1,5 @@
+{% import "_includes/forms" as forms %}
+
 {% extends "_layouts/cp" %}
 {% import '_includes/forms' as forms %}
 
@@ -18,15 +20,15 @@
 
 {% set crumbs = [
     { label: "Retour"|t, url: url('retour') },
-    { label: "Redirects"|t, url: url('retour/redirects') },
+    { label: "Settings"|t, url: url('retour/settings') },
 ] %}
 
 {% if craft.app.version < 2.5 %}
     {% set tabs = retourSections %}
-    {% set selectedTab = 'redirects' %}
+    {% set selectedTab = 'settings' %}
 {% else %}
     {% set subnav = retourSections %}
-    {% set selectedSubnavItem = 'redirects' %}
+    {% set selectedSubnavItem = 'settings' %}
 {% endif %}
 
 {% set content %}
@@ -34,20 +36,29 @@
 <!-- Needed for for Craft < 2.5 -->
 
     {% if craft.app.version < 2.5 %}
-    <form id="creator-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
+    <form id="settings-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
     {% endif %}
 
-    <input type="hidden" name="action" value="retour/saveCreator" />
-    <input type="hidden" name="redirect" value="retour/redirects" />
+    <input type="hidden" name="action" value="plugins/savePluginSettings">
+    <input type="hidden" name="redirect" value="retour/settings" />
+    <input type="hidden" name="pluginClass" value="Retour">
     {{ getCsrfInput() }}
 
         {% if tabs is defined %}
             {% include "_includes/tabs" %}
         {% endif %}
 
-<!-- Site Creatorship -->
+<!-- Settings -->
 
-        <h1>{{ "Hello, world" |t }}</h1>
+    {{ forms.textField({
+        label: "Plugin Name"|t,
+        instructions: "The plugin name as you'd like it to be displayed in the AdminCP."|t,
+        id: 'pluginNameOverride',
+        name: 'settings[pluginNameOverride]',
+        value: settings.pluginNameOverride,
+        autofocus: true,
+        first: true,
+    }) }}
 
 <!-- Needed for for Craft < 2.5 -->
 

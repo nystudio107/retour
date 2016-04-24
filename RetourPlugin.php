@@ -16,16 +16,6 @@ namespace Craft;
 class RetourPlugin extends BasePlugin
 {
     /**
-     * Called after the plugin class is instantiated; do any one-time initialization here such as hooks and events:
-     *
-     * craft()->on('entries.saveEntry', function(Event $event) {
-     *    // ...
-     * });
-     *
-     * or loading any third party Composer packages via:
-     *
-     * require_once __DIR__ . '/vendor/autoload.php';
-     *
      * @return mixed
      */
     public function init()
@@ -37,18 +27,18 @@ class RetourPlugin extends BasePlugin
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview())
                 {
 
-/* -- Extract out just the path and query string */
+/* -- See if we should redirect */
 
                     $url = craft()->request->getUrl();
-
-/* -- See if we have a match */
+                    $redirectsModel = craft()->retour->findRedirectMatch($url);
 
 /* -- Redirect if we found a match, otherwise let Craft handle it */
 
-                    if (true)
+                    if ($redirectsModel)
                     {
-                        craft()->request->redirect('/', true, 301);
+                        craft()->request->redirect($redirectsModel->redirectDestUrl, false, $redirectsModel->redirectHttpCode);
                         $event->handled = true;
+                        RetourPlugin::log("Redirecting " . $url . " to " . $redirectsModel->redirectDestUrl, LogLevel::Info, false);
                     }
                 }
             }
@@ -62,13 +52,11 @@ class RetourPlugin extends BasePlugin
      */
     public function getName()
     {
-         return Craft::t('Retour');
+        $pluginNameOverride = $this->getSettings()->getAttribute('pluginNameOverride');
+        return empty($pluginNameOverride) ? Craft::t('Retour') : $pluginNameOverride;
     }
 
     /**
-     * Plugins can have descriptions of themselves displayed on the Plugins page by adding a getDescription() method
-     * on the primary plugin class:
-     *
      * @return mixed
      */
     public function getDescription()
@@ -77,9 +65,6 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Plugins can have links to their documentation on the Plugins page by adding a getDocumentationUrl() method on
-     * the primary plugin class:
-     *
      * @return string
      */
     public function getDocumentationUrl()
@@ -88,10 +73,6 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Plugins can now take part in Craft’s update notifications, and display release notes on the Updates page, by
-     * providing a JSON feed that describes new releases, and adding a getReleaseFeedUrl() method on the primary
-     * plugin class.
-     *
      * @return string
      */
     public function getReleaseFeedUrl()
@@ -110,11 +91,6 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * As of Craft 2.5, Craft no longer takes the whole site down every time a plugin’s version number changes, in
-     * case there are any new migrations that need to be run. Instead plugins must explicitly tell Craft that they
-     * have new migrations by returning a new (higher) schema version number with a getSchemaVersion() method on
-     * their primary plugin class:
-     *
      * @return string
      */
     public function getSchemaVersion()
@@ -123,8 +99,6 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Returns the developer’s name.
-     *
      * @return string
      */
     public function getDeveloper()
@@ -133,8 +107,6 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Returns the developer’s website URL.
-     *
      * @return string
      */
     public function getDeveloperUrl()
@@ -143,8 +115,6 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Returns whether the plugin should get its own tab in the CP header.
-     *
      * @return bool
      */
     public function hasCpSection()
@@ -153,16 +123,29 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Called right before your plugin’s row gets stored in the plugins database table, and tables have been created
-     * for it based on its records.
+     * @return array
+     */
+    protected function defineSettings()
+    {
+        return array(
+            'pluginNameOverride'  => AttributeType::String
+        );
+    }
+
+    public function registerCpRoutes()
+    {
+        return array(
+            'retour/settings'           => array('action' => 'retour/editSettings'),
+        );
+    }
+
+    /**
      */
     public function onBeforeInstall()
     {
     }
 
     /**
-     * Called right after your plugin’s row has been stored in the plugins database table, and tables have been
-     * created for it based on its records.
      */
     public function onAfterInstall()
     {
@@ -173,16 +156,12 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * Called right before your plugin’s record-based tables have been deleted, and its row in the plugins table
-     * has been deleted.
      */
     public function onBeforeUninstall()
     {
     }
 
     /**
-     * Called right after your plugin’s record-based tables have been deleted, and its row in the plugins table
-     * has been deleted.
      */
     public function onAfterUninstall()
     {

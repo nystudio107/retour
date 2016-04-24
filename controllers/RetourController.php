@@ -16,17 +16,14 @@ namespace Craft;
 class RetourController extends BaseController
 {
 
-    /**
-     * @var    bool|array Allows anonymous access to this controller's actions.
-     * @access protected
-     */
-    protected $allowAnonymous = array('actionIndex',
-        );
-
-    /**
-     * Handle a request going to our plugin's index action URL, e.g.: actions/retour
-     */
-    public function actionIndex()
+    public function actionEditSettings()
     {
+        $retourPlugin = craft()->plugins->getPlugin('retour');
+        $settings = $retourPlugin->getSettings();
+
+        $this->renderTemplate('retour/settings', array(
+           'settings' => $settings
+        ));
     }
+
 }
