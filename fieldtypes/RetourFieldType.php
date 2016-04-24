@@ -66,7 +66,7 @@ class RetourFieldType extends BaseFieldType
 
 /* -- Get the list of matches */
 
-        $matchList = $this->_getMatchesList();
+        $matchList = craft()->retour->getMatchesList();
 
 /* -- Variables to pass down to our rendered template */
 
@@ -106,7 +106,7 @@ class RetourFieldType extends BaseFieldType
 
 /* -- Get the list of matches */
 
-        $matchList = $this->_getMatchesList();
+        $matchList = craft()->retour->getMatchesList();
 
         return craft()->templates->render('retour/fields/RetourFieldType_Settings', array(
             'matchList'     => $matchList,
@@ -176,28 +176,5 @@ class RetourFieldType extends BaseFieldType
 
         return $value;
     } /* -- prepValue */
-
-/**
- * @return  mixed Returns the list of matching schemes
- */
-    private function _getMatchesList()
-    {
-        $result = array(
-            'exactmatch' => 'Exact Match',
-            'regexmatch' => 'RegEx Match',
-            );
-
-/* -- Add any plugins that offer the retourMatch() method */
-
-        foreach (craft()->plugins->getPlugins() as $plugin)
-        {
-            if (method_exists($plugin, "retourMatch"))
-            {
-                $result[$plugin->getClassHandle()] = $plugin->getName() . Craft::t(" Match");
-            }
-        }
-
-        return $result;
-    } /* -- _getMatchesList */
 
 }

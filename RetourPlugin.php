@@ -30,15 +30,15 @@ class RetourPlugin extends BasePlugin
 /* -- See if we should redirect */
 
                     $url = craft()->request->getUrl();
-                    $redirectsModel = craft()->retour->findRedirectMatch($url);
+                    $redirect = craft()->retour->findRedirectMatch($url);
 
 /* -- Redirect if we found a match, otherwise let Craft handle it */
 
-                    if ($redirectsModel)
+                    if (isset($redirect))
                     {
                         $event->handled = true;
-                        RetourPlugin::log("Redirecting " . $url . " to " . $redirectsModel->redirectDestUrl, LogLevel::Info, false);
-                        craft()->request->redirect($redirectsModel->redirectDestUrl, false, $redirectsModel->redirectHttpCode);
+                        RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
+                        craft()->request->redirect($redirect['redirectDestUrl'], false, $redirect['redirectHttpCode']);
                     }
                 }
             }
@@ -168,7 +168,7 @@ class RetourPlugin extends BasePlugin
     }
 
     /**
-     * @param mixed $args An array of arguments passed in, currently just 'redirectModel', a Retour_RedirectsModel
+     * @param mixed $args An array of arguments passed in, currently just 'redirect', the attributes of a Retour_RedirectsModel
      * @return bool Return true if it's a match, false otherwise
      */
     public function retourMatch($args)

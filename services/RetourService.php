@@ -31,7 +31,10 @@ class RetourService extends BaseApplicationComponent
         if (isset($this->cachedRedirects))
             return $this->cachedRedirects;
 
-        $result = Retour_RedirectsRecord::model()->findAll();
+        $result = craft()->db->createCommand()
+            ->select('*')
+            ->from('retour_redirects')
+            ->queryAll();
 
         $this->cachedRedirects = $result;
 
@@ -49,7 +52,11 @@ class RetourService extends BaseApplicationComponent
         if (isset($this->cachedEntryRedirects))
             return $this->cachedEntryRedirects;
 
-        $result = Retour_RedirectsRecord::model()->findAllByAttributes(array(), 'associatedEntryId <> 0');
+        $result = craft()->db->createCommand()
+            ->select('*')
+            ->from('retour_redirects')
+            ->where('associatedEntryId <> 0')
+            ->queryAll();
 
         $this->cachedEntryRedirects = $result;
 
@@ -67,7 +74,11 @@ class RetourService extends BaseApplicationComponent
         if (isset($this->cachedStaticRedirects))
             return $this->cachedStaticRedirects;
 
-        $result = Retour_RedirectsRecord::model()->findAllByAttributes(array('associatedEntryId' => 0));
+        $result = craft()->db->createCommand()
+            ->select('*')
+            ->from('retour_redirects')
+            ->where('associatedEntryId = 0')
+            ->queryAll();
 
         $this->cachedStaticRedirects = $result;
 
@@ -79,16 +90,16 @@ class RetourService extends BaseApplicationComponent
         $redirects = $this->getAllRedirects();
         foreach ($redirects as $redirect)
         {
-            switch ($redirect->redirectMatchType)
+            switch ($redirect['redirectMatchType'])
             {
 
 /* -- Do a straight up match */
 
                 case "exactmatch":
-                    if (strcasecmp($redirect->redirectSrcUrlParsed, $url) === 0)
+                    if (strcasecmp($redirect['redirectSrcUrlParsed'], $url) === 0)
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
-                        RetourPlugin::log($redirect->redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
+                        RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
                         return $redirect;
                     }
                     break;
@@ -100,7 +111,7 @@ class RetourService extends BaseApplicationComponent
                     if (preg_match($matchRegEx, $url) === 1)
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
-                        RetourPlugin::log($redirect->redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
+                        RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
                         return $redirect;
                     }
                     break;
@@ -108,19 +119,19 @@ class RetourService extends BaseApplicationComponent
 /* -- Otherwise try to look up a plugin's method by and call it for the match */
 
                 default:
-                    $plugin = craft()->plugins->getPlugin($redirect->redirectMatchType);
+                    $plugin = craft()->plugins->getPlugin($redirect['redirectMatchType']);
                     if ($plugin)
                     {
                         if (method_exists($plugin, "retourMatch"))
                         {
                             $args = array(
-                                'redirectModel' => &$redirect,
+                                'redirect' => &$redirect,
                                 );
                             $result = call_user_func_array(array($plugin, "retourMatch"), $args);
                             if ($result)
                             {
                                 $error = $this->incrementRedirectHitCount($redirect);
-                                RetourPlugin::log($redirect->redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
+                                RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
                                 return $redirect;
                             }
                         }
@@ -134,13 +145,14 @@ class RetourService extends BaseApplicationComponent
 /**
  * @param  Retour_RedirectsModel The redirect to create
  */
-    public function incrementRedirectHitCount(&$redirectsModel)
+    public function incrementRedirectHitCount($redirect)
     {
-        if (isset($redirectsModel))
+        if (isset($redirect))
         {
-            $redirectsModel->hitCount = $redirectsModel->hitCount + 1;
-            $redirectsModel->hitLastTime = DateTimeHelper::currentUTCDateTime();
-            return $redirectsModel->save();
+            $redirectsRecord = new Retour_RedirectsRecord($redirect);
+            $redirectsRecord->hitCount = $redirectsRecord->hitCount + 1;
+            $redirectsRecord->hitLastTime = DateTimeHelper::currentUTCDateTime();
+            return $redirectsRecord->save();
         }
     } /* -- incrementRedirectHitCount */
 
@@ -152,6 +164,8 @@ class RetourService extends BaseApplicationComponent
     public function getRedirectByEntryId($entryId, $locale)
     {
         $result = Retour_RedirectsRecord::model()->findByAttributes(array('associatedEntryId' => $entryId, 'locale' => $locale));
+                                RetourPlugin::log(print_r($result, true), LogLevel::Info, false);
+
         return $result;
     } /* -- getRedirectByEntryId */
 
@@ -199,5 +213,28 @@ class RetourService extends BaseApplicationComponent
             return $result->save();
         }
     } /* -- createRedirect */
+
+/**
+ * @return  mixed Returns the list of matching schemes
+ */
+    public function getMatchesList()
+    {
+        $result = array(
+            'exactmatch' => Craft::t('Exact Match'),
+            'regexmatch' => Craft::t('RegEx Match'),
+            );
+
+/* -- Add any plugins that offer the retourMatch() method */
+
+        foreach (craft()->plugins->getPlugins() as $plugin)
+        {
+            if (method_exists($plugin, "retourMatch"))
+            {
+                $result[$plugin->getClassHandle()] = $plugin->getName() . Craft::t(" Match");
+            }
+        }
+
+        return $result;
+    } /* -- getMatchesList */
 
 }

@@ -26,4 +26,9 @@ class RetourVariable
         return craft()->retour->getAllStaticRedirects();
     } /* -- getStaticRedirects */
 
+    function getMatchesList()
+    {
+        return craft()->retour->getMatchesList();
+    } /* -- getMatchesList */
+
 }
