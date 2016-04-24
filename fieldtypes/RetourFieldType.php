@@ -66,10 +66,7 @@ class RetourFieldType extends BaseFieldType
 
 /* -- Get the list of matches */
 
-        $matchList = array(
-            'exactmatch' => 'Exact Match',
-            'regexmatch' => 'RegEx Match',
-            );
+        $matchList = $this->_getMatchesList();
 
 /* -- Variables to pass down to our rendered template */
 
@@ -93,6 +90,7 @@ class RetourFieldType extends BaseFieldType
         return array(
             'defaultRedirectSrcUrl' => array(AttributeType::String, 'default' => ''),
             'defaultRedirectMatchType' => array(AttributeType::String, 'default' => 'match'),
+            'defaultRedirectHttpCode' => array(AttributeType::Number, 'default' => 301),
             'redirectChangeable' => array(AttributeType::Bool, 'default' => 1),
         );
     } /* -- getSettingsHtml */
@@ -108,10 +106,7 @@ class RetourFieldType extends BaseFieldType
 
 /* -- Get the list of matches */
 
-        $matchList = array(
-            'exactmatch' => 'Exact Match',
-            'regexmatch' => 'RegEx Match',
-            );
+        $matchList = $this->_getMatchesList();
 
         return craft()->templates->render('retour/fields/RetourFieldType_Settings', array(
             'matchList'     => $matchList,
@@ -169,13 +164,40 @@ class RetourFieldType extends BaseFieldType
             $result = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
             if ($result)
                 $value->setAttributes($result->getAttributes(), false);
+            else
+            {
+                $value->redirectSrcUrl = $this->getSettings()->defaultRedirectSrcUrl;
+                $value->redirectMatchType = $this->getSettings()->defaultRedirectMatchType;
+                $value->redirectHttpCode = $this->getSettings()->defaultRedirectHttpCode;
+            }
        }
 
-        $value->defaultRedirectSrcUrl = $this->getSettings()->defaultRedirectSrcUrl;
-        $value->defaultRedirectMatchType = $this->getSettings()->defaultRedirectMatchType;
         $value->redirectChangeable = $this->getSettings()->redirectChangeable;
 
         return $value;
     } /* -- prepValue */
+
+/**
+ * @return  mixed Returns the list of matching schemes
+ */
+    private function _getMatchesList()
+    {
+        $result = array(
+            'exactmatch' => 'Exact Match',
+            'regexmatch' => 'RegEx Match',
+            );
+
+/* -- Add any plugins that offer the retourMatch() method */
+
+        foreach (craft()->plugins->getPlugins() as $plugin)
+        {
+            if (method_exists($plugin, "retourMatch"))
+            {
+                $result[$plugin->getClassHandle()] = $plugin->getName() . Craft::t(" Match");
+            }
+        }
+
+        return $result;
+    } /* -- _getMatchesList */
 
 }

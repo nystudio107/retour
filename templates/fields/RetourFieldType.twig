@@ -23,14 +23,14 @@
 
     <div class="field first">
         <div class="heading">
-            <div class="instructions"><p>{{ "Retour will look for 404 (Not Found) URLs that match the Legacy Pattern below, and redirect them to this entry's URL." |t |raw}}</p></div>
+            <div class="instructions"><p>{{ "Retour will look for 404 (Not Found) URLs that match the Legacy URL Pattern below, and redirect them to this entry's URL." |t |raw}}</p></div>
         </div>
     </div>
 
     <div class="field">
         <div class="heading">
-            <label for= id ~ "redirectSrcUrl">{{ "Legacy Pattern"|t}}</label>
-            <div class="instructions"><p>{{ "Enter the pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below." |t |raw}}</p></div>
+            <label for= id ~ "redirectSrcUrl">{{ "Legacy URL Pattern"|t}}</label>
+            <div class="instructions"><p>{{ "Enter the URL pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below.  e.g.: Exact Match: <code>/recipes/{recipeid}</code> or RegEx Match: <code>/.*RecipeID={recipeid}</code> where <code>{recipeid}</code> is a field handle to a field in this entry." |t |raw}}</p></div>
         </div>
        {{ forms.textField({
             fieldClass: 'nomarginfield',
@@ -48,7 +48,7 @@
     <div class="field">
         <div class="heading">
             <label for= id ~ "redirectMatchType">{{ "Pattern Match Type"|t}}</label>
-            <div class="instructions"><p>{{ "What type of matching should be done with the Legacy URL." |t |raw}}</p></div>
+            <div class="instructions"><p>{{ "What type of matching should be done with the Legacy URL Pattern.  If a plugin provides a custom matching function, you can select it here." |t |raw}}</p></div>
         </div>
         {{ forms.selectField({
             fieldClass: 'nomarginfield',
@@ -57,6 +57,25 @@
             options: matchList,
             name: name ~ "[redirectMatchType]",
             value: values.redirectMatchType,
+            disabled: disableFields,
+        }) }}
+    </div>
+
+    <div class="field">
+        <div class="heading">
+            <label for= id ~ "redirectHttpCode">{{ "Redirect Type"|t}}</label>
+            <div class="instructions"><p>{{ "Select whether the redirect should be permanent or temporary." |t |raw}}</p></div>
+        </div>
+        {{ forms.selectField({
+            fieldClass: 'nomarginfield',
+            class: 'selectField',
+            id: id ~ "redirectHttpCode",
+            options: {
+                "301": "301 - Permanent"|t,
+                "302": "302 - Temporary"|t,
+            },
+            name: name ~ "[redirectHttpCode]",
+            value: values.redirectHttpCode,
             disabled: disableFields,
         }) }}
     </div>

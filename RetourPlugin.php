@@ -36,9 +36,9 @@ class RetourPlugin extends BasePlugin
 
                     if ($redirectsModel)
                     {
-                        craft()->request->redirect($redirectsModel->redirectDestUrl, false, $redirectsModel->redirectHttpCode);
                         $event->handled = true;
                         RetourPlugin::log("Redirecting " . $url . " to " . $redirectsModel->redirectDestUrl, LogLevel::Info, false);
+                        craft()->request->redirect($redirectsModel->redirectDestUrl, false, $redirectsModel->redirectHttpCode);
                     }
                 }
             }
@@ -166,4 +166,14 @@ class RetourPlugin extends BasePlugin
     public function onAfterUninstall()
     {
     }
+
+    /**
+     * @param mixed $args An array of arguments passed in, currently just 'redirectModel', a Retour_RedirectsModel
+     * @return bool Return true if it's a match, false otherwise
+     */
+    public function retourMatch($args)
+    {
+        return true;
+    }
+
 }

@@ -23,8 +23,6 @@ class Retour_RedirectsFieldModel extends Retour_RedirectsModel
     protected function defineAttributes()
     {
         return array_merge(parent::defineAttributes(), array(
-            'defaultRedirectSrcUrl'     => array(AttributeType::String, 'default' => ''),
-            'defaultRedirectMatchType'  => array(AttributeType::String, 'default' => 'match'),
             'redirectChangeable'        => array(AttributeType::Bool, 'default' => 1),
         ));
     }

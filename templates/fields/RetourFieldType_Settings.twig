@@ -16,10 +16,15 @@
 
 <div>
 
-    <div id ="defaultRedirectSrcUrl-wrapper" class="field">
+    <div class="field first">
         <div class="heading">
-            <label for="defaultRedirectMatchType">{{ "Legacy URL"|t}}</label>
-            <div class="instructions"><p>{{ "blah blah blah." |t |raw}}</p></div>
+            <div class="instructions"><p>{{ "Retour will look for 404 (Not Found) URLs that match the Legacy URL Pattern below, and redirect them to this entry's URL.  Here you can set the default values for the Retour Redirect FieldType." |t |raw}}</p></div>
+        </div>
+    </div>
+    <div class="field">
+        <div class="heading">
+            <label for="defaultRedirectMatchType">{{ "Default Legacy URL Pattern"|t}}</label>
+            <div class="instructions"><p>{{ "Enter the URL pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below.  e.g.: Exact Match: <code>/recipes/{recipeid}</code> or RegEx Match: <code>/.*RecipeID={recipeid}</code> where <code>{recipeid}</code> is a field handle to a field in this entry." |t |raw}}</p></div>
         </div>
        {{ forms.textField({
             fieldClass: 'nomarginfield',
@@ -35,8 +40,8 @@
 
     <div class="field">
         <div class="heading">
-            <label for="defaultRedirectMatchType">{{ "Pattern Match Type"|t}}</label>
-            <div class="instructions"><p>{{ "Set what type of pattern matching should be set as a default for this field." |t |raw}}</p></div>
+            <label for="defaultRedirectMatchType">{{ "Default Pattern Match Type"|t}}</label>
+            <div class="instructions"><p>{{ "Set what type of pattern matching should be set as a default for this field.  If a plugin provides a custom matching function, you can select it here." |t |raw}}</p></div>
         </div>
         {{ forms.selectField({
             fieldClass: 'nomarginfield',
@@ -45,6 +50,24 @@
             options: matchList,
             name: 'defaultRedirectMatchType',
             value: settings.defaultRedirectMatchType,
+        }) }}
+    </div>
+
+    <div class="field">
+        <div class="heading">
+            <label for= "defaultRedirectHttpCode">{{ "Default Redirect Type"|t}}</label>
+            <div class="instructions"><p>{{ "Select whether the redirect should be permanent or temporary." |t |raw}}</p></div>
+        </div>
+        {{ forms.selectField({
+            fieldClass: 'nomarginfield',
+            class: 'selectField',
+            id: "defaultRedirectHttpCode",
+            options: {
+                "301": "301 - Permanent"|t,
+                "302": "302 - Temporary"|t,
+            },
+            name: "defaultRedirectHttpCode",
+            value: settings.defaultRedirectHttpCode,
         }) }}
     </div>
 

@@ -47,7 +47,38 @@
 
 <!-- Site Creatorship -->
 
-        <h1>{{ "Hello, world" |t }}</h1>
+        <h2>{{ "Entry Redirects" |t }}</h2>
+
+        {% set redirects = craft.retour.getEntryRedirects() %}
+        {% if redirects|length %}
+            <div class="tableview">
+                <table id="entry-redirects" class="data fullwidth">
+                    <thead>
+                        <th scope="col">{{ "Legacy URL Pattern"|t }}</th>
+                        <th scope="col">{{ "Redirect To"|t }}</th>
+                        <th scope="col">{{ "Pattern Match Type"|t }}</th>
+                        <th scope="col">{{ "Redirect Type"|t }}</th>
+                        <th scope="col">{{ "Hits"|t }}</th>
+                        <th scope="col">{{ "Last Hit"|t }}</th>
+                    </thead>
+                    <tbody>
+
+                        {% for redir in redirects %}
+                            {% set associatedEntry = craft.entries.id(redir.associatedEntryId).locale(redir.locale).first %}
+                            <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
+                                <td><a class="go" href="{{ associatedEntry.cpEditUrl }}">{{ redir.redirectSrcUrl }}</a></td>
+                                <td>{{ redir.redirectDestUrl }}</td>
+                                <td>{{ redir.redirectMatchType }}</td>
+                                <td>{{ redir.redirectHttpCode }}</td>
+                                <td>{{ redir.hitCount }}</td>
+                                <td>{{ redir.hitLastTime.localeDate() ~ " " ~ redir.hitLastTime.localeTime() }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
 
 <!-- Needed for for Craft < 2.5 -->
 
