@@ -6,8 +6,6 @@
 
 {% set title = "Retour"|t %}
 
-{% set fullPageForm = true %}
-
 {% set docsUrl = "https://github.com/nystudio107/retour/blob/master/README.md" %}
 
 {% set retourSections = {
@@ -30,16 +28,6 @@
 {% endif %}
 
 {% set content %}
-
-<!-- Needed for for Craft < 2.5 -->
-
-    {% if craft.app.version < 2.5 %}
-    <form id="creator-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
-    {% endif %}
-
-    <input type="hidden" name="action" value="retour/saveCreator" />
-    <input type="hidden" name="redirect" value="retour/statistics" />
-    {{ getCsrfInput() }}
 
         {% if tabs is defined %}
             {% include "_includes/tabs" %}
@@ -74,24 +62,5 @@
         {% else %}
             <p class="instructions">You have no 404s yet.</p>
         {% endif %}
-
-<!-- Needed for for Craft < 2.5 -->
-
-        {% if craft.app.version < 2.5 %}
-        <div class="item" data-position="left" data-colspan="1">
-            <div class="buttons">
-                <div class="btngroup submit first">
-                    <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-
-<!-- Needed for for Craft < 2.5 -->
-
-    {% if craft.app.version < 2.5 %}
-    </form>
-    {% endif %}
 
 {% endset %}

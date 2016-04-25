@@ -64,10 +64,11 @@ class RetourController extends BaseController
 /* -- Set the record attributes, defaulting to the existing values for whatever is missing from the post data */
 
         $record->locale = craft()->language;
-        $record->redirectSrcUrl = craft()->request->getPost('redirectSrcUrl', $record->redirectSrcUrl);
-        $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
-        $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
         $record->redirectMatchType = craft()->request->getPost('redirectMatchType', $record->redirectMatchType);
+        $record->redirectSrcUrl = craft()->request->getPost('redirectSrcUrl', $record->redirectSrcUrl);
+        if ($record->redirectMatchType == "exactmatch")
+            $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
+        $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
         $record->redirectDestUrl = craft()->request->getPost('redirectDestUrl', $record->redirectDestUrl);
         $record->redirectHttpCode = craft()->request->getPost('redirectHttpCode', $record->redirectHttpCode);
         $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
