@@ -13,19 +13,17 @@
 
 namespace Craft;
 
-class Retour_RedirectsRecord extends BaseRecord
+class Retour_StaticRedirectsRecord extends BaseRecord
 {
     /**
      * @return string
      */
     public function getTableName()
     {
-        return 'retour_redirects';
+        return 'retour_static_redirects';
     }
 
     /**
-     * Returns an array of attributes which map back to columns in the database table.
-     *
      * @access protected
      * @return array
      */
@@ -39,36 +37,21 @@ class Retour_RedirectsRecord extends BaseRecord
             'redirectHttpCode'      => array(AttributeType::Number, 'default' => 301),
             'hitCount'              => array(AttributeType::Number, 'default' => 0),
             'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
-            'locale'                => array(AttributeType::Locale, 'required' => true)
-            /* defined in defineRelations()
+            'locale'                => array(AttributeType::Locale, 'required' => true),
             'associatedEntryId'     => array(AttributeType::Number, 'default' => 0),
-            */
         );
     }
 
     /**
-     * Define fields that should be indexed
      * @return array
      */
 
     public function defineIndexes()
     {
         return array(
-            array('columns' => array('locale', 'associatedEntryId')),
+            array('columns' => array('locale', 'id')),
             array('columns' => array('redirectSrcUrl'), 'unique' => true)
         );
     }
 
-    /**
-     * If your record should have any relationships with other tables, you can specify them with the
-     * defineRelations() function
-     * @return array
-     */
-    public function defineRelations()
-    {
-        return array(
-            'locale'            => array(static::BELONGS_TO, 'LocaleRecord', 'locale', 'required' => true, 'onDelete' => static::CASCADE, 'onUpdate' => static::CASCADE),
-            'associatedEntry'   => array(static::BELONGS_TO, 'EntryRecord', 'required' => true, 'onDelete' => static::CASCADE)
-        );
-    }
 }

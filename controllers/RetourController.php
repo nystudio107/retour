@@ -59,12 +59,13 @@ class RetourController extends BaseController
         if ($redirectId)
             $record = craft()->retour->getRedirectById($redirectId);
         else
-            $record = new Retour_RedirectsRecord;
+            $record = new Retour_StaticRedirectsRecord;
 
 /* -- Set the record attributes, defaulting to the existing values for whatever is missing from the post data */
 
         $record->locale = craft()->language;
         $record->redirectSrcUrl = craft()->request->getPost('redirectSrcUrl', $record->redirectSrcUrl);
+        $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
         $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
         $record->redirectMatchType = craft()->request->getPost('redirectMatchType', $record->redirectMatchType);
         $record->redirectDestUrl = craft()->request->getPost('redirectDestUrl', $record->redirectDestUrl);

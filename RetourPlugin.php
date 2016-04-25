@@ -135,9 +135,9 @@ class RetourPlugin extends BasePlugin
     public function registerCpRoutes()
     {
         return array(
-            'retour/settings'               => array('action' => 'retour/editSettings'),
-            'retour/new'                    => array('action' => 'retour/editRedirect'),
-            'retour/(?P<redirectId>\d+)'    => array('action' => 'retour/editRedirect'),
+            'retour/settings'                   => array('action' => 'retour/editSettings'),
+            'retour/new'                        => array('action' => 'retour/editRedirect'),
+            'retour/edit/(?P<redirectId>\d+)'   => array('action' => 'retour/editRedirect'),
         );
     }
 

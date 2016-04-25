@@ -16,30 +16,8 @@ namespace Craft;
 class RetourService extends BaseApplicationComponent
 {
 
-    protected $cachedRedirects = null;
     protected $cachedEntryRedirects = null;
     protected $cachedStaticRedirects = null;
-
-/**
- * @return Array All of the redirects
- */
-    public function getAllRedirects()
-    {
-
-/* -- Cache it in our class; no need to fetch it more than once */
-
-        if (isset($this->cachedRedirects))
-            return $this->cachedRedirects;
-
-        $result = craft()->db->createCommand()
-            ->select('*')
-            ->from('retour_redirects')
-            ->queryAll();
-
-        $this->cachedRedirects = $result;
-
-        return $result;
-    } /* -- getAllRedirects */
 
 /**
  * @return Array All of the entry redirects
@@ -55,7 +33,6 @@ class RetourService extends BaseApplicationComponent
         $result = craft()->db->createCommand()
             ->select('*')
             ->from('retour_redirects')
-            ->where('associatedEntryId <> 0')
             ->order('hitCount DESC')
             ->queryAll();
 
@@ -77,8 +54,7 @@ class RetourService extends BaseApplicationComponent
 
         $result = craft()->db->createCommand()
             ->select('*')
-            ->from('retour_redirects')
-            ->where('associatedEntryId = 0')
+            ->from('retour_static_redirects')
             ->order('hitCount DESC')
             ->queryAll();
 
@@ -87,9 +63,39 @@ class RetourService extends BaseApplicationComponent
         return $result;
     } /* -- getAllStaticRedirects */
 
+/**
+ * @param  string $url the url to match
+ * @return mixed      the redirect array
+ */
     public function findRedirectMatch($url)
     {
-        $redirects = $this->getAllRedirects();
+        $result = null;
+
+/* -- Look up the entry redirects first */
+
+        $redirects = $this->getAllEntryRedirects();
+        $result = $this->lookupRedirect($url, $redirects);
+        if ($result)
+            return $result;
+
+/* -- Look up the static redirects next */
+
+        $redirects = $this->getAllStaticRedirects();
+        $result = $this->lookupRedirect($url, $redirects);
+        if ($result)
+            return $result;
+
+        return $result;
+    } /* -- findRedirectMatch */
+
+/**
+ * @param  string $url the url to match
+ * @param  mixed $redirects an array of redirects to look through
+ * @return mixed      the redirect array
+ */
+    public function lookupRedirect($url, $redirects)
+    {
+        $result = null;
         foreach ($redirects as $redirect)
         {
             switch ($redirect['redirectMatchType'])
@@ -109,7 +115,7 @@ class RetourService extends BaseApplicationComponent
 /* -- Do a regex match */
 
                 case "regexmatch":
-                    $matchRegEx = "`" . $redirect->redirectSrcUrlParsed . "`i";
+                    $matchRegEx = "`" . $redirect['redirectSrcUrlParsed'] . "`i";
                     if (preg_match($matchRegEx, $url) === 1)
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
@@ -149,8 +155,8 @@ class RetourService extends BaseApplicationComponent
                     break;
             }
         }
-        return null;
-    } /* -- findRedirectMatch */
+        return $result;
+    } /* -- lookupRedirect */
 
 /**
  * @param  Retour_RedirectsModel The redirect to create
@@ -162,8 +168,12 @@ class RetourService extends BaseApplicationComponent
             $redirect['hitCount'] = $redirect['hitCount'] + 1;
             $redirect['hitLastTime'] = DateTimeHelper::currentTimeForDb();
 
+            if ($redirect['associatedEntryId'])
+                $table = 'retour_redirects';
+            else
+                $table= 'retour_static_redirects';
             $result = craft()->db->createCommand()
-                ->update('retour_redirects', array(
+                ->update($table, array(
                     'hitCount' =>  $redirect['hitCount'],
                     'hitLastTime' =>  $redirect['hitLastTime'],
                     ), 'id=:id', array(':id' => $redirect['id']));
@@ -186,9 +196,9 @@ class RetourService extends BaseApplicationComponent
  * @param  string $locale  The locale
  * @return Mixed The resulting Redirect
  */
-    public function getRedirectById($entryId)
+    public function getRedirectById($id)
     {
-        $result = Retour_RedirectsRecord::model()->findByAttributes(array('id' => $id));
+        $result = Retour_StaticRedirectsRecord::model()->findByAttributes(array('id' => $id));
         return $result;
     } /* -- getRedirectById */
 

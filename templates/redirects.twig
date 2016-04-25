@@ -60,9 +60,8 @@
                     <tbody>
 
                         {% for redir in redirects %}
-                            {% set associatedEntry = craft.entries.id(redir.associatedEntryId).locale(redir.locale).first %}
                             <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
-                                <td><a class="go" href="{{ associatedEntry.cpEditUrl }}">{{ redir.redirectSrcUrl }}</a></td>
+                                <td><a class="go" href="{{ url("retour/edit/" ~ redir.id) }}">{{ redir.redirectSrcUrl }}</a></td>
                                 <td>{{ redir.redirectDestUrl }}</td>
                                 <td>{{ matchesList[redir.redirectMatchType] }}</td>
                                 <td>{{ redir.redirectHttpCode }}</td>
