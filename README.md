@@ -21,13 +21,13 @@ Retour allows you to intelligently redirect legacy URLs, so that you don't lose 
 
 In addition to supporting traditional exact and RegEx matching of URL patterns, Retour also has a Retour Redirect FieldType that you can add to your entries. This allows you to have dynamic entry redirects that have access to the data in your entries when matching URL patterns.
 
-Retour is written to be performant. There is no impact on your website's performance until an 404 exception happens; and even then the resulting matching happens with minimal impact.
+Retour is written to be performant. There is no impact on your website's performance until a 404 exception happens; and even then the resulting matching happens with minimal impact.
 
 Don't just rebuild a website. Transition it with Retour.
 
 ## Dynamic Entry Redirects
 
-Retire implements a Retour FieldType that you can add to your Entry Types.  Retour will look for 404 (Not Found) URLs that match the Legacy URL Pattern, and redirect them to this entry's URL.
+Retour implements a Retour FieldType that you can add to your Entry Types.  Retour will look for 404 (Not Found) URLs that match the Legacy URL Pattern, and redirect them to this entry's URL.
 
 You also get the context of the `entry` that you can use when matching legacy URLs; so if you've imported a field called `recipeid` into your new website, you can the Retour Redirect FieldType look for it in your Legacy URL Pattern, e.g.: `/old-recipes/{recipeid}`
 
@@ -50,13 +50,13 @@ Static Redirects are useful when the Legacy URL Patterns and the new URL pattern
 
 ## Retour Statistics
 
-Retire keeps track of every 404 your website receives.  You can view them by clicking on **Retour->Statistics**.  
+Retour keeps track of every 404 your website receives.  You can view them by clicking on **Retour->Statistics**.  
 
 Only one record is saved per URL Pattern, so the database won't get clogged with a ton of records.
 
 ## Custom Match Functions via Plugin
 
-Retire allows you to implement a custom matching function via plugin, if the Exact and RegEx matching are not sufficient for your purposes.
+Retour allows you to implement a custom matching function via plugin, if the Exact and RegEx matching are not sufficient for your purposes.
 
 In your main plugin class file, simply add this function:
 
