@@ -30,7 +30,7 @@
     <div class="field">
         <div class="heading">
             <label for= id ~ "redirectSrcUrl">{{ "Legacy URL Pattern"|t}}</label>
-            <div class="instructions"><p>{{ "Enter the URL pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below.  e.g.: Exact Match: <code>/recipes/{recipeid}</code> or RegEx Match: <code>/.*RecipeID={recipeid}</code> where <code>{recipeid}</code> is a field handle to a field in this entry." |t |raw}}</p></div>
+            <div class="instructions"><p>{{ "Enter the URL pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below.  e.g.: Exact Match: <code>/recipes/{recipeid}</code> or RegEx Match: <code>.*RecipeID={recipeid}</code> where <code>{recipeid}</code> is a field handle to a field in this entry." |t |raw}}</p></div>
         </div>
        {{ forms.textField({
             fieldClass: 'nomarginfield',
@@ -48,7 +48,7 @@
     <div class="field">
         <div class="heading">
             <label for= id ~ "redirectMatchType">{{ "Pattern Match Type"|t}}</label>
-            <div class="instructions"><p>{{ "What type of matching should be done with the Legacy URL Pattern.  If a plugin provides a custom matching function, you can select it here." |t |raw}}</p></div>
+            <div class="instructions"><p>{{ "What type of matching should be done with the Legacy URL Pattern.  Details on RegEx matching can be found at <a href='http://regexr.com/' target='blank'>regexr.com</a>  If a plugin provides a custom matching function, you can select it here." |t |raw}}</p></div>
         </div>
         {{ forms.selectField({
             fieldClass: 'nomarginfield',

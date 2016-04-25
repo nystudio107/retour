@@ -7,11 +7,19 @@
 {% set linkGetStarted = url('retour/redirects') %}
 {% set docsUrl = "https://github.com/nystudio107/retour/blob/master/README.md" %}
 
+{% set crumbs = [
+    { label: "Retour"|t, url: url('retour') },
+    { label: "Welcome"|t, url: url('retour/Welcome') },
+] %}
+
 {% set content %}
 	<div style="text-align:center; margin:0 auto; padding: 5% 10%;">
 		<img src="{{ resourceUrl('retour/icon.svg') }}" width="30%" height="auto" />
 		<h2>Thanks for using Retour!</h2>
-		<p>Cool stuff goes here.</p>
+		<p>Retour allows you to intelligently redirect legacy URLs, so that you don't lose SEO value when rebuilding &amp; restructuring a website.</p>
+		<p>In addition to supporting traditional exact and RegEx matching of URL patterns, Retour also has a <strong>Retour Redirect</strong> FieldType that you can add to your entries.  This allows you to have dynamic entry redirects that have access to the data in your entries when matching URL patterns.</p>
+		<p>Retour is written to be performant.  There is no impact on your website's performance until an 404 exception happens; and even then the resulting matching happens with minimal impact.</p>
+		<p>Don't just rebuild a website.  Transition it with Retour.</p>
 		<p>
 			&nbsp;
 		</p>

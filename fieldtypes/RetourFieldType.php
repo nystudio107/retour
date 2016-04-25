@@ -135,7 +135,18 @@ class RetourFieldType extends BaseFieldType
         $result->redirectDestUrl = $this->element->url;
         $result->associatedEntryId = $this->element->id;
         $result->locale = $this->element->locale;
-        $result->redirectSrcUrl = '/' . ltrim($result->redirectSrcUrl, '/');
+        if ($result->redirectMatchType == "exactmatch")
+            $result->redirectSrcUrl = '/' . ltrim($result->redirectSrcUrl, '/');
+
+/* -- Restore the default fields we don't let the user edit */
+
+        $oldRecord = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
+
+        if ($oldRecord)
+        {
+            $result->hitCount = $oldRecord->hitCount;
+            $result->hitLastTime = $oldRecord->hitLastTime;
+        }
 
         try
         {
@@ -176,5 +187,22 @@ class RetourFieldType extends BaseFieldType
 
         return $value;
     } /* -- prepValue */
+
+    /**
+     * @inheritDoc IFieldType::onAfterElementSave()
+     *
+     * @return null
+     */
+    public function onAfterElementSave()
+    {
+        $fieldHandle = $this->model->handle;
+
+        if (empty($fieldHandle))
+        {
+            $this->prepValueFromPost(null);
+        }
+
+        parent::onAfterElementSave();
+    }
 
 }

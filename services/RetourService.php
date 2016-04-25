@@ -56,6 +56,7 @@ class RetourService extends BaseApplicationComponent
             ->select('*')
             ->from('retour_redirects')
             ->where('associatedEntryId <> 0')
+            ->order('hitCount DESC')
             ->queryAll();
 
         $this->cachedEntryRedirects = $result;
@@ -78,6 +79,7 @@ class RetourService extends BaseApplicationComponent
             ->select('*')
             ->from('retour_redirects')
             ->where('associatedEntryId = 0')
+            ->order('hitCount DESC')
             ->queryAll();
 
         $this->cachedStaticRedirects = $result;
@@ -112,6 +114,14 @@ class RetourService extends BaseApplicationComponent
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
                         RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+
+/* -- If we're not associated with an EntryID, handle capture group replacement */
+
+                        if ($redirect['associatedEntryId'] == 0)
+                        {
+                            $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
+                            $redirect = $value;
+                        }
                         return $redirect;
                     }
                     break;
@@ -149,10 +159,14 @@ class RetourService extends BaseApplicationComponent
     {
         if (isset($redirect))
         {
-            $redirectsRecord = new Retour_RedirectsRecord($redirect);
-            $redirectsRecord->hitCount = $redirectsRecord->hitCount + 1;
-            $redirectsRecord->hitLastTime = DateTimeHelper::currentUTCDateTime();
-            return $redirectsRecord->save();
+            $redirect['hitCount'] = $redirect['hitCount'] + 1;
+            $redirect['hitLastTime'] = DateTimeHelper::currentTimeForDb();
+
+            $result = craft()->db->createCommand()
+                ->update('retour_redirects', array(
+                    'hitCount' =>  $redirect['hitCount'],
+                    'hitLastTime' =>  $redirect['hitLastTime'],
+                    ), 'id=:id', array(':id' => $redirect['id']));
         }
     } /* -- incrementRedirectHitCount */
 
@@ -164,10 +178,19 @@ class RetourService extends BaseApplicationComponent
     public function getRedirectByEntryId($entryId, $locale)
     {
         $result = Retour_RedirectsRecord::model()->findByAttributes(array('associatedEntryId' => $entryId, 'locale' => $locale));
-                                RetourPlugin::log(print_r($result, true), LogLevel::Info, false);
-
         return $result;
     } /* -- getRedirectByEntryId */
+
+/**
+ * @param  int $id The redirect's id
+ * @param  string $locale  The locale
+ * @return Mixed The resulting Redirect
+ */
+    public function getRedirectById($entryId)
+    {
+        $result = Retour_RedirectsRecord::model()->findByAttributes(array('id' => $id));
+        return $result;
+    } /* -- getRedirectById */
 
 /**
  * @param  Retour_RedirectsModel The redirect to save

@@ -6,8 +6,6 @@
 
 {% set title = "Retour"|t %}
 
-{% set fullPageForm = true %}
-
 {% set docsUrl = "https://github.com/nystudio107/retour/blob/master/README.md" %}
 
 {% set retourSections = {
@@ -29,17 +27,13 @@
     {% set selectedSubnavItem = 'redirects' %}
 {% endif %}
 
+{% set extraPageHeaderHtml %}
+    <div class="buttons">
+        <a href="{{ url('retour/new') }}" class="btn submit add icon">{{ "New Static Redirect"|t }}</a>
+    </div>
+{% endset %}
+
 {% set content %}
-
-<!-- Needed for for Craft < 2.5 -->
-
-    {% if craft.app.version < 2.5 %}
-    <form id="creator-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
-    {% endif %}
-
-    <input type="hidden" name="action" value="retour/saveCreator" />
-    <input type="hidden" name="redirect" value="retour/redirects" />
-    {{ getCsrfInput() }}
 
         {% if tabs is defined %}
             {% include "_includes/tabs" %}
@@ -47,9 +41,48 @@
 
         {% set matchesList = craft.retour.getMatchesList() %}
 
+<!-- Static Redirects -->
+
+        <h2>{{ "Static Redirects" |t }}</h2>
+
+        {% set redirects = craft.retour.getStaticRedirects() %}
+        {% if redirects|length %}
+            <div class="tableview">
+                <table id="static-redirects" class="data fullwidth">
+                    <thead>
+                        <th scope="col">{{ "Legacy URL Pattern"|t }}</th>
+                        <th scope="col">{{ "Redirect To"|t }}</th>
+                        <th scope="col">{{ "Pattern Match Type"|t }}</th>
+                        <th scope="col">{{ "Redirect Type"|t }}</th>
+                        <th scope="col">{{ "Hits"|t }}</th>
+                        <th scope="col">{{ "Last Hit"|t }}</th>
+                    </thead>
+                    <tbody>
+
+                        {% for redir in redirects %}
+                            {% set associatedEntry = craft.entries.id(redir.associatedEntryId).locale(redir.locale).first %}
+                            <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
+                                <td><a class="go" href="{{ associatedEntry.cpEditUrl }}">{{ redir.redirectSrcUrl }}</a></td>
+                                <td>{{ redir.redirectDestUrl }}</td>
+                                <td>{{ matchesList[redir.redirectMatchType] }}</td>
+                                <td>{{ redir.redirectHttpCode }}</td>
+                                <td>{{ redir.hitCount }}</td>
+                                <td>{{ redir.hitLastTime |datetime }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="instructions">You have no Static Redirects.  You can create clicking on the <strong>+ New Static Redirect</strong> button.</p>
+        {% endif %}
+
+        <p class="textline"></p>
+
 <!-- Entry Redirects -->
 
-        <h2>{{ "Entry Redirects" |t }}</h2>
+        <h2>{{ "Dynamic Entry Redirects" |t }}</h2>
 
         {% set redirects = craft.retour.getEntryRedirects() %}
         {% if redirects|length %}
@@ -80,60 +113,8 @@
                     </tbody>
                 </table>
             </div>
+        {% else %}
+            <p class="instructions">You have no Dynamic Entry Redirects.  You can create them by adding a Retour Redirect FieldType to your Section Entry Types.</p>
         {% endif %}
-
-<!-- Static Redirects -->
-
-        <h2>{{ "Static Redirects" |t }}</h2>
-
-        {% set redirects = craft.retour.getStaticRedirects() %}
-        {% if redirects|length %}
-            <div class="tableview">
-                <table id="entry-redirects" class="data fullwidth">
-                    <thead>
-                        <th scope="col">{{ "Legacy URL Pattern"|t }}</th>
-                        <th scope="col">{{ "Redirect To"|t }}</th>
-                        <th scope="col">{{ "Pattern Match Type"|t }}</th>
-                        <th scope="col">{{ "Redirect Type"|t }}</th>
-                        <th scope="col">{{ "Hits"|t }}</th>
-                        <th scope="col">{{ "Last Hit"|t }}</th>
-                    </thead>
-                    <tbody>
-
-                        {% for redir in redirects %}
-                            {% set associatedEntry = craft.entries.id(redir.associatedEntryId).locale(redir.locale).first %}
-                            <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
-                                <td><a class="go" href="{{ associatedEntry.cpEditUrl }}">{{ redir.redirectSrcUrl }}</a></td>
-                                <td>{{ redir.redirectDestUrl }}</td>
-                                <td>{{ matchesList[redir.redirectMatchType] }}</td>
-                                <td>{{ redir.redirectHttpCode }}</td>
-                                <td>{{ redir.hitCount }}</td>
-                                <td>{{ redir.hitLastTime |datetime }}</td>
-                            </tr>
-                        {% endfor %}
-
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
-
-<!-- Needed for for Craft < 2.5 -->
-
-        {% if craft.app.version < 2.5 %}
-        <div class="item" data-position="left" data-colspan="1">
-            <div class="buttons">
-                <div class="btngroup submit first">
-                    <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-
-<!-- Needed for for Craft < 2.5 -->
-
-    {% if craft.app.version < 2.5 %}
-    </form>
-    {% endif %}
 
 {% endset %}
