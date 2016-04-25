@@ -42,8 +42,17 @@ class Retour_StatsRecord extends BaseRecord
     }
 
     /**
-     * If your record should have any relationships with other tables, you can specify them with the
-     * defineRelations() function
+     * @return array
+     */
+    public function defineIndexes()
+    {
+        return array(
+            array('columns' => array('hitCount', 'id')),
+            array('columns' => array('redirectSrcUrl'), 'unique' => true)
+        );
+    }
+
+    /**
      * @return array
      */
     public function defineRelations()

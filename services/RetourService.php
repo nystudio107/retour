@@ -18,6 +18,7 @@ class RetourService extends BaseApplicationComponent
 
     protected $cachedEntryRedirects = null;
     protected $cachedStaticRedirects = null;
+    protected $cachedStatistics = null;
 
 /**
  * @return Array All of the entry redirects
@@ -64,6 +65,28 @@ class RetourService extends BaseApplicationComponent
     } /* -- getAllStaticRedirects */
 
 /**
+ * @return Array All of the statistics
+ */
+    public function getAllStatistics()
+    {
+
+/* -- Cache it in our class; no need to fetch it more than once */
+
+        if (isset($this->cachedStatistics))
+            return $this->cachedStatistics;
+
+        $result = craft()->db->createCommand()
+            ->select('*')
+            ->from('retour_stats')
+            ->order('hitCount DESC')
+            ->queryAll();
+
+        $this->cachedStatistics = $result;
+
+        return $result;
+    } /* -- getAllStatistics */
+
+/**
  * @param  string $url the url to match
  * @return mixed      the redirect array
  */
@@ -73,6 +96,7 @@ class RetourService extends BaseApplicationComponent
 
 /* -- Look up the entry redirects first */
 
+        $redirects = null;
         $redirects = $this->getAllEntryRedirects();
         $result = $this->lookupRedirect($url, $redirects);
         if ($result)
@@ -80,6 +104,7 @@ class RetourService extends BaseApplicationComponent
 
 /* -- Look up the static redirects next */
 
+        $redirects = null;
         $redirects = $this->getAllStaticRedirects();
         $result = $this->lookupRedirect($url, $redirects);
         if ($result)
@@ -179,6 +204,47 @@ class RetourService extends BaseApplicationComponent
                     ), 'id=:id', array(':id' => $redirect['id']));
         }
     } /* -- incrementRedirectHitCount */
+
+/**
+ * @param  $url The 404 url
+ */
+    public function incrementStatistics($url)
+    {
+
+/* -- See if a stats record exists already */
+
+        $result = craft()->db->createCommand()
+            ->select('*')
+            ->from('retour_stats')
+            ->where('redirectSrcUrl =' . craft()->db->quoteValue($url))
+            ->queryAll();
+
+        if (empty($result))
+        {
+            $stats = new Retour_StatsRecord;
+            $stats->redirectSrcUrl = $url;
+            $stats->hitCount = 1;
+            $stats->hitLastTime = DateTimeHelper::currentUTCDateTime();
+            $stats->save();
+        }
+        else
+        {
+
+/* -- Update the stats table */
+
+            foreach ($result as $stat)
+            {
+                $stat['hitCount'] = $stat['hitCount'] + 1;
+                $stat['hitLastTime'] = DateTimeHelper::currentTimeForDb();
+
+                $result = craft()->db->createCommand()
+                    ->update('retour_stats', array(
+                        'hitCount' =>  $stat['hitCount'],
+                        'hitLastTime' =>  $stat['hitLastTime'],
+                        ), 'id=:id', array(':id' => $stat['id']));
+            }
+        }
+    } /* -- incrementStatistics */
 
 /**
  * @param  int $entryId The associated entryID

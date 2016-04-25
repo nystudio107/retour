@@ -45,9 +45,35 @@
             {% include "_includes/tabs" %}
         {% endif %}
 
-<!-- Site Creatorship -->
+<!-- Staistics -->
 
-        <h1>{{ "Hello, world" |t }}</h1>
+        <h2>{{ "Retour Statistics" |t }}</h2>
+
+        {% set stats = craft.retour.getStatistics() %}
+        {% if stats|length %}
+            <div class="tableview">
+                <table id="static-redirects" class="data fullwidth">
+                    <thead>
+                        <th scope="col">{{ "404 File Not Found URL"|t }}</th>
+                        <th scope="col">{{ "Hits"|t }}</th>
+                        <th scope="col">{{ "Last Hit"|t }}</th>
+                    </thead>
+                    <tbody>
+
+                        {% for stat in stats %}
+                            <tr data-id="{{ stat.id }}" data-name="{{ stat.redirectSrcUrl }}">
+                                <td><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
+                                <td>{{ stat.hitCount }}</td>
+                                <td>{{ stat.hitLastTime |datetime }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="instructions">You have no 404s yet.</p>
+        {% endif %}
 
 <!-- Needed for for Craft < 2.5 -->
 

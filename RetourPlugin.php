@@ -32,6 +32,10 @@ class RetourPlugin extends BasePlugin
                     $url = craft()->request->getUrl();
                     $redirect = craft()->retour->findRedirectMatch($url);
 
+/* -- Log all 404's */
+
+                    craft()->retour->incrementStatistics($url);
+
 /* -- Redirect if we found a match, otherwise let Craft handle it */
 
                     if (isset($redirect))
