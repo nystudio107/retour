@@ -4,7 +4,7 @@
 {% includeCssResource "retour/css/Retour.css" %}
 {% includeJsResource "retour/js/Retour.js" %}
 
-{% set title = "Retour"|t %}
+{% set title = craft.retour.getPluginName() %}
 
 {% set docsUrl = "https://github.com/nystudio107/retour/blob/master/README.md" %}
 
@@ -15,7 +15,7 @@
 } %}
 
 {% set crumbs = [
-    { label: "Retour"|t, url: url('retour') },
+    { label: craft.retour.getPluginName(), url: url('retour') },
     { label: "Statistics"|t, url: url('retour/statistics') },
 ] %}
 

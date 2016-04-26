@@ -36,4 +36,12 @@ class RetourVariable
         return craft()->retour->getMatchesList();
     } /* -- getMatchesList */
 
+    function getPluginName()
+    {
+        $retourPlugin = craft()->plugins->getPlugin('retour');
+        $result = $retourPlugin->getName();
+        return $result;
+    } /* -- getPluginName */
+
+
 }

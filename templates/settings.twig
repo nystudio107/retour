@@ -6,7 +6,7 @@
 {% includeCssResource "retour/css/Retour.css" %}
 {% includeJsResource "retour/js/Retour.js" %}
 
-{% set title = "Retour"|t %}
+{% set title = craft.retour.getPluginName() %}
 
 {% set fullPageForm = true %}
 
@@ -19,7 +19,7 @@
 } %}
 
 {% set crumbs = [
-    { label: "Retour"|t, url: url('retour') },
+    { label: craft.retour.getPluginName(), url: url('retour') },
     { label: "Settings"|t, url: url('retour/settings') },
 ] %}
 
