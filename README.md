@@ -107,6 +107,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.2 -- 2016.04.29
 
 * [Improved] Spiffy new icon
+* [Improved] Changing the display name of the plugin is now more globally applied
 * [Improved] Updated the README.md
 
 ### 1.0.1 -- 2016.04.26
