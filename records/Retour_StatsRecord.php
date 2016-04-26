@@ -16,9 +16,6 @@ namespace Craft;
 class Retour_StatsRecord extends BaseRecord
 {
     /**
-     * Returns the name of the database table the model is associated with (sans table prefix). By convention,
-     * tables created by plugins should be prefixed with the plugin name and an underscore.
-     *
      * @return string
      */
     public function getTableName()
@@ -27,8 +24,6 @@ class Retour_StatsRecord extends BaseRecord
     }
 
     /**
-     * Returns an array of attributes which map back to columns in the database table.
-     *
      * @access protected
      * @return array
      */

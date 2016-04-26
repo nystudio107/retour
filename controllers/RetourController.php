@@ -76,6 +76,8 @@ class RetourController extends BaseController
 
         if ($record->save())
         {
+            $error = craft()->cache->flush();
+            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
             craft()->userSession->setNotice(Craft::t('Retour Redirect saved.'));
             $this->redirectToPostedUrl($record);
         }
@@ -92,6 +94,27 @@ class RetourController extends BaseController
             ));
         }
     } /* -- actionSaveRedirect */
+
+/**
+ * @param  array  $variables
+ */
+    public function actionDeleteRedirect()
+    {
+        $this->requirePostRequest();
+        $this->requireAjaxRequest();
+
+        $id = craft()->request->getRequiredPost('id');
+
+        $affectedRows = craft()->db->createCommand()->delete('retour_static_redirects', array(
+            'id' => $id
+        ));
+
+        RetourPlugin::log("Deleted Redirected: " . $id, LogLevel::Info, false);
+        $error = craft()->cache->flush();
+        RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+
+        $this->returnJson(array('success' => true));
+    } /* -- actionDeleteRedirect */
 
 /**
  */

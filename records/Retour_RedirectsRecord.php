@@ -24,8 +24,6 @@ class Retour_RedirectsRecord extends BaseRecord
     }
 
     /**
-     * Returns an array of attributes which map back to columns in the database table.
-     *
      * @access protected
      * @return array
      */
@@ -47,10 +45,8 @@ class Retour_RedirectsRecord extends BaseRecord
     }
 
     /**
-     * Define fields that should be indexed
      * @return array
      */
-
     public function defineIndexes()
     {
         return array(
@@ -60,8 +56,6 @@ class Retour_RedirectsRecord extends BaseRecord
     }
 
     /**
-     * If your record should have any relationships with other tables, you can specify them with the
-     * defineRelations() function
      * @return array
      */
     public function defineRelations()

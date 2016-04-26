@@ -56,6 +56,7 @@
                         <th scope="col">{{ "Redirect Type"|t }}</th>
                         <th scope="col">{{ "Hits"|t }}</th>
                         <th scope="col">{{ "Last Hit"|t }}</th>
+                        <th class="thin right"></th>
                     </thead>
                     <tbody>
 
@@ -67,6 +68,7 @@
                                 <td>{{ redir.redirectHttpCode }}</td>
                                 <td>{{ redir.hitCount }}</td>
                                 <td>{{ redir.hitLastTime |datetime }}</td>
+                                <td class="rightalign"><a class="delete icon" title="{{ 'Delete'|t }}"></a></td>
                             </tr>
                         {% endfor %}
 
@@ -74,7 +76,7 @@
                 </table>
             </div>
         {% else %}
-            <p class="instructions">You have no Static Redirects.  You can create clicking on the <strong>+ New Static Redirect</strong> button.</p>
+            <p id = "no-static-redirects" class="instructions">You have no Static Redirects.  You can create clicking on the <strong>+ New Static Redirect</strong> button.</p>
         {% endif %}
 
         <p class="textline"></p>
@@ -117,3 +119,12 @@
         {% endif %}
 
 {% endset %}
+
+{% set js %}
+    new Craft.AdminTable({
+        tableSelector: '#static-redirects',
+        noObjectsSelector: '#no-static-redirects',
+        deleteAction: 'retour/deleteRedirect'
+    });
+{% endset %}
+{% includeJs js %}

@@ -103,6 +103,13 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.1 -- 2016.04.26
+
+* [Added] Implemented a caching layer so that once a redirect has been determined, subsequent redirects are cached and immediately returned
+* [Added] Added the ability to delete static redirects
+* [Added] Added Composer support
+* [Improved] Updated the README.md
+
 ### 1.0.0 -- 2016.04.25
 
 * Initial release

@@ -94,6 +94,17 @@ class RetourService extends BaseApplicationComponent
     {
         $result = null;
 
+/* -- Check the cache first */
+
+        $redirect = $this->getRedirectFromCache($url);
+        if ($redirect)
+        {
+            $error = $this->incrementRedirectHitCount($redirect);
+            $this->saveRedirectToCache($url, $redirect);
+            RetourPlugin::log("[cached] " . $redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+            return $redirect;
+        }
+
 /* -- Look up the entry redirects first */
 
         $redirects = null;
@@ -133,6 +144,7 @@ class RetourService extends BaseApplicationComponent
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
                         RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+                        $this->saveRedirectToCache($url, $redirect);
                         return $redirect;
                     }
                     break;
@@ -153,6 +165,7 @@ class RetourService extends BaseApplicationComponent
                             $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
                             $redirect = $value;
                         }
+                        $this->saveRedirectToCache($url, $redirect);
                         return $redirect;
                     }
                     break;
@@ -173,6 +186,7 @@ class RetourService extends BaseApplicationComponent
                             {
                                 $error = $this->incrementRedirectHitCount($redirect);
                                 RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+                                $this->saveRedirectToCache($url, $redirect);
                                 return $redirect;
                             }
                         }
@@ -186,7 +200,7 @@ class RetourService extends BaseApplicationComponent
 /**
  * @param  Retour_RedirectsModel The redirect to create
  */
-    public function incrementRedirectHitCount($redirect)
+    public function incrementRedirectHitCount(&$redirect)
     {
         if (isset($redirect))
         {
@@ -312,6 +326,29 @@ class RetourService extends BaseApplicationComponent
             return $result->save();
         }
     } /* -- createRedirect */
+
+/**
+ * @param  string $urld The input URL
+ * @param  mixed $redirect The redirect
+ */
+    public function saveRedirectToCache($url, $redirect)
+    {
+        $cacheKey = "retour_cache_" . md5($url);
+        $error = craft()->cache->set($cacheKey, $redirect, null);
+        RetourPlugin::log("Cached Redirect saved: " . print_r($error, true), LogLevel::Info, false);
+    } /* -- saveRedirectToCache */
+
+/**
+ * @param  string $urld The input URL
+ * @return mixed The redirect
+ */
+    public function getRedirectFromCache($url)
+    {
+        $cacheKey = "retour_cache_" . md5($url);
+        $result = craft()->cache->get($cacheKey);
+        RetourPlugin::log("Cached Redirect hit: " . print_r($result, true), LogLevel::Info, false);
+        return $result;
+    } /* -- getRedirectFromCache */
 
 /**
  * @return  mixed Returns the list of matching schemes

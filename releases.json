@@ -1,8 +1,19 @@
 [
     {
+        "version": "1.0.1",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-04-26T18:16:52.434Z",
+        "notes": [
+            "[Added] Implemented a caching layer so that once a redirect has been determined, subsequent redirects are cached and immediately returned",
+            "[Added] Added the ability to delete static redirects",
+            "[Added] Added Composer support",
+            "[Improved] Updated the README.md"
+        ]
+    }
+    {
         "version": "1.0.0",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-04-17T18:16:52.434Z",
+        "date": "2016-04-25T18:16:52.434Z",
         "notes": [
             "[Added] Initial release"
         ]

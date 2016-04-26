@@ -156,6 +156,8 @@ class RetourFieldType extends BaseFieldType
         {
             RetourPlugin::log("Template error in the `redirectSrcUrl` field.", LogLevel::Info, true);
         }
+        $error = craft()->cache->flush();
+        RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
         craft()->retour->saveRedirect($result);
 
         return $result;
