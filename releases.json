@@ -2,7 +2,7 @@
     {
         "version": "1.0.2",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-04-29T18:16:52.434Z",
+        "date": "2016-04-26T20:16:52.434Z",
         "notes": [
             "[Fixed] Fixed faulty indexes that could cause Retour Redirect FieldTypes to not work properly",
             "[Improved] Spiffy new icon",

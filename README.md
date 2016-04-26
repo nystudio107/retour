@@ -106,8 +106,9 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
-### 1.0.2 -- 2016.04.29
+### 1.0.2 -- 2016.04.26
 
+* [Fixed] Fixed faulty indexes that could cause Retour Redirect FieldTypes to not work properly
 * [Improved] Spiffy new icon
 * [Improved] Changing the display name of the plugin is now more globally applied
 * [Improved] Updated the README.md
