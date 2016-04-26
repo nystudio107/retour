@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.2",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-04-29T18:16:52.434Z",
+        "notes": [
+            "[Improved] Spiffy new icon",
+            "[Improved] Updated the README.md"
+        ]
+    }
+    {
         "version": "1.0.1",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-04-26T18:16:52.434Z",
