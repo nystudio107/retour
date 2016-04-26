@@ -50,7 +50,7 @@ class Retour_StaticRedirectsRecord extends BaseRecord
     {
         return array(
             array('columns' => array('locale', 'id')),
-            array('columns' => array('redirectSrcUrl'), 'unique' => true)
+            array('columns' => array('redirectSrcUrlParsed'), 'unique' => true)
         );
     }
 

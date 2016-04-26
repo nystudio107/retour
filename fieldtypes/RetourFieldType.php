@@ -198,11 +198,7 @@ class RetourFieldType extends BaseFieldType
     public function onAfterElementSave()
     {
         $fieldHandle = $this->model->handle;
-
-        if (empty($fieldHandle))
-        {
-            $this->prepValueFromPost(null);
-        }
+        $this->prepValueFromPost(null);
 
         parent::onAfterElementSave();
     }

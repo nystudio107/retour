@@ -24,7 +24,7 @@
     <div class="field">
         <div class="heading">
             <label for="defaultRedirectMatchType">{{ "Default Legacy URL Pattern"|t}}</label>
-            <div class="instructions"><p>{{ "Enter the URL pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below.  e.g.: Exact Match: <code>/recipes/{recipeid}</code> or RegEx Match: <code>/.*RecipeID={recipeid}</code> where <code>{recipeid}</code> is a field handle to a field in this entry." |t |raw}}</p></div>
+            <div class="instructions"><p>{{ "Enter the URL pattern that Retour should match.  This matches against the path, the part of the URL after the domain name.  You can include tags that output entry properties, such as <code>{title}</code> or <code>{myCustomField}</code> in the text field below.  e.g.: Exact Match: <code>/recipes/{recipeid}</code> or RegEx Match: <code>/.*RecipeID={recipeid}$</code> where <code>{recipeid}</code> is a field handle to a field in this entry." |t |raw}}</p></div>
         </div>
        {{ forms.textField({
             fieldClass: 'nomarginfield',

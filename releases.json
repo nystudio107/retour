@@ -4,6 +4,7 @@
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-04-29T18:16:52.434Z",
         "notes": [
+            "[Fixed] Fixed faulty indexes that could cause Retour Redirect FieldTypes to not work properly",
             "[Improved] Spiffy new icon",
             "[Improved] Changing the display name of the plugin is now more globally applied",
             "[Improved] Updated the README.md"

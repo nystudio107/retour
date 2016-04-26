@@ -51,7 +51,7 @@ class Retour_RedirectsRecord extends BaseRecord
     {
         return array(
             array('columns' => array('locale', 'associatedEntryId')),
-            array('columns' => array('redirectSrcUrl'), 'unique' => true)
+            array('columns' => array('redirectSrcUrlParsed'), 'unique' => true)
         );
     }
 

@@ -323,7 +323,9 @@ class RetourService extends BaseApplicationComponent
         {
             $result = new Retour_RedirectsRecord;
             $result->setAttributes($redirectsModel->getAttributes(), false);
-            return $result->save();
+            $result->save();
+            $error = $result->getErrors();
+            RetourPlugin::log(print_r($error, true), LogLevel::Info, false);
         }
     } /* -- createRedirect */
 
