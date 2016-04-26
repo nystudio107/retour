@@ -1,0 +1,8 @@
+{
+    "name": "nystudio107/retour",
+    "description": "Retour allows you to intelligently redirect legacy URLs, so that you don't lose SEO value when rebuilding & restructuring a website.",
+    "require": {
+        "composer/installers": "~1.0"
+    },
+    "type": "craft-plugin"
+}
