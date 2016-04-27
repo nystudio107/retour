@@ -135,6 +135,12 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.4 -- 2016.04.28
+
+* [Added] The tables in the Statistics and Redirects pages are now sortable by any column
+* [Improved] Minor changes/fixes to the plugin
+* [Improved] Updated the README.md
+
 ### 1.0.3 -- 2016.04.27
 
 * [Added] Added a Retour Stats widget

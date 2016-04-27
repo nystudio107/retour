@@ -64,7 +64,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getDescription()
     {
-        return Craft::t("Redirect URLs to retain your website's SEO gravitas when migrating a website or restructuring it.");
+        return Craft::t("Intelligently redirect legacy URLs, so that you don't lose SEO value when rebuilding & restructuring a website.");
     }
 
     /**
@@ -90,7 +90,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.3';
+        return '1.0.4';
     }
 
     /**

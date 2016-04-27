@@ -1,5 +1,15 @@
 [
     {
+        "version": "1.0.4",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-04-28T11:00:00-05:00",
+        "notes": [
+            "[Added] The tables in the Statistics and Redirects pages are now sortable by any column",
+            "[Improved] Minor changes/fixes to the plugin",
+            "[Improved] Updated the README.md"
+        ]
+    }
+    {
         "version": "1.0.3",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-04-27T20:16:52.434Z",
