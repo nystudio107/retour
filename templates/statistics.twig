@@ -45,7 +45,7 @@
                 <table id="statistics" class="data fullwidth">
                     <thead>
                         <th data-sort="string-ins" scope="col">{{ "404 File Not Found URL"|t }}</th>
-                        <th data-sort="int" scope="col">{{ "Hits"|t }}</th>
+                        <th data-sort="int" scope="col">{{ "Hits"|t }}<span class="arrow">&darr;</span></th>
                         <th data-sort="date" scope="col">{{ "Last Hit"|t }}</th>
                         <th data-sort="string-ins" scope="col">{{ "Handled by Retour"|t }}</th>
                     </thead>
@@ -97,7 +97,6 @@
       };
       var table = $("table").stupidtable({
         "date":function(a,b){
-          // Get these into date objects for comparison.
           aDate = moment(a, "MMM, DD, YYYY, hh:mm:ss A");
           bDate = moment(b, "MMM, DD, YYYY, hh:mm:ss A");
           return aDate - bDate;
