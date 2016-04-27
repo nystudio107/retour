@@ -84,7 +84,9 @@ If you'd like to see an overview of the Retour Statistics in your dashboard, you
 
 It displays the total number of handled and not handled 404s, and the 5 most recent 404 URLs in each category right in your dashboard.
 
-## Custom Match Functions via Plugin
+## Developer Info
+
+### Custom Match Functions via Plugin
 
 Retour allows you to implement a custom matching function via plugin, if the Exact and RegEx matching are not sufficient for your purposes.
 
@@ -123,6 +125,10 @@ In your main plugin class file, simply add this function:
     }
 
 Your plugin will then appear in the list of Pattern Match Types that can be chosen from via Retour->Redirects or via the Retour Redirect FieldType.
+
+### Utility Functions
+
+`craft.retour.getHttpStatus` in your templates will return the HTTP Status code for the current template, so you can display a special message for people who end up on a page via a `301` or `302` redirect.
 
 ## Retour Roadmap
 
