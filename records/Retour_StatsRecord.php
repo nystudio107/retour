@@ -33,6 +33,7 @@ class Retour_StatsRecord extends BaseRecord
             'redirectSrcUrl'        => array(AttributeType::String, 'default' => ''),
             'hitCount'              => array(AttributeType::Number, 'default' => 0),
             'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
+            'handledByRetour'       => array(AttributeType::Bool, 'default' => false ),
         );
     }
 
