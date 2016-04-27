@@ -9,3 +9,7 @@
  * @package   Retour
  * @since     1.0.0
  */
+
+th[data-sort]:hover {
+    cursor: pointer;
+}
