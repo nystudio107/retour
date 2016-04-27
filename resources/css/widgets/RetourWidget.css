@@ -1,0 +1,43 @@
+/**
+ * Retour plugin for Craft CMS
+ *
+ * RetourWidget CSS
+ *
+ * @author    nystudio107
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   Retour
+ * @since     1.0.0
+ */
+
+table.retour td.retour-large-stat {
+	text-align: center;
+	font-size: 4vw;
+	border: none;
+	line-height: normal;
+	vertical-align: top;
+	width: 50%;
+}
+
+table.retour th.retour-handled,
+table.retour td.retour-handled {
+	color: green;
+}
+
+table.retour th.retour-not-handled,
+table.retour td.retour-not-handled {
+	color: red;
+}
+
+table.retour td.retour-stats {
+	vertical-align: top;
+	width: 50%;
+}
+
+table.retour .centered {
+	text-align: center;
+}
+
+table.retour .rightered {
+	text-align: right;
+}

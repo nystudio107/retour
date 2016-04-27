@@ -32,18 +32,17 @@ class RetourPlugin extends BasePlugin
                     $url = craft()->request->getUrl();
                     $redirect = craft()->retour->findRedirectMatch($url);
 
-/* -- Log all 404's */
-
-                    craft()->retour->incrementStatistics($url);
-
 /* -- Redirect if we found a match, otherwise let Craft handle it */
 
                     if (isset($redirect))
                     {
+                        craft()->retour->incrementStatistics($url, true);
                         $event->handled = true;
                         RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
                         craft()->request->redirect($redirect['redirectDestUrl'], false, $redirect['redirectHttpCode']);
                     }
+                    else
+                        craft()->retour->incrementStatistics($url, false);
                 }
             }
         };
@@ -91,7 +90,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.2';
+        return '1.0.3';
     }
 
     /**
@@ -99,7 +98,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getSchemaVersion()
     {
-        return '1.0.1';
+        return '1.0.2';
     }
 
     /**

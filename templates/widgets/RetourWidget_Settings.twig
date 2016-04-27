@@ -1,0 +1,23 @@
+{#
+/**
+ * Retour plugin for Craft CMS
+ *
+ * RetourWidget Settings
+ *
+ * @author    nystudio107
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   Retour
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: 'Statistics for Days',
+    instructions: 'Number of days to display statistics from',
+    id: 'numberOfDays',
+    name: 'numberOfDays',
+    value: settings['numberOfDays']})
+}}

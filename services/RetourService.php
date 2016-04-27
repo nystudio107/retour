@@ -65,7 +65,7 @@ class RetourService extends BaseApplicationComponent
     } /* -- getAllStaticRedirects */
 
 /**
- * @return Array All of the statistics
+ * @return array All of the statistics
  */
     public function getAllStatistics()
     {
@@ -85,6 +85,26 @@ class RetourService extends BaseApplicationComponent
 
         return $result;
     } /* -- getAllStatistics */
+
+/**
+ * @param $days The number of days to get
+ * @return array Recent statistics
+ */
+    public function getRecentStatistics($days = 1, $handled)
+    {
+
+        if (!$handled)
+            $handled = 0;
+        $result = craft()->db->createCommand()
+            ->select('*')
+            ->from('retour_stats')
+            ->where("hitLastTime >= ( CURDATE() - INTERVAL '$days' DAY )")
+            ->andWhere('handledByRetour =' . $handled)
+            ->order('hitLastTime DESC')
+            ->queryAll();
+
+        return $result;
+    } /* -- getRecentStatistics */
 
 /**
  * @param  string $url the url to match
@@ -222,7 +242,7 @@ class RetourService extends BaseApplicationComponent
 /**
  * @param  $url The 404 url
  */
-    public function incrementStatistics($url)
+    public function incrementStatistics($url, $handled = false)
     {
 
 /* -- See if a stats record exists already */
@@ -239,6 +259,7 @@ class RetourService extends BaseApplicationComponent
             $stats->redirectSrcUrl = $url;
             $stats->hitCount = 1;
             $stats->hitLastTime = DateTimeHelper::currentUTCDateTime();
+            $stats->handledByRetour = $handled;
             $stats->save();
         }
         else
@@ -255,6 +276,7 @@ class RetourService extends BaseApplicationComponent
                     ->update('retour_stats', array(
                         'hitCount' =>  $stat['hitCount'],
                         'hitLastTime' =>  $stat['hitLastTime'],
+                        'handledByRetour' =>  $handled,
                         ), 'id=:id', array(':id' => $stat['id']));
             }
         }
@@ -351,6 +373,16 @@ class RetourService extends BaseApplicationComponent
         RetourPlugin::log("Cached Redirect hit: " . print_r($result, true), LogLevel::Info, false);
         return $result;
     } /* -- getRedirectFromCache */
+
+/**
+ * @return  string The name of the plugin
+ */
+    function getPluginName()
+    {
+        $retourPlugin = craft()->plugins->getPlugin('retour');
+        $result = $retourPlugin->getName();
+        return $result;
+    } /* -- getPluginName */
 
 /**
  * @return  mixed Returns the list of matching schemes

@@ -26,6 +26,25 @@ Retour is written to be performant. There is no impact on your website's perform
 
 Don't just rebuild a website. Transition it with Retour.
 
+## Why Use a Plugin for Redirects?
+
+If you have just a few static redirects, then your best bet is to put them in your `.htaccess` file, or better yet, in your `.conf` file for your virtual server.  However, there are a number of cases where using a plugin to handle it is a **better** solution:
+
+1. If you have a large number of redirects, it will slow down every single request your web server handles unnecessarily if they are in `.htaccess` or `.conf`
+
+2. Often the URL patterns from the legacy website do not match the new website URLs in a deterministic way, which makes creating redirects difficult
+
+3. Sometimes you don't have access to the server config files, or you want to give your client the ability to manage redirects easily
+
+Retour solves these problems:
+
+1. Retour only attempts to do a redirect after the web server has already thrown a 404 exception.  Once a redirect mapping is successfully determined, it also caches the result for speedy resolution of the next redirect request.
+
+2. Retour also gives you the ability to do Dynamic Entry Redirects that allow you to import a piece of legacy data into your entries to use as a key to determining the new URL patterns.  In this way, utterly dissimilar URLs can be mapped for redirection effectively.
+
+3. It provides an easy to use GUI that the client can use from Craft's AdminCP, and keeps statistics on the 404 hits (and misses)
+
+
 ## Dynamic Entry Redirects
 
 Retour implements a Retour Redirect FieldType that you can add to your Entry Types.  Retour will look for 404 (Not Found) URLs that match the Legacy URL Pattern, and redirect them to this entry's URL.
@@ -36,7 +55,7 @@ This allows you to can key off of a piece of legacy data that was imported, for 
 
 ![Screenshot](resources/screenshots/retour02.png)
 
-* **Legacy URL Pattern** - Enter the URL pattern that Retour should match. This matches against the path, the part of the URL after the domain name. You can include tags that output entry properties, such as `{title}` or `{myCustomField}` in the text field below. e.g.: Exact Match: /recipes/{recipeid} or RegEx Match: `.*RecipeID={recipeid}$` where `{recipeid}` is a field handle to a field in this entry.
+* **Legacy URL Pattern** - Enter the URL pattern that Retour should match. This matches against the path, the part of the URL after the domain name. You can include tags that output entry properties, such as `{title}` or `{myCustomField}` in the text field below. e.g.: Exact Match: `/recipes/{recipeid}` or RegEx Match: `.*RecipeID={recipeid}$` where `{recipeid}` is a field handle to a field in this entry.
 * **Pattern Match Type** - What type of matching should be done with the Legacy URL Pattern. Details on RegEx matching can be found at [regexr.com](http://regexr.com) If a plugin provides a custom matching function, you can select it here.
 * **Redirect Type** - Select whether the redirect should be permanent or temporary.
 
@@ -46,7 +65,7 @@ Note: if you add a Retour Redirect FieldType to an existing Section, or you impo
 
 Static Redirects are useful when the Legacy URL Patterns and the new URL patterns are deterministic.  You can create them by clicking on **Retour->Redirects** and then clicking on the **+ New Static Redirect** button.
 
-* **Legacy URL Pattern** - Enter the URL pattern that Retour should match. This matches against the path, the part of the URL after the domain name. e.g.: Exact Match: /recipes/ or RegEx Match: `.*RecipeID=(.*)`
+* **Legacy URL Pattern** - Enter the URL pattern that Retour should match. This matches against the path, the part of the URL after the domain name. e.g.: Exact Match: `/recipes/` or RegEx Match: `.*RecipeID=(.*)`
 * **Destination URL** - Enter the destination URL that should be redirected to. This can either be a fully qualified URL or a relative URL. e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`
 * **Pattern Match Type** - What type of matching should be done with the Legacy URL Pattern. Details on RegEx matching can be found at [regexr.com](http://regexr.com) If a plugin provides a custom matching function, you can select it here.
 * **Redirect Type** - Select whether the redirect should be permanent or temporary.
@@ -56,6 +75,14 @@ Static Redirects are useful when the Legacy URL Patterns and the new URL pattern
 Retour keeps track of every 404 your website receives.  You can view them by clicking on **Retour->Statistics**.  
 
 Only one record is saved per URL Pattern, so the database won't get clogged with a ton of records.
+
+### Retour Widget
+
+If you'd like to see an overview of the Retour Statistics in your dashboard, you can add a Retour widget to your Dashboard:
+
+![Screenshot](resources/screenshots/retour03.png)
+
+It displays the total number of handled and not handled 404s, and the 5 most recent 404 URLs in each category right in your dashboard.
 
 ## Custom Match Functions via Plugin
 
@@ -105,6 +132,12 @@ Some things to do, and ideas for potential features:
 * A way to purge statistics/hitcounts
 
 ## Retour Changelog
+
+### 1.0.3 -- 2016.04.27
+
+* [Added] Added a Retour Stats widget
+* [Added] Added information on the Statistics tab as to whether Retour handled the 404 or not
+* [Improved] Updated the README.md
 
 ### 1.0.2 -- 2016.04.26
 

@@ -1,0 +1,77 @@
+{#
+/**
+ * Retour plugin for Craft CMS
+ *
+ * RetourWidget Body
+ *
+ * @author    nystudio107
+ * @copyright Copyright (c) 2016 nystudio107
+ * @link      http://nystudio107.com
+ * @package   Retour
+ * @since     1.0.0
+ */
+#}
+
+    {% set handled = craft.retour.getRecentStatistics(settings.numberOfDays, true) %}
+    {% set nothandled = craft.retour.getRecentStatistics(settings.numberOfDays, false) %}
+    {% set outputRows = 5 %}
+
+    <p>404 Redirects in the last {{ settings.numberOfDays }} {% if settings.numberOfDays == 1 %}day{% else %}days{% endif %}</p>
+
+    <div class="tableview">
+        <table id="handled-statistics" class="fullwidth retour">
+            <thead>
+                <th class="centered retour-handled" scope="col">&#x2714; Handled:</th>
+                <th class="centered retour-not-handled" scope="col">&#x2716; Not Handled:</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="retour-large-stat retour-handled">
+                        {{ handled |length }}
+                    </td>
+                    <td class="retour-large-stat retour-not-handled">
+                        {{ nothandled |length }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="retour-stats" style="padding-right: 10px;">
+                        <table id="handled-statistics" class="data fullwidth">
+                            <thead>
+                                <th scope="col">{{ "URL"|t }}</th>
+                                <th class="rightered" scope="col">{{ "Hits"|t }}</th>
+                            </thead>
+                            <tbody>
+                                {% set displayOutput = true %}
+                                {% for stat in handled %}
+                                    {% if loop.index0 < outputRows %}
+                                        <tr data-id="{{ stat.id }}" data-name="{{ stat.redirectSrcUrl }}">
+                                            <td class="retour-stats"><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
+                                            <td class="retour-stats rightered">{{ stat.hitCount }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="retour-stats" style="padding-left: 10px;">
+                        <table id="not-handled-statistics" class="data fullwidth">
+                            <thead>
+                                <th scope="col">{{ "URL"|t }}</th>
+                                <th class="rightered" scope="col">{{ "Hits"|t }}</th>
+                            </thead>
+                            <tbody>
+                                {% for stat in nothandled %}
+                                    {% if loop.index0 < outputRows %}
+                                        <tr data-id="{{ stat.id }}" data-name="{{ stat.redirectSrcUrl }}">
+                                            <td class="retour-stats"><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
+                                            <td class="retour-stats rightered">{{ stat.hitCount }}</td>
+                                        </tr>
+                                    {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>

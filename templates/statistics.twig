@@ -40,11 +40,12 @@
         {% set stats = craft.retour.getStatistics() %}
         {% if stats|length %}
             <div class="tableview">
-                <table id="static-redirects" class="data fullwidth">
+                <table id="statistics" class="data fullwidth">
                     <thead>
                         <th scope="col">{{ "404 File Not Found URL"|t }}</th>
                         <th scope="col">{{ "Hits"|t }}</th>
                         <th scope="col">{{ "Last Hit"|t }}</th>
+                        <th scope="col">{{ "Handled by Retour"|t }}</th>
                     </thead>
                     <tbody>
 
@@ -53,6 +54,7 @@
                                 <td><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
                                 <td>{{ stat.hitCount }}</td>
                                 <td>{{ stat.hitLastTime |datetime }}</td>
+                                <td>{% if stat.handledByRetour %}<span style="color: green;">&#x2714;</span>{% else %}<span style="color: red;">&#x2716;</span>{% endif %}</td>
                             </tr>
                         {% endfor %}
 
@@ -60,7 +62,7 @@
                 </table>
             </div>
         {% else %}
-            <p class="instructions">You have no 404s yet.</p>
+            <p id="no-statistics" class="instructions">You have no 404s yet.</p>
         {% endif %}
 
 {% endset %}

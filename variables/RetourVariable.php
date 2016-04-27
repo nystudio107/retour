@@ -31,6 +31,11 @@ class RetourVariable
         return craft()->retour->getAllStatistics();
     } /* -- getStatistics */
 
+    function getRecentStatistics($days, $handled)
+    {
+        return craft()->retour->getRecentStatistics($days, $handled);
+    } /* -- getRecentStatistics */
+
     function getMatchesList()
     {
         return craft()->retour->getMatchesList();
@@ -38,9 +43,7 @@ class RetourVariable
 
     function getPluginName()
     {
-        $retourPlugin = craft()->plugins->getPlugin('retour');
-        $result = $retourPlugin->getName();
-        return $result;
+        return craft()->retour->getPluginName();
     } /* -- getPluginName */
 
 
