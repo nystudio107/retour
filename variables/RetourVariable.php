@@ -46,5 +46,9 @@ class RetourVariable
         return craft()->retour->getPluginName();
     } /* -- getPluginName */
 
+    public function getHttpStatus()
+    {
+        return http_response_code();
+    }
 
 }
