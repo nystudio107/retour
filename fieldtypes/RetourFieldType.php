@@ -75,6 +75,8 @@ class RetourFieldType extends BaseFieldType
             'name' => $name,
             'namespaceId' => $namespacedId,
             'matchList' => $matchList,
+            'element' => $this->element,
+            'field' => $this->model,
             'values' => $value
             );
 

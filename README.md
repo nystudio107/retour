@@ -138,6 +138,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.4 -- 2016.04.28
 
 * [Added] The tables in the Statistics and Redirects pages are now sortable by any column
+* [Improved] Fixed up the localization support for the FieldType
 * [Improved] Minor changes/fixes to the plugin
 * [Improved] Updated the README.md
 
