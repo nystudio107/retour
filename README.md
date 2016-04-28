@@ -134,6 +134,12 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.6 -- 2016.04.29
+
+* [Fixed] Fixed a Javascript error with the FieldType Javascript
+* [Fixed] Fixed a visual display glitch with the tabs on Craft 2.4.x
+* [Improved] Updated the README.md
+
 ### 1.0.5 -- 2016.04.28
 
 * [Added] Added a 'Clear Statistics' button to the Statistics page

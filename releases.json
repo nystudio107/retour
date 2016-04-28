@@ -1,5 +1,15 @@
 [
     {
+        "version": "1.0.6",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-04-29T12:00:00-05:00",
+        "notes": [
+            "[Fixed] Fixed a Javascript error with the FieldType Javascript",
+            "[Fixed] Fixed a visual display glitch with the tabs on Craft 2.4.x",
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.5",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-04-28T12:00:00-05:00",
