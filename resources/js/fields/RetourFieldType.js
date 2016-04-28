@@ -12,7 +12,7 @@
 
  ;(function ( $, window, document, undefined ) {
 
-    var pluginName = "Retour_FieldType",
+    var pluginName = "RetourFieldType",
         defaults = {
         };
 
