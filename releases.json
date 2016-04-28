@@ -9,7 +9,7 @@
             "[Improved] Minor changes/fixes to the plugin",
             "[Improved] Updated the README.md"
         ]
-    }
+    },
     {
         "version": "1.0.3",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
@@ -19,7 +19,7 @@
             "[Added] Added information on the Statistics tab as to whether Retour handled the 404 or not",
             "[Improved] Updated the README.md"
         ]
-    }
+    },
     {
         "version": "1.0.2",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
@@ -30,7 +30,7 @@
             "[Improved] Changing the display name of the plugin is now more globally applied",
             "[Improved] Updated the README.md"
         ]
-    }
+    },
     {
         "version": "1.0.1",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
@@ -41,7 +41,7 @@
             "[Added] Added Composer support",
             "[Improved] Updated the README.md"
         ]
-    }
+    },
     {
         "version": "1.0.0",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
