@@ -107,6 +107,16 @@ class RetourService extends BaseApplicationComponent
     } /* -- getRecentStatistics */
 
 /**
+ */
+    public function clearStatistics()
+    {
+        $result = craft()->db->createCommand()
+            ->truncateTable('retour_stats');
+
+        return $result;
+    } /* -- clearStatistics */
+
+/**
  * @param  string $url the url to match
  * @return mixed      the redirect array
  */
@@ -183,7 +193,6 @@ class RetourService extends BaseApplicationComponent
                         if ($redirect['associatedEntryId'] == 0)
                         {
                             $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
-                            $redirect = $value;
                         }
                         $this->saveRedirectToCache($url, $redirect);
                         return $redirect;

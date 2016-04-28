@@ -128,4 +128,19 @@ class RetourController extends BaseController
         ));
     } /* -- actionEditSettings */
 
+/**
+ */
+    public function actionClearStatistics()
+    {
+
+        $error = craft()->retour->clearStatistics();
+        RetourPlugin::log("Statistics cleared: " . print_r($error, true), LogLevel::Info, false);
+
+        $error = craft()->cache->flush();
+        RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+
+        craft()->userSession->setNotice(Craft::t('Statistics Cleared.'));
+        craft()->request->redirect('statistics');
+    } /* -- actionClearStatistics */
+
 }

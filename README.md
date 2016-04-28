@@ -131,9 +131,15 @@ Your plugin will then appear in the list of Pattern Match Types that can be chos
 Some things to do, and ideas for potential features:
 
 * More interesting statistics tracking
-* A way to purge statistics/hitcounts
 
 ## Retour Changelog
+
+### 1.0.5 -- 2016.04.28
+
+* [Added] Added a 'Clear Statistics' button to the Statistics page
+* [Fixed] Fixed a bug when using RegEx for static redirects that would cause them to not work
+* [Fixed] Fixed an issue with Craft 2.4.x
+* [Improved] Updated the README.md
 
 ### 1.0.4 -- 2016.04.28
 

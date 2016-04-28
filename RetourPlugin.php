@@ -90,7 +90,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.4';
+        return '1.0.5';
     }
 
     /**
@@ -139,6 +139,7 @@ class RetourPlugin extends BasePlugin
     {
         return array(
             'retour/settings'                   => array('action' => 'retour/editSettings'),
+            'retour/clearStats'                 => array('action' => 'retour/clearStatistics'),
             'retour/new'                        => array('action' => 'retour/editRedirect'),
             'retour/edit/(?P<redirectId>\d+)'   => array('action' => 'retour/editRedirect'),
         );

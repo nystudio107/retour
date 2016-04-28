@@ -29,6 +29,12 @@
     {% set selectedSubnavItem = 'statistics' %}
 {% endif %}
 
+{% set extraPageHeaderHtml %}
+    <div class="buttons">
+        <a href="{{ url('retour/clearStats') }}" class="btn delete icon">{{ "Clear Stats"|t }}</a>
+    </div>
+{% endset %}
+
 {% set content %}
 
         {% if tabs is defined %}

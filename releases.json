@@ -1,5 +1,16 @@
 [
     {
+        "version": "1.0.5",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-04-28T12:00:00-05:00",
+        "notes": [
+            "[Added] Added a 'Clear Statistics' button to the Statistics page",
+            "[Fixed] Fixed a bug when using RegEx for static redirects that would cause them to not work",
+            "[Fixed] Fixed an issue with Craft 2.4.x",
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.4",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-04-28T11:00:00-05:00",
