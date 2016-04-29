@@ -103,8 +103,6 @@ class RetourFieldType extends BaseFieldType
      */
     public function getSettingsHtml()
     {
-        craft()->templates->includeCssResource('retour/css/fields/RetourFieldTypeSettings.css');
-        craft()->templates->includeJsResource('retour/js/fields/RetourFieldTypeSettings.js');
 
 /* -- Get the list of matches */
 
