@@ -37,7 +37,7 @@
 
 {% set content %}
 
-        {% if tabs is defined %}
+        {% if tabs is defined and tabs|length %}
             {% include "_includes/tabs" with tabs only %}
         {% endif %}
 
