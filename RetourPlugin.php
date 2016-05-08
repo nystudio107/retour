@@ -22,14 +22,14 @@ class RetourPlugin extends BasePlugin
     {
         craft()->onException = function(\CExceptionEvent $event)
         {
-            if (isset($event->exception->statusCode) && ($event->exception->statusCode == 404))
+            if (($event->exception instanceof \CHttpException) && ($event->exception->statusCode == 404))
             {
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview())
                 {
 
 /* -- See if we should redirect */
 
-                    $url = craft()->request->getUrl();
+                    $url = craft()->request->getRequestUri();
                     $redirect = craft()->retour->findRedirectMatch($url);
 
 /* -- Redirect if we found a match, otherwise let Craft handle it */
@@ -39,7 +39,7 @@ class RetourPlugin extends BasePlugin
                         craft()->retour->incrementStatistics($url, true);
                         $event->handled = true;
                         RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
-                        craft()->request->redirect($redirect['redirectDestUrl'], false, $redirect['redirectHttpCode']);
+                        craft()->request->redirect($redirect['redirectDestUrl'], true, $redirect['redirectHttpCode']);
                     }
                     else
                         craft()->retour->incrementStatistics($url, false);
@@ -90,7 +90,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.6';
+        return '1.0.7';
     }
 
     /**

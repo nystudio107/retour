@@ -367,7 +367,7 @@ class RetourService extends BaseApplicationComponent
     public function saveRedirectToCache($url, $redirect)
     {
         $cacheKey = "retour_cache_" . md5($url);
-        $error = craft()->cache->set($cacheKey, $redirect, null);
+        $error = craft()->cache->set($cacheKey, $redirect, 0);
         RetourPlugin::log("Cached Redirect saved: " . print_r($error, true), LogLevel::Info, false);
     } /* -- saveRedirectToCache */
 

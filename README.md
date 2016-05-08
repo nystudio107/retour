@@ -150,6 +150,13 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.7 -- 2016.05.07
+
+* [Improved] getRequestUri() is now explicitly used, and we immediately terminate the request upon redirect
+* [Improved] We now pass in 0 instead of null for the cache duration
+* [Improved] We now explicitly check for CHttpException
+* [Improved] Updated the README.md
+
 ### 1.0.6 -- 2016.04.29
 
 * [Fixed] Fixed a Javascript error with the FieldType Javascript
