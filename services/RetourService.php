@@ -92,6 +92,7 @@ class RetourService extends BaseApplicationComponent
  */
     public function getRecentStatistics($days = 1, $handled)
     {
+        $handled = (int) $handled;
 
         if (!$handled)
             $handled = 0;
@@ -251,9 +252,9 @@ class RetourService extends BaseApplicationComponent
 /**
  * @param  $url The 404 url
  */
-    public function incrementStatistics($url, $handled = false)
+    public function incrementStatistics($url, $handled = 0)
     {
-
+        $handled = (int) $handled;
 /* -- See if a stats record exists already */
 
         $result = craft()->db->createCommand()
