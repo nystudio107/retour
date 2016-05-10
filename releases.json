@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.8",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-05-10T12:00:00-05:00",
+        "notes": [
+            "[Fixed] Fixed an issue with Retour and MySQL running in strict mode (which is the default in 5.7+)",
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.7",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-05-06T12:00:00-05:00",
