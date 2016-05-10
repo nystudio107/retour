@@ -188,9 +188,9 @@ class RetourService extends BaseApplicationComponent
                         $error = $this->incrementRedirectHitCount($redirect);
                         RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
 
-/* -- If we're not associated with an EntryID, handle capture group replacement */
+/* -- If we're not associated with an ElementId, handle capture group replacement */
 
-                        if ($redirect['associatedEntryId'] == 0)
+                        if ($redirect['associatedElementId'] == 0)
                         {
                             $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
                         }
@@ -236,7 +236,7 @@ class RetourService extends BaseApplicationComponent
             $redirect['hitCount'] = $redirect['hitCount'] + 1;
             $redirect['hitLastTime'] = DateTimeHelper::currentTimeForDb();
 
-            if ($redirect['associatedEntryId'])
+            if ($redirect['associatedElementId'])
                 $table = 'retour_redirects';
             else
                 $table= 'retour_static_redirects';
@@ -292,15 +292,15 @@ class RetourService extends BaseApplicationComponent
     } /* -- incrementStatistics */
 
 /**
- * @param  int $entryId The associated entryID
+ * @param  int $ElementId The associated ElementId
  * @param  string $locale  The locale
  * @return Mixed The resulting Redirect
  */
-    public function getRedirectByEntryId($entryId, $locale)
+    public function getRedirectByElementId($ElementId, $locale)
     {
-        $result = Retour_RedirectsRecord::model()->findByAttributes(array('associatedEntryId' => $entryId, 'locale' => $locale));
+        $result = Retour_RedirectsRecord::model()->findByAttributes(array('associatedElementId' => $ElementId, 'locale' => $locale));
         return $result;
-    } /* -- getRedirectByEntryId */
+    } /* -- getRedirectByElementId */
 
 /**
  * @param  int $id The redirect's id
@@ -320,7 +320,7 @@ class RetourService extends BaseApplicationComponent
     {
         if (isset($redirectsModel))
         {
-            $result = $this->getRedirectByEntryId($redirectsModel->associatedEntryId, $redirectsModel->locale);
+            $result = $this->getRedirectByElementId($redirectsModel->associatedElementId, $redirectsModel->locale);
             if ($result)
             {
                 $result->setAttributes($redirectsModel->getAttributes(), false);
@@ -333,17 +333,17 @@ class RetourService extends BaseApplicationComponent
     } /* -- saveRedirect */
 
 /**
- * @param  int $entryId The associated entryID
+ * @param  int $ElementId The associated ElementId
  * @param  string $locale  The locale
  */
-    public function deleteRedirectByEntryId($entryId, $locale)
+    public function deleteRedirectByElementId($ElementId, $locale)
     {
-        $result = $this->getRedirectByEntryId($entryId, $locale);
+        $result = $this->getRedirectByElementId($ElementId, $locale);
         if ($result)
         {
             $result->delete();
         }
-    } /* -- deleteRedirectByEntryId */
+    } /* -- deleteRedirectByElementId */
 
 /**
  * @param  Retour_RedirectsModel The redirect to create

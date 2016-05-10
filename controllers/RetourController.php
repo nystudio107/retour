@@ -72,7 +72,7 @@ class RetourController extends BaseController
         $record->redirectDestUrl = craft()->request->getPost('redirectDestUrl', $record->redirectDestUrl);
         $record->redirectHttpCode = craft()->request->getPost('redirectHttpCode', $record->redirectHttpCode);
         $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
-        $record->associatedEntryId = 0;
+        $record->associatedElementId = 0;
 
         if ($record->save())
         {
