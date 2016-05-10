@@ -133,14 +133,13 @@ class RetourFieldType extends BaseFieldType
             $result = new Retour_RedirectsFieldModel($value);
         }
         $result->redirectDestUrl = $this->element->url;
-        $result->associatedEntryId = $this->element->id;
         $result->locale = $this->element->locale;
         if ($result->redirectMatchType == "exactmatch")
             $result->redirectSrcUrl = '/' . ltrim($result->redirectSrcUrl, '/');
 
 /* -- Restore the default fields we don't let the user edit */
 
-        $oldRecord = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
+        $oldRecord = craft()->retour->getRedirectByElementId($this->element->id, $this->element->locale);
 
         if ($oldRecord)
         {
@@ -158,7 +157,6 @@ class RetourFieldType extends BaseFieldType
         }
         $error = craft()->cache->flush();
         RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
-        craft()->retour->saveRedirect($result);
 
         return $result;
     } /* -- prepValueFromPost */
@@ -174,7 +172,7 @@ class RetourFieldType extends BaseFieldType
         if (!$value)
         {
             $value = new Retour_RedirectsFieldModel();
-            $result = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
+            $result = craft()->retour->getRedirectByElementId($this->element->id, $this->element->locale);
             if ($result)
                 $value->setAttributes($result->getAttributes(), false);
             else
@@ -197,10 +195,14 @@ class RetourFieldType extends BaseFieldType
      */
     public function onAfterElementSave()
     {
-        $fieldHandle = $this->model->handle;
-        $this->prepValueFromPost(null);
+        $element = $this->element;
+        $field = $this->model;
+        $result = $element->getContent()->getAttribute($field->handle);
 
-        parent::onAfterElementSave();
+        $result->associatedElementId = $element->id;
+        craft()->retour->saveRedirect($result);
+
+        // $this->prepValueFromPost(null);
     }
 
 }

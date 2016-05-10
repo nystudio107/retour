@@ -39,7 +39,7 @@ class Retour_RedirectsRecord extends BaseRecord
             'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
             'locale'                => array(AttributeType::Locale, 'required' => true)
             /* defined in defineRelations()
-            'associatedEntryId'     => array(AttributeType::Number, 'default' => 0),
+            'associatedElementId'   => array(AttributeType::Number, 'default' => 0),
             */
         );
     }
@@ -50,7 +50,7 @@ class Retour_RedirectsRecord extends BaseRecord
     public function defineIndexes()
     {
         return array(
-            array('columns' => array('locale', 'associatedEntryId')),
+            array('columns' => array('locale', 'associatedElementId')),
             array('columns' => array('redirectSrcUrlParsed'), 'unique' => true)
         );
     }
@@ -62,7 +62,7 @@ class Retour_RedirectsRecord extends BaseRecord
     {
         return array(
             'locale'            => array(static::BELONGS_TO, 'LocaleRecord', 'locale', 'required' => true, 'onDelete' => static::CASCADE, 'onUpdate' => static::CASCADE),
-            'associatedEntry'   => array(static::BELONGS_TO, 'EntryRecord', 'required' => true, 'onDelete' => static::CASCADE)
+            'associatedElement' => array(static::BELONGS_TO, 'ElementRecord', 'required' => true, 'onDelete' => static::CASCADE),
         );
     }
 }
