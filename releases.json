@@ -5,6 +5,7 @@
         "date": "2016-05-10T12:00:00-05:00",
         "notes": [
             "[Fixed] Fixed an issue with Retour and MySQL running in strict mode (which is the default in 5.7+)",
+            "[Fixed] Retour will no longer try to save a record with a null id (caused a CDbCommand exception)",
             "[Improved] Updated the README.md"
         ]
     },

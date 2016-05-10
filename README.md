@@ -153,6 +153,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.8 -- 2016.05.10
 
 * [Fixed] Fixed an issue with Retour and MySQL running in strict mode (which is the default in 5.7+)
+* [Fixed] Retour will no longer try to save a record with a null id (caused a CDbCommand exception)
 * [Improved] Updated the README.md
 
 ### 1.0.7 -- 2016.05.07
