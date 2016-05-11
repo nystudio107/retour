@@ -19,6 +19,7 @@ class RetourService extends BaseApplicationComponent
     protected $cachedEntryRedirects = null;
     protected $cachedStaticRedirects = null;
     protected $cachedStatistics = null;
+    protected $queuedRedirect = null;
 
 /**
  * @return Array All of the entry redirects
@@ -419,5 +420,38 @@ class RetourService extends BaseApplicationComponent
 
         return $result;
     } /* -- getMatchesList */
+
+/**
+ */
+    public function processQueueRedirectSave()
+    {
+        RetourPlugin::log("processQueueRedirectSave(): " . print_r($this->queuedRedirect, true), LogLevel::Info, false);
+        if ($this->queuedRedirect)
+        {
+            $error = craft()->cache->flush();
+            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+            craft()->retour->saveRedirect($this->queuedRedirect);
+            $this->queuedRedirect = null;
+        }
+    }
+
+/**
+ */
+    public function queueRedirectSetId($thisId)
+    {
+        RetourPlugin::log("queueRedirectSetId(): " . print_r($thisId, true), LogLevel::Info, false);
+        if ($this->queuedRedirect)
+        {
+            $this->queuedRedirect->associatedEntryId = $thisId;
+        }
+    }
+
+/**
+ */
+    public function queueRedirectSave($value)
+    {
+        RetourPlugin::log("queueRedirectSave(): " . print_r($value, true), LogLevel::Info, false);
+        $this->queuedRedirect = $value;
+    }
 
 }

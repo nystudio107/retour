@@ -15,6 +15,16 @@ namespace Craft;
 
 class RetourFieldType extends BaseFieldType
 {
+
+    /**
+     */
+    public function init()
+    {
+        craft()->on('entries.saveEntry', function(Event $event) {
+            craft()->retour->processQueueRedirectSave();
+        });
+    }
+
     /**
      * Returns the name of the fieldtype.
      *
@@ -157,14 +167,8 @@ class RetourFieldType extends BaseFieldType
             RetourPlugin::log("Template error in the `redirectSrcUrl` field.", LogLevel::Info, true);
         }
 
-/* -- Don't try to save the redirect record if there's no associated element id yet */
-
-        if ($this->element->id)
-        {
-            $error = craft()->cache->flush();
-            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
-            craft()->retour->saveRedirect($result);
-        }
+        if ($result)
+            craft()->retour->queueRedirectSave($result);
 
         return $result;
     } /* -- prepValueFromPost */
@@ -203,9 +207,7 @@ class RetourFieldType extends BaseFieldType
      */
     public function onAfterElementSave()
     {
-        $fieldHandle = $this->model->handle;
-        $this->prepValueFromPost(null);
-
+        craft()->retour->queueRedirectSetId($this->element->id);
         parent::onAfterElementSave();
     }
 
