@@ -347,7 +347,7 @@ class RetourService extends BaseApplicationComponent
         {
             $result->delete();
         }
-    } /* -- deleteRedirectByEntryId */
+    } /* -- deleteRedirectByElementId */
 
 /**
  * @param  Retour_RedirectsModel The redirect to create

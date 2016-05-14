@@ -140,7 +140,7 @@ class RetourFieldType extends BaseFieldType
 
 /* -- Restore the default fields we don't let the user edit */
 
-        $oldRecord = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
+        $oldRecord = craft()->retour->getRedirectByElementId($this->element->id, $this->element->locale);
 
         if ($oldRecord)
         {
@@ -171,7 +171,7 @@ class RetourFieldType extends BaseFieldType
         if (!$value)
         {
             $value = new Retour_RedirectsFieldModel();
-            $result = craft()->retour->getRedirectByEntryId($this->element->id, $this->element->locale);
+            $result = craft()->retour->getRedirectByElementId($this->element->id, $this->element->locale);
             if ($result)
                 $value->setAttributes($result->getAttributes(), false);
             else
