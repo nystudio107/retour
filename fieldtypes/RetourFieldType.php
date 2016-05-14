@@ -15,16 +15,6 @@ namespace Craft;
 
 class RetourFieldType extends BaseFieldType
 {
-
-    /**
-     */
-    public function init()
-    {
-        craft()->on('entries.saveEntry', function(Event $event) {
-            craft()->retour->processQueueRedirectSave();
-        });
-    }
-
     /**
      * Returns the name of the fieldtype.
      *
@@ -143,7 +133,7 @@ class RetourFieldType extends BaseFieldType
             $result = new Retour_RedirectsFieldModel($value);
         }
         $result->redirectDestUrl = $this->element->url;
-        $result->associatedEntryId = $this->element->id;
+        $result->associatedElementId = $this->element->id;
         $result->locale = $this->element->locale;
         if ($result->redirectMatchType == "exactmatch")
             $result->redirectSrcUrl = '/' . ltrim($result->redirectSrcUrl, '/');
@@ -166,9 +156,6 @@ class RetourFieldType extends BaseFieldType
         {
             RetourPlugin::log("Template error in the `redirectSrcUrl` field.", LogLevel::Info, true);
         }
-
-        if ($result)
-            craft()->retour->queueRedirectSave($result);
 
         return $result;
     } /* -- prepValueFromPost */
@@ -207,7 +194,16 @@ class RetourFieldType extends BaseFieldType
      */
     public function onAfterElementSave()
     {
-        craft()->retour->queueRedirectSetId($this->element->id);
+        $fieldHandle = $this->model->handle;
+        $value = $this->prepValueFromPost(null);
+
+        if ($value)
+        {
+            $error = craft()->cache->flush();
+            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+            craft()->retour->saveRedirect($value);
+        }
+
         parent::onAfterElementSave();
     }
 

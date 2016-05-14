@@ -31,7 +31,7 @@ class Retour_RedirectsModel extends BaseModel
             'hitCount'              => array(AttributeType::Number, 'default' => 0),
             'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
             'locale'                => array(AttributeType::String, 'default' => ''),
-            'associatedEntryId'     => array(AttributeType::Number, 'default' => 0)
+            'associatedElementId'   => array(AttributeType::Number, 'default' => 0)
         ));
     }
 

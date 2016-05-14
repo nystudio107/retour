@@ -19,7 +19,6 @@ class RetourService extends BaseApplicationComponent
     protected $cachedEntryRedirects = null;
     protected $cachedStaticRedirects = null;
     protected $cachedStatistics = null;
-    protected $queuedRedirect = null;
 
 /**
  * @return Array All of the entry redirects
@@ -193,7 +192,7 @@ class RetourService extends BaseApplicationComponent
 
 /* -- If we're not associated with an EntryID, handle capture group replacement */
 
-                        if ($redirect['associatedEntryId'] == 0)
+                        if ($redirect['associatedElementId'] == 0)
                         {
                             $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
                         }
@@ -239,7 +238,7 @@ class RetourService extends BaseApplicationComponent
             $redirect['hitCount'] = $redirect['hitCount'] + 1;
             $redirect['hitLastTime'] = DateTimeHelper::currentTimeForDb();
 
-            if ($redirect['associatedEntryId'])
+            if ($redirect['associatedElementId'])
                 $table = 'retour_redirects';
             else
                 $table= 'retour_static_redirects';
@@ -297,15 +296,15 @@ class RetourService extends BaseApplicationComponent
     } /* -- incrementStatistics */
 
 /**
- * @param  int $entryId The associated entryID
+ * @param  int $elementId The associated elementId
  * @param  string $locale  The locale
  * @return Mixed The resulting Redirect
  */
-    public function getRedirectByEntryId($entryId, $locale)
+    public function getRedirectByElementId($elementId, $locale)
     {
-        $result = Retour_RedirectsRecord::model()->findByAttributes(array('associatedEntryId' => $entryId, 'locale' => $locale));
+        $result = Retour_RedirectsRecord::model()->findByAttributes(array('associatedElementId' => $elementId, 'locale' => $locale));
         return $result;
-    } /* -- getRedirectByEntryId */
+    } /* -- getRedirectByElementId */
 
 /**
  * @param  int $id The redirect's id
@@ -325,7 +324,7 @@ class RetourService extends BaseApplicationComponent
     {
         if (isset($redirectsModel))
         {
-            $result = $this->getRedirectByEntryId($redirectsModel->associatedEntryId, $redirectsModel->locale);
+            $result = $this->getRedirectByElementId($redirectsModel->associatedElementId, $redirectsModel->locale);
             if ($result)
             {
                 $result->setAttributes($redirectsModel->getAttributes(), false);
@@ -338,12 +337,12 @@ class RetourService extends BaseApplicationComponent
     } /* -- saveRedirect */
 
 /**
- * @param  int $entryId The associated entryID
+ * @param  int $elementId The associated elementId
  * @param  string $locale  The locale
  */
-    public function deleteRedirectByEntryId($entryId, $locale)
+    public function deleteRedirectByElementId($elementId, $locale)
     {
-        $result = $this->getRedirectByEntryId($entryId, $locale);
+        $result = $this->getRedirectByElementId($elementId, $locale);
         if ($result)
         {
             $result->delete();
@@ -420,38 +419,5 @@ class RetourService extends BaseApplicationComponent
 
         return $result;
     } /* -- getMatchesList */
-
-/**
- */
-    public function processQueueRedirectSave()
-    {
-        RetourPlugin::log("processQueueRedirectSave(): " . print_r($this->queuedRedirect, true), LogLevel::Info, false);
-        if ($this->queuedRedirect)
-        {
-            $error = craft()->cache->flush();
-            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
-            craft()->retour->saveRedirect($this->queuedRedirect);
-            $this->queuedRedirect = null;
-        }
-    }
-
-/**
- */
-    public function queueRedirectSetId($thisId)
-    {
-        RetourPlugin::log("queueRedirectSetId(): " . print_r($thisId, true), LogLevel::Info, false);
-        if ($this->queuedRedirect)
-        {
-            $this->queuedRedirect->associatedEntryId = $thisId;
-        }
-    }
-
-/**
- */
-    public function queueRedirectSave($value)
-    {
-        RetourPlugin::log("queueRedirectSave(): " . print_r($value, true), LogLevel::Info, false);
-        $this->queuedRedirect = $value;
-    }
 
 }

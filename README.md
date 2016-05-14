@@ -116,7 +116,7 @@ In your main plugin class file, simply add this function:
      *            $args = array(
      *                'redirect' => array(
      *                    'id' => the id of the redirect record in the retour_redirects table
-     *                    'associatedEntryId' => the id of the entry if this is a Dynamic Entry Redirect; 0 otherwise
+     *                    'associatedElementId' => the id of the entry if this is a Dynamic Entry Redirect; 0 otherwise
      *                    'redirectSrcUrl' => the legacy URL as entered by the user
      *                    'redirectSrcUrlParsed' => the redirectSrcUrl after it has been parsed as a micro template for {variables}
      *                        via renderObjectTemplate().  This is typically what you would want to match against.
