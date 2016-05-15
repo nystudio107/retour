@@ -195,7 +195,11 @@ class RetourFieldType extends BaseFieldType
     public function onAfterElementSave()
     {
         $fieldHandle = $this->model->handle;
-        $value = $this->prepValueFromPost(null);
+        $attributes = $this->element->content->attributes;
+        $retourModel = null;
+        if (isset($attributes[$fieldHandle]))
+            $retourModel = $attributes[$fieldHandle];
+        $value = $this->prepValueFromPost($retourModel);
 
         if ($value)
         {
