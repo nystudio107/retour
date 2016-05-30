@@ -150,10 +150,12 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
-### 1.0.8 -- 2016.05.10
+### 1.0.8 -- 2016.05.30
 
+* [Improved] Revamped Retour to key off of the ElementID rather than the EntryID
 * [Fixed] Fixed an issue with Retour and MySQL running in strict mode (which is the default in 5.7+)
 * [Fixed] Retour will no longer try to save a record with a null id (caused a CDbCommand exception)
+* [Fixed] A '/' isn't prepended to empty src URLs anymore
 * [Improved] Updated the README.md
 
 ### 1.0.7 -- 2016.05.07
