@@ -135,7 +135,7 @@ class RetourFieldType extends BaseFieldType
         $result->redirectDestUrl = $this->element->url;
         $result->associatedElementId = $this->element->id;
         $result->locale = $this->element->locale;
-        if ($result->redirectMatchType == "exactmatch")
+        if ($result->redirectMatchType == "exactmatch" && $result->redirectSrcUrl !== '')
             $result->redirectSrcUrl = '/' . ltrim($result->redirectSrcUrl, '/');
 
 /* -- Restore the default fields we don't let the user edit */
