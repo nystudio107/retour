@@ -308,7 +308,6 @@ class RetourService extends BaseApplicationComponent
 
 /**
  * @param  int $id The redirect's id
- * @param  string $locale  The locale
  * @return Mixed The resulting Redirect
  */
     public function getRedirectById($id)
@@ -316,6 +315,17 @@ class RetourService extends BaseApplicationComponent
         $result = Retour_StaticRedirectsRecord::model()->findByAttributes(array('id' => $id));
         return $result;
     } /* -- getRedirectById */
+
+/**
+ * @param  string $srcUrl the redirect's redirectSrcUrl
+ * @param  string $locale  The locale
+ * @return Mixed The resulting Redirect
+ */
+    public function getRedirectByRedirectSrcUrl($srcUrl, $locale)
+    {
+        $result = Retour_RedirectsRecord::model()->findByAttributes(array('redirectSrcUrl' => $srcUrl, 'locale' => $locale));
+        return $result;
+    } /* -- getRedirectByredirectSrcUrl */
 
 /**
  * @param  Retour_RedirectsModel The redirect to save
@@ -356,11 +366,17 @@ class RetourService extends BaseApplicationComponent
     {
         if (isset($redirectsModel))
         {
-            $result = new Retour_RedirectsRecord;
-            $result->setAttributes($redirectsModel->getAttributes(), false);
-            $result->save();
-            $error = $result->getErrors();
-            RetourPlugin::log(print_r($error, true), LogLevel::Info, false);
+
+/* -- Don't try to create a redirect if one already exists for the redirectSrcUrl */
+
+            if (!$this->getRedirectByRedirectSrcUrl($redirectsModel->redirectSrcUrl, $redirectsModel->locale))
+            {
+                $result = new Retour_RedirectsRecord;
+                $result->setAttributes($redirectsModel->getAttributes(), false);
+                $result->save();
+                $error = $result->getErrors();
+                RetourPlugin::log(print_r($error, true), LogLevel::Info, false);
+            }
         }
     } /* -- createRedirect */
 

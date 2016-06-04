@@ -203,9 +203,17 @@ class RetourFieldType extends BaseFieldType
 
         if ($value)
         {
-            $error = craft()->cache->flush();
-            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
-            craft()->retour->saveRedirect($value);
+
+/* -- If the redirectSrcUrl is empty, don't save it, and delete any existing record */
+
+            if ($value->redirectSrcUrl == "")
+                craft()->retour->deleteRedirectByElementId($value->associatedElementId, $value->locale);
+            else
+            {
+                $error = craft()->cache->flush();
+                RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+                craft()->retour->saveRedirect($value);
+            }
         }
 
         parent::onAfterElementSave();

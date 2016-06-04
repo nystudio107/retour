@@ -150,6 +150,13 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.9 -- 2016.06.04
+
+* [Improved] Retour checks to ensure that no two redirects have the same redirectSrcUrl
+* [Improved] The Statistics page handles really long URLs better now
+* [Improved] If you save a redirect, either static or dynamic, with an empty Legacy URL Pattern, retour now deletes it
+* [Improved] Updated the README.md
+
 ### 1.0.8 -- 2016.05.30
 
 * [Improved] Revamped Retour to key off of the ElementID rather than the EntryID
