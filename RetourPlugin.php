@@ -15,11 +15,17 @@ namespace Craft;
 
 class RetourPlugin extends BasePlugin
 {
+
+    protected $originalUri = "";
+
     /**
      * @return mixed
      */
     public function init()
     {
+
+/* -- Listen for exceptions */
+
         craft()->onException = function(\CExceptionEvent $event)
         {
             if (($event->exception instanceof \CHttpException) && ($event->exception->statusCode == 404))
@@ -46,6 +52,53 @@ class RetourPlugin extends BasePlugin
                 }
             }
         };
+
+/* -- Listen for entries whose slug changes */
+
+        craft()->on('entries.onBeforeSaveEntry', function(Event $e)
+        {
+            $this->originalUri = "";
+            if(!$e->params['isNewEntry'])
+            {
+                $entry = $e->params['entry'];
+
+                $thisSection = $entry->getSection();
+                if ($thisSection->hasUrls)
+                {
+                    $this->originalUri = $entry->uri;
+                }
+            }
+        });
+
+        craft()->on('entries.onSaveEntry', function(Event $e)
+        {
+            if((!$e->params['isNewEntry']) && ($this->originalUri != ""))
+            {
+                $entry = $e->params['entry'];
+
+                if(strcmp($this->originalUri, $entry->uri) != 0)
+                {
+                    $record = new Retour_StaticRedirectsRecord;
+
+/* -- Set the record attributes for our new auto-redirect */
+
+                    $record->locale = craft()->language;
+                    $record->redirectMatchType = 'exactmatch';
+                    $record->redirectSrcUrl = $this->originalUri;
+                    if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl !=""))
+                        $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
+                    $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
+                    $record->redirectDestUrl = $entry->uri;
+                    if (($record->redirectMatchType == "exactmatch") && ($record->redirectDestUrl !=""))
+                        $record->redirectDestUrl = '/' . ltrim($record->redirectDestUrl, '/');
+                    $record->redirectHttpCode = '301';
+                    $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
+                    $record->associatedElementId = 0;
+
+                    $result = craft()->retour->saveStaticRedirect($record);
+                }
+            }
+        });
     }
 
     /**

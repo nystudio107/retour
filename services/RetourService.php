@@ -229,6 +229,49 @@ class RetourService extends BaseApplicationComponent
     } /* -- lookupRedirect */
 
 /**
+ * [saveStaticRedirect description]
+ * @param  Retour_StaticRedirectsRecord $record the static redirect record to save
+ * @return [type]         [description]
+ */
+    public function saveStaticRedirect($record)
+    {
+        $error = "";
+
+        if (isset($record))
+        {
+            if ($record->redirectSrcUrl == "")
+            {
+                $id = $record->id;
+                $affectedRows = craft()->db->createCommand()->delete('retour_static_redirects', array(
+                    'id' => $id
+                ));
+
+                RetourPlugin::log("Deleted Redirected: " . $id, LogLevel::Info, false);
+                $error = craft()->cache->flush();
+                RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+                $error = -1;
+            }
+            else
+            {
+                if ($record->save())
+                {
+                    $error = craft()->cache->flush();
+                    RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
+                    craft()->userSession->setNotice(Craft::t('Retour Redirect saved.'));
+                    $error = "";
+                }
+                else
+                {
+                    $error = $record->getErrors();
+                    RetourPlugin::log(print_r($error, true), LogLevel::Info, false);
+                    craft()->userSession->setError(Craft::t('Couldn’t save Retour Redirect.'));
+                }
+            }
+        }
+        return $error;
+    } /* -- saveStaticRedirect */
+
+/**
  * @param  Retour_RedirectsModel The redirect to create
  */
     public function incrementRedirectHitCount(&$redirect)

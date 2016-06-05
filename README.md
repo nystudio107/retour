@@ -22,6 +22,8 @@ Retour allows you to intelligently redirect legacy URLs, so that you don't lose 
 
 In addition to supporting traditional exact and RegEx matching of URL patterns, Retour also has a Retour Redirect FieldType that you can add to your entries. This allows you to have dynamic entry redirects that have access to the data in your entries when matching URL patterns.
 
+Retour will also automatically create a redirect for you if you change an entry's slug.
+
 Retour is written to be performant. There is no impact on your website's performance until a 404 exception happens; and even then the resulting matching happens with minimal impact.
 
 Don't just rebuild a website. Transition it with Retour.
@@ -81,6 +83,10 @@ Static Redirects are useful when the Legacy URL Patterns and the new URL pattern
 * **Destination URL** - Enter the destination URL that should be redirected to. This can either be a fully qualified URL or a relative URL. e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`
 * **Pattern Match Type** - What type of matching should be done with the Legacy URL Pattern. Details on RegEx matching can be found at [regexr.com](http://regexr.com) If a plugin provides a custom matching function, you can select it here.
 * **Redirect Type** - Select whether the redirect should be permanent or temporary.
+
+### Renamed Slug Redirects
+
+If you rename an entry's `slug` (and the Section the entry is in has URLs), Retour will automatically create a static redirect for you to keep traffic going to the right place.  It will appear listed under the "Static Redirects" section like any other static redirect.
 
 ## Retour Statistics
 
@@ -152,6 +158,7 @@ Some things to do, and ideas for potential features:
 
 ### 1.0.9 -- 2016.06.04
 
+* [Added] Retour will now automatically create a static redirect for you if you rename an entry's slug
 * [Improved] Retour checks to ensure that no two redirects have the same redirectSrcUrl
 * [Improved] The Statistics page handles really long URLs better now
 * [Improved] If you save a redirect, either static or dynamic, with an empty Legacy URL Pattern, retour now deletes it

@@ -4,6 +4,7 @@
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-06-04T12:00:00-05:00",
         "notes": [
+            "[Added] Retour will now automatically create a static redirect for you if you rename an entry's slug",
             "[Improved] Retour checks to ensure that no two redirects have the same redirectSrcUrl",
             "[Improved] The Statistics page handles really long URLs better now",
             "[Improved] If you save a redirect, either static or dynamic, with an empty Legacy URL Pattern, retour now deletes it",

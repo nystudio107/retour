@@ -74,39 +74,19 @@ class RetourController extends BaseController
         $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
         $record->associatedElementId = 0;
 
-        if ($record->redirectSrcUrl == "")
+        $result = craft()->retour->saveStaticRedirect($record);
+        if ($result === "" || $result === -1)
         {
-            $id = $record->id;
-            $affectedRows = craft()->db->createCommand()->delete('retour_static_redirects', array(
-                'id' => $id
-            ));
-
-            RetourPlugin::log("Deleted Redirected: " . $id, LogLevel::Info, false);
-            $error = craft()->cache->flush();
-            RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
             $this->redirectToPostedUrl($record);
         }
         else
         {
-            if ($record->save())
-            {
-                $error = craft()->cache->flush();
-                RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
-                craft()->userSession->setNotice(Craft::t('Retour Redirect saved.'));
-                $this->redirectToPostedUrl($record);
-            }
-            else
-            {
-                $error = $record->getErrors();
-                RetourPlugin::log(print_r($error, true), LogLevel::Info, false);
-                craft()->userSession->setError(Craft::t('Couldn’t save Retour Redirect.'));
 
-    /* -- Send the Meta back to the template */
+/* -- Send the record back to the template */
 
-                craft()->urlManager->setRouteVariables(array(
-                    'values' => $record
-                ));
-            }
+            craft()->urlManager->setRouteVariables(array(
+                'values' => $record
+            ));
         }
     } /* -- actionSaveRedirect */
 
