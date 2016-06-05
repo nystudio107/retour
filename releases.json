@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.10",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-06-06T12:00:00-05:00",
+        "notes": [
+            "[Added] Retour will attempt to prevent redirect loops when saving a new redirect by deleting any existing redirects that have the destUrl as their srcUrl",
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.9",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-06-04T12:00:00-05:00",

@@ -259,6 +259,17 @@ class RetourService extends BaseApplicationComponent
                     RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
                     craft()->userSession->setNotice(Craft::t('Retour Redirect saved.'));
                     $error = "";
+
+/* -- To prevent redirect loops, see if any static redirects have our destUrl as their srcUrl */
+
+                    $redir = $this->getRedirectByRedirectSrcUrl($record->redirectDestUrl, $record->locale);
+                    if ($redir)
+                        {
+                            $id = $redir->id;
+                            $affectedRows = craft()->db->createCommand()->delete('retour_static_redirects', array(
+                                'id' => $id
+                            ));
+                        }
                 }
                 else
                 {
