@@ -2,9 +2,10 @@
     {
         "version": "1.0.10",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-06-06T12:00:00-05:00",
+        "date": "2016-06-15T12:00:00-05:00",
         "notes": [
             "[Added] Retour will attempt to prevent redirect loops when saving a new redirect by deleting any existing redirects that have the destUrl as their srcUrl",
+            "[Added] Added a 410 - Gone redirect http code for permanently removed resources",
             "[Improved] Updated the README.md"
         ]
     },

@@ -156,9 +156,10 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
-### 1.0.10 -- 2016.06.06
+### 1.0.10 -- 2016.06.15
 
 * [Added] Retour will attempt to prevent redirect loops when saving a new redirect by deleting any existing redirects that have the destUrl as their srcUrl
+* [Added] Added a 410 - Gone redirect http code for permanently removed resources
 * [Improved] Updated the README.md
 
 ### 1.0.9 -- 2016.06.04
