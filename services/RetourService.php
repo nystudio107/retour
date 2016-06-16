@@ -79,6 +79,7 @@ class RetourService extends BaseApplicationComponent
             ->select('*')
             ->from('retour_stats')
             ->order('hitCount DESC')
+            ->limit(1000)
             ->queryAll();
 
         $this->cachedStatistics = $result;

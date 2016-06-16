@@ -159,6 +159,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.11 -- 2016.06.16
 
 * [Fixed] Fixed an issue with URLs that have umlauts in them
+* [Improved] Statistics are now limited to the top 1,000 hits
 * [Improved] Updated the README.md
 
 ### 1.0.10 -- 2016.06.15
