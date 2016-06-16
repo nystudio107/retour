@@ -35,7 +35,7 @@ class RetourPlugin extends BasePlugin
 
 /* -- See if we should redirect */
 
-                    $url = craft()->request->getRequestUri();
+                    $url = urldecode(craft()->request->getRequestUri());
                     $redirect = craft()->retour->findRedirectMatch($url);
 
 /* -- Redirect if we found a match, otherwise let Craft handle it */
