@@ -2,7 +2,7 @@
     {
         "version": "1.0.11",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-06-16T12:00:00-05:00",
+        "date": "2016-06-21T12:00:00-05:00",
         "notes": [
             "[Fixed] Fixed an issue with URLs that have umlauts in them",
             "[Fixed] Fixed an issue with URLs that are longer than 255 characters for the redirect statistics",

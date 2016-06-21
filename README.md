@@ -156,7 +156,7 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
-### 1.0.11 -- 2016.06.16
+### 1.0.11 -- 2016.06.21
 
 * [Fixed] Fixed an issue with URLs that have umlauts in them
 * [Fixed] Fixed an issue with URLs that are longer than 255 characters for the redirect statistics
