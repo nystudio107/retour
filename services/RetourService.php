@@ -312,6 +312,7 @@ class RetourService extends BaseApplicationComponent
     {
 
         $handled = (int) $handled;
+        $url = substr($url, 0, 255);
 
 /* -- See if a stats record exists already */
 

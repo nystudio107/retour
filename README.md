@@ -159,6 +159,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.11 -- 2016.06.16
 
 * [Fixed] Fixed an issue with URLs that have umlauts in them
+* [Fixed] Fixed an issue with URLs are longer than 255 characters for the redirect statistics
 * [Improved] Statistics are now limited to the top 1,000 hits
 * [Improved] Updated the README.md
 

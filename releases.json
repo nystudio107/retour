@@ -5,6 +5,7 @@
         "date": "2016-06-16T12:00:00-05:00",
         "notes": [
             "[Fixed] Fixed an issue with URLs that have umlauts in them",
+            "[Fixed] Fixed an issue with URLs are longer than 255 characters for the redirect statistics",
             "[Improved] Statistics are now limited to the top 1,000 hits",
             "[Improved] Updated the README.md"
         ]
