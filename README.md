@@ -158,7 +158,7 @@ Some things to do, and ideas for potential features:
 
 ### 1.0.12 -- 2016.07.02
 
-* [Improved] The automatic rediret creation for renamed slugs is now on a per-locale basis
+* [Improved] The automatic redirect creation for renamed slugs is now on a per-locale basis
 * [Improved] Updated the README.md
 
 ### 1.0.11 -- 2016.06.21
