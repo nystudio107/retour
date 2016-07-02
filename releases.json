@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.12",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-07-02T12:00:00-05:00",
+        "notes": [
+            "[Improved] The automatic rediret creation for renamed slugs is now on a per-locale basis",
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.11",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-06-21T12:00:00-05:00",

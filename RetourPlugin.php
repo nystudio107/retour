@@ -17,6 +17,7 @@ class RetourPlugin extends BasePlugin
 {
 
     protected $originalUri = "";
+    protected $originalLocale = "";
 
     /**
      * @return mixed
@@ -66,6 +67,7 @@ class RetourPlugin extends BasePlugin
                 if ($thisSection->hasUrls)
                 {
                     $this->originalUri = $entry->uri;
+                    $this->originalLocale = $entry->locale;
                 }
             }
         });
@@ -76,7 +78,7 @@ class RetourPlugin extends BasePlugin
             {
                 $entry = $e->params['entry'];
 
-                if(strcmp($this->originalUri, $entry->uri) != 0)
+                if ((strcmp($this->originalUri, $entry->uri) != 0) && ($this->originalLocale == $entry->locale))
                 {
                     $record = new Retour_StaticRedirectsRecord;
 
@@ -143,7 +145,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.11';
+        return '1.0.12';
     }
 
     /**
