@@ -240,7 +240,7 @@ class RetourService extends BaseApplicationComponent
 
         if (isset($record))
         {
-            if ($record->redirectSrcUrl == "")
+            if (($record->redirectSrcUrl == "") || ($record->redirectDestUrl == ""))
             {
                 $id = $record->id;
                 $affectedRows = craft()->db->createCommand()->delete('retour_static_redirects', array(

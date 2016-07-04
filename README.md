@@ -157,6 +157,11 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.13 -- 2016.07.10
+
+* [Improved] Retour will no longer let you save a static redirect with an empty destinationURL
+* [Improved] Updated the README.md
+
 ### 1.0.12 -- 2016.07.04
 
 * [Added] If you hover over a 404 File Not Found URL on the Statistics page, you'll now see the last referrer for the 404 URL
