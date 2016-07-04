@@ -46,19 +46,21 @@
             <div class="tableview">
                 <table id="statistics" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
                     <thead>
-                        <th style="width: 70%" data-sort="string-ins" scope="col">{{ "404 File Not Found URL"|t }}</th>
+                        <th style="width: 65%" data-sort="string-ins" scope="col">{{ "404 File Not Found URL"|t }}</th>
                         <th style="width: 5%" data-sort="int" scope="col">{{ "Hits"|t }}<span class="arrow">&darr;</span></th>
                         <th style="width: 20%" data-sort="date" scope="col">{{ "Last Hit"|t }}</th>
                         <th style="width: 5%" data-sort="string-ins" scope="col">{{ "Handled"|t }}</th>
+                        <th class="thin right" style="width: 5%"></th>
                     </thead>
                     <tbody>
 
                         {% for stat in stats %}
                             <tr data-id="{{ stat.id }}" data-name="{{ stat.redirectSrcUrl }}">
-                                <td style="width: 70%" ><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
+                                <td style="width: 68%" ><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
                                 <td style="width: 5%">{{ stat.hitCount }}</td>
                                 <td style="width: 20%">{{ stat.hitLastTime |datetime }}</td>
-                                <td style="width: 5%">{% if stat.handledByRetour %}<span style="color: green;">&#x2714;</span>{% else %}<span style="color: red;">&#x2716;</span>{% endif %}</td>
+                                <td style="width: 6%">{% if stat.handledByRetour %}<span style="color: green;">&#x2714;</span>{% else %}<span style="color: red;">&#x2716;</span>{% endif %}</td>
+                                <td style="width: 5%"><a href="{{ actionUrl('retour/editRedirect?redirectSrcUrl=' ~ stat.redirectSrcUrl) }}" class="add icon" title="{{ 'Add'|t }}"></a></td>
                             </tr>
                         {% endfor %}
 

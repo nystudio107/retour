@@ -25,6 +25,7 @@ class RetourController extends BaseController
 /* -- Give us something to edit */
 
         $redirectModel = new Retour_RedirectsModel();
+        $redirectModel->redirectSrcUrl = craft()->request->getParam('redirectSrcUrl');
         $redirectId = 0;
         if (!empty($variables['redirectId']))
         {
