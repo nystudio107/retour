@@ -206,6 +206,8 @@ class RetourFieldType extends BaseFieldType
         if ($value)
         {
 
+            RetourPlugin::log("Resaving Retour field data", LogLevel::Info, false);
+
 /* -- If the redirectSrcUrl is empty, don't save it, and delete any existing record */
 
             if ($value->redirectSrcUrl == "")

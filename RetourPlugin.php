@@ -53,6 +53,34 @@ class RetourPlugin extends BasePlugin
             }
         };
 
+/* -- Listen for structure changes so we can regenerated our FieldType's URLs */
+
+        craft()->on('structures.onMoveElement', function(Event $e)
+        {
+            $element = $e->params['element'];
+            $elemType = $element->getElementType();
+            if ($element)
+            {
+                if ($elemType == ElementType::Entry)
+                {
+
+/* -- Check the field layout, so that we only do this for FieldLayouts that have our Retour fieldtype in them */
+
+                    $fieldLayouts = $element->fieldLayout->getFields();
+                    foreach ($fieldLayouts as $fieldLayout)
+                    {
+                        $field = craft()->fields->getFieldById($fieldLayout->fieldId);
+                        if ($field->type == "Retour")
+                        {
+                            craft()->elements->saveElement($element);
+                            RetourPlugin::log("Resaved moved structure element", LogLevel::Info, false);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
 /* -- Listen for entries whose slug changes */
 
         craft()->on('entries.onBeforeSaveEntry', function(Event $e)
