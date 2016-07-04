@@ -46,7 +46,7 @@
         {% set redirects = craft.retour.getStaticRedirects() %}
         {% if redirects|length %}
             <div class="tableview">
-                <table id="static-redirects" class="data fullwidth">
+                <table id="static-redirects" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
                     <thead>
                         <th data-sort="string-ins" scope="col">{{ "Legacy URL Pattern"|t }}</th>
                         <th data-sort="string-ins" scope="col">{{ "Redirect To"|t }}</th>
@@ -86,7 +86,7 @@
         {% set redirects = craft.retour.getEntryRedirects() %}
         {% if redirects|length %}
             <div class="tableview">
-                <table id="entry-redirects" class="data fullwidth">
+                <table id="entry-redirects" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
                     <thead>
                         <th data-sort="string-ins" scope="col">{{ "Legacy URL Pattern"|t }}</th>
                         <th data-sort="string-ins" scope="col">{{ "Redirect To"|t }}</th>

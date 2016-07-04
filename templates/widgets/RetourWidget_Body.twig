@@ -19,7 +19,7 @@
     <p>404 Redirects in the last {{ settings.numberOfDays }} {% if settings.numberOfDays == 1 %}day{% else %}days{% endif %}</p>
 
     <div class="tableview">
-        <table id="handled-statistics" class="fullwidth retour">
+        <table id="handled-statistics" class="fullwidth retour" style="table-layout: fixed; width: 100%; overflow: hidden;">
             <thead>
                 <th class="centered retour-handled" scope="col">&#x2714; Handled:</th>
                 <th class="centered retour-not-handled" scope="col">&#x2716; Not Handled:</th>

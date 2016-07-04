@@ -44,7 +44,7 @@
         {% set stats = craft.retour.getStatistics() %}
         {% if stats|length %}
             <div class="tableview">
-                <table id="statistics" class="data fullwidth" style="table-layout: fixed; width: 100%">
+                <table id="statistics" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
                     <thead>
                         <th style="width: 70%" data-sort="string-ins" scope="col">{{ "404 File Not Found URL"|t }}</th>
                         <th style="width: 5%" data-sort="int" scope="col">{{ "Hits"|t }}<span class="arrow">&darr;</span></th>

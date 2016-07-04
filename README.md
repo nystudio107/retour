@@ -160,6 +160,7 @@ Some things to do, and ideas for potential features:
 
 * [Improved] We now store the destination for redirects in the FieldType as a URI rather than a URL, so that it's more portable across environments
 * [Added] Structure entries that have Retour FieldTypes in them now have the destinationURL updated when the structure elements are moved
+* [Improved] The widget now handles very long URLs more gracefully
 * [Improved] Updated the README.md
 
 ### 1.0.11 -- 2016.06.21
