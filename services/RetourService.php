@@ -326,6 +326,7 @@ class RetourService extends BaseApplicationComponent
         {
             $stats = new Retour_StatsRecord;
             $stats->redirectSrcUrl = $url;
+            $stats->referrerUrl = craft()->request->getUrlReferrer();
             $stats->hitCount = 1;
             $stats->hitLastTime = DateTimeHelper::currentUTCDateTime();
             $stats->handledByRetour = $handled;
@@ -340,12 +341,14 @@ class RetourService extends BaseApplicationComponent
             {
                 $stat['hitCount'] = $stat['hitCount'] + 1;
                 $stat['hitLastTime'] = DateTimeHelper::currentTimeForDb();
+                $stat['referrerUrl'] = craft()->request->getUrlReferrer();
 
                 $result = craft()->db->createCommand()
                     ->update('retour_stats', array(
                         'hitCount' =>  $stat['hitCount'],
                         'hitLastTime' =>  $stat['hitLastTime'],
                         'handledByRetour' =>  $handled,
+                        'referrerUrl' =>  $stat['referrerUrl'],
                         ), 'id=:id', array(':id' => $stat['id']));
             }
         }
