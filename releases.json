@@ -2,9 +2,9 @@
     {
         "version": "1.0.12",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-07-02T12:00:00-05:00",
+        "date": "2016-07-04T12:00:00-05:00",
         "notes": [
-            "[Improved] The automatic redirect creation for renamed slugs is now on a per-locale basis",
+            "[Improved] We now store the destination for redirects in the FieldType as a URI rather than a URL, so that it's more portable across environments",
             "[Improved] Updated the README.md"
         ]
     },

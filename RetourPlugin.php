@@ -17,7 +17,6 @@ class RetourPlugin extends BasePlugin
 {
 
     protected $originalUri = "";
-    protected $originalLocale = "";
 
     /**
      * @return mixed
@@ -67,7 +66,6 @@ class RetourPlugin extends BasePlugin
                 if ($thisSection->hasUrls)
                 {
                     $this->originalUri = $entry->uri;
-                    $this->originalLocale = $entry->locale;
                 }
             }
         });
@@ -77,10 +75,10 @@ class RetourPlugin extends BasePlugin
             if((!$e->params['isNewEntry']) && ($this->originalUri != ""))
             {
                 $entry = $e->params['entry'];
-
-                if ((strcmp($this->originalUri, $entry->uri) != 0) && ($this->originalLocale == $entry->locale))
+                if (strcmp($this->originalUri, $entry->uri) != 0)
                 {
                     $record = new Retour_StaticRedirectsRecord;
+
 
 /* -- Set the record attributes for our new auto-redirect */
 
