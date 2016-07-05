@@ -484,7 +484,7 @@ public function getLocalizedUris($element=null)
             foreach ($_rows as $row)
             {
               $path = ($row['uri'] == '__home__') ? '' : $row['uri'];
-              $unsortedLocalizedUris[$row['locale']] = "/" . $path;
+              $unsortedLocalizedUris[$row['locale']] = UrlHelper::getSiteUrl($path, null, null, $row['locale'] )
             }
 
             $locales = craft()->i18n->getSiteLocales();
@@ -492,7 +492,11 @@ public function getLocalizedUris($element=null)
             {
                 $localeId = $locale->getId();
                 if (isset($unsortedLocalizedUris[$localeId]))
-                    array_push($localizedUris, $unsortedLocalizedUris[$localeId]);
+                {
+                    $urlParts = parse_url($unsortedLocalizedUris[$localeId]);
+
+                    array_push($localizedUris, "/" . urlParts['path']);
+                }
             }
         }
         else
