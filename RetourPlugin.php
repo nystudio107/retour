@@ -116,7 +116,7 @@ class RetourPlugin extends BasePlugin
 
     /* -- Set the record attributes for our new auto-redirect */
 
-                        $record->locale = craft()->language;
+                        $record->locale = $entry->locale;
                         $record->redirectMatchType = 'exactmatch';
                         $record->redirectSrcUrl = $oldUri;
                         if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl !=""))
