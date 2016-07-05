@@ -109,7 +109,7 @@ class RetourPlugin extends BasePlugin
                 {
                     $oldUri = current($this->originalUris);
                     next($this->originalUris);
-                    if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != ""))
+                    if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != "") && ($newUri != ""))
                     {
                         $record = new Retour_StaticRedirectsRecord;
 
