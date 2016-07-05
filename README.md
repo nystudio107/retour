@@ -159,6 +159,7 @@ Some things to do, and ideas for potential features:
 
 ### 1.0.13 -- 2016.07.10
 
+* [Added] Adds support for locales in the automatic redirect that is created when a slug is changed for an entry
 * [Improved] Retour will no longer let you save a static redirect with an empty destinationURL
 * [Improved] Updated the README.md
 

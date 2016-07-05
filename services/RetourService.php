@@ -463,6 +463,47 @@ class RetourService extends BaseApplicationComponent
     } /* -- getRedirectFromCache */
 
 /**
+ * Returns a list of localized URIs for the passed in element
+ * @return array an array of paths
+ */
+public function getLocalizedUris($element=null)
+{
+    $localizedUris = array();
+    if ($element)
+    {
+        if (craft()->isLocalized())
+        {
+            $unsortedLocalizedUris = array();
+            $_rows = craft()->db->createCommand()
+            ->select('locale')
+            ->addSelect('uri')
+            ->from('elements_i18n')
+            ->where(array('elementId' => $element->id, 'enabled' => 1))
+            ->queryAll();
+
+            foreach ($_rows as $row)
+            {
+              $path = ($row['uri'] == '__home__') ? '' : $row['uri'];
+              $unsortedLocalizedUris[$row['locale']] = "/" . $path;
+            }
+
+            $locales = craft()->i18n->getSiteLocales();
+            foreach ($locales as $locale)
+            {
+                $localeId = $locale->getId();
+                if (isset($unsortedLocalizedUris[$localeId]))
+                    array_push($localizedUris, $unsortedLocalizedUris[$localeId]);
+            }
+        }
+        else
+        {
+            array_push($localizedUris, "/" . $element->uri);
+        }
+    }
+    return $localizedUris;
+} /* --  getLocalizedUris */
+
+/**
  * @return  string The name of the plugin
  */
     function getPluginName()

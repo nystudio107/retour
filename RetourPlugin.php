@@ -16,7 +16,7 @@ namespace Craft;
 class RetourPlugin extends BasePlugin
 {
 
-    protected $originalUri = "";
+    protected $originalUris = array();
 
     /**
      * @return mixed
@@ -85,7 +85,7 @@ class RetourPlugin extends BasePlugin
 
         craft()->on('entries.onBeforeSaveEntry', function(Event $e)
         {
-            $this->originalUri = "";
+            $this->originalUris = array();
             if(!$e->params['isNewEntry'])
             {
                 $entry = $e->params['entry'];
@@ -93,37 +93,44 @@ class RetourPlugin extends BasePlugin
                 $thisSection = $entry->getSection();
                 if ($thisSection->hasUrls)
                 {
-                    $this->originalUri = $entry->uri;
+                    $this->originalUris = craft()->retour->getLocalizedUris($entry);
                 }
             }
         });
 
         craft()->on('entries.onSaveEntry', function(Event $e)
         {
-            if((!$e->params['isNewEntry']) && ($this->originalUri != ""))
+            if (!$e->params['isNewEntry'])
             {
                 $entry = $e->params['entry'];
-                if (strcmp($this->originalUri, $entry->uri) != 0)
+                $newUris = craft()->retour->getLocalizedUris($entry);
+
+                foreach ($newUris as $newUri)
                 {
-                    $record = new Retour_StaticRedirectsRecord;
+                    $oldUri = current($this->originalUris);
+                    next($this->originalUris);
+                    if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != ""))
+                    {
+                        $record = new Retour_StaticRedirectsRecord;
 
 
-/* -- Set the record attributes for our new auto-redirect */
+    /* -- Set the record attributes for our new auto-redirect */
 
-                    $record->locale = craft()->language;
-                    $record->redirectMatchType = 'exactmatch';
-                    $record->redirectSrcUrl = $this->originalUri;
-                    if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl !=""))
-                        $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
-                    $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
-                    $record->redirectDestUrl = $entry->uri;
-                    if (($record->redirectMatchType == "exactmatch") && ($record->redirectDestUrl !=""))
-                        $record->redirectDestUrl = '/' . ltrim($record->redirectDestUrl, '/');
-                    $record->redirectHttpCode = '301';
-                    $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
-                    $record->associatedElementId = 0;
+                        $record->locale = craft()->language;
+                        $record->redirectMatchType = 'exactmatch';
+                        $record->redirectSrcUrl = $oldUri;
+                        if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl !=""))
+                            $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
+                        $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
+                        $record->redirectDestUrl = $newUri;
+                        if (($record->redirectMatchType == "exactmatch") && ($record->redirectDestUrl !=""))
+                            $record->redirectDestUrl = '/' . ltrim($record->redirectDestUrl, '/');
+                        $record->redirectHttpCode = '301';
+                        $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
+                        $record->associatedElementId = 0;
 
-                    $result = craft()->retour->saveStaticRedirect($record);
+                        $result = craft()->retour->saveStaticRedirect($record);
+                    }
                 }
             }
         });
