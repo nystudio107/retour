@@ -2,10 +2,12 @@
     {
         "version": "1.0.13",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-07-10T12:00:00-05:00",
+        "date": "2016-07-06T12:00:00-05:00",
         "notes": [
             "[Added] Adds support for locales in the automatic redirect that is created when a slug is changed for an entry",
             "[Improved] Retour will no longer let you save a static redirect with an empty destinationURL",
+            "[Fixed] Fixed a typo in the Retour_StatsModel",
+            "[Improved] Added a rant about `.htaccess` to the docs",
             "[Improved] Updated the README.md"
         ]
     },
