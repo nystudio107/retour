@@ -32,7 +32,7 @@ class Retour_StatsModel extends BaseModel
         return array_merge(parent::defineAttributes(), array(
             'redirectSrcUrl'        => array(AttributeType::String, 'default' => ''),
             'referrerUrl'           => array(AttributeType::String, 'default' => ''),
-            'hitCount'              => array(AttributeType::Number, 'default' => 0)
+            'hitCount'              => array(AttributeType::Number, 'default' => 0),
             'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
             'handledByRetour'       => array(AttributeType::Bool, 'default' => false ),
         ));
