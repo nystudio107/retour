@@ -48,18 +48,34 @@ People using the Apache webserver are familiar with the `.htaccess` file, and ma
 
     There are two main reasons to avoid the use of .htaccess files.
 
-    The first of these is performance. When AllowOverride is set to allow the use of .htaccess files, httpd will look in every directory for .htaccess files. Thus, permitting .htaccess files causes a performance hit, whether or not you actually even use them! Also, the .htaccess file is loaded every time a document is requested.
+    The first of these is performance. When AllowOverride is set to allow the
+    use of .htaccess files, httpd will look in every directory for .htaccess
+    files. Thus, permitting .htaccess files causes a performance hit, whether or
+    not you actually even use them! Also, the .htaccess file is loaded every
+    time a document is requested.
 
-    Further note that httpd must look for .htaccess files in all higher-level directories, in order to have a full complement of directives that it must apply. (See section on how directives are applied.) Thus, if a file is requested out of a directory /www/htdocs/example, httpd must look for the following files:
+    Further note that httpd must look for .htaccess files in all higher-level
+    directories, in order to have a full complement of directives that it must
+    apply. (See section on how directives are applied.) Thus, if a file is
+    requested out of a directory /www/htdocs/example, httpd must look for the
+    following files:
 
     /.htaccess
     /www/.htaccess
     /www/htdocs/.htaccess
     /www/htdocs/example/.htaccess
 
-    And so, for each file access out of that directory, there are 4 additional file-system accesses, even if none of those files are present. (Note that this would only be the case if .htaccess files were enabled for /, which is not usually the case.)
+    And so, for each file access out of that directory, there are 4 additional
+    file-system accesses, even if none of those files are present. (Note that
+    this would only be the case if .htaccess files were enabled for /, which is
+    not usually the case.)
 
-    In the case of RewriteRule directives, in .htaccess context these regular expressions must be re-compiled with every request to the directory, whereas in main server configuration context they are compiled once and cached. Additionally, the rules themselves are more complicated, as one must work around the restrictions that come with per-directory context and mod_rewrite. Consult the Rewrite Guide for more detail on this subject.
+    In the case of RewriteRule directives, in .htaccess context these regular
+    expressions must be re-compiled with every request to the directory, whereas
+    in main server configuration context they are compiled once and cached.
+    Additionally, the rules themselves are more complicated, as one must work
+    around the restrictions that come with per-directory context and
+    mod_rewrite. Consult the Rewrite Guide for more detail on this subject.
 
 As you can see, avoiding the use of `.htaccess` completely is best if at all possible, and especially avoid it for RewriteRule directives, such as 404 rewrites.
 
