@@ -172,7 +172,6 @@ Your plugin will then appear in the list of Pattern Match Types that can be chos
 
 Some things to do, and ideas for potential features:
 
-* Add the ability to create redirects for all locales for multi-locale sites where the entries don't have localized URLs
 * Add the ability to mass-import redirects from a CSV file
 
 ## Retour Changelog
