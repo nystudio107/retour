@@ -192,6 +192,11 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.14 -- 2016.07.09
+
+* [Added] The Statistics and Redirects tables are now dynamically searchable and sortable
+* [Improved] Updated the README.md
+
 ### 1.0.13 -- 2016.07.06
 
 * [Added] Adds support for locales in the automatic redirect that is created when a slug is changed for an entry

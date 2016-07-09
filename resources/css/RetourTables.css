@@ -1,0 +1,264 @@
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-decoration,
+input[type=search]::-webkit-search-results-button,
+input[type=search]::-webkit-search-results-decoration {
+-webkit-appearance:none;
+}
+
+div.top {
+    padding-bottom: 10px;
+}
+
+div.bottom {
+    padding-top: 10px;
+}
+
+/* -- The cancel button that appears after the datatable_filter div */
+
+.filter-cancel-button {
+    float: right;
+    padding-top: 12px;
+    padding-right: 10px;
+    cursor: pointer;
+    z-index: 10;
+    clear: both;
+    position: relative;
+    height: 16px;
+    width: 16px;
+}
+
+.dataTables_wrapper {
+    padding: 0;
+    width: 100%;
+}
+
+/* -- Override the default datatable styles */
+
+
+table.dataTable td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table.dataTable th {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    outline: 0;
+}
+
+table.dataTable tr.odd {
+}
+
+table.dataTable tr.even {
+}
+
+table.dataTable tr.odd td.sorting_1 {
+}
+
+table.dataTable tr.odd td.sorting_2 {
+}
+
+table.dataTable tr.odd td.sorting_3 {
+}
+
+table.dataTable tr.even td.sorting_1 {
+}
+
+table.dataTable tr.even td.sorting_2 {
+}
+
+table.dataTable tr.even td.sorting_3 {
+}
+
+table.dataTable thead th {
+}
+
+.dataTables_wrapper {
+  position: relative;
+  clear: both;
+  *zoom: 1;
+  zoom: 1;
+}
+
+
+table.dataTable thead th.sorting > span.sort-label {
+    padding-right: 15px;
+    margin-right: -15px;
+    background: url('images/sort_both.png') no-repeat center right;
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
+table.dataTable thead th.sorting {
+}
+
+table.dataTable thead th.sorting_desc {
+}
+
+table.dataTable thead th.sorting_asc {
+}
+
+table.dataTable thead th.sorting_desc > span.sort-label {
+    padding-right: 15px;
+    margin-right: -15px;
+    background: url('images/sort_desc.png') no-repeat center right;
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
+table.dataTable thead th.sorting_asc > span.sort-label {
+    padding-right: 15px;
+    margin-right: -15px;
+    background: url('images/sort_asc.png') no-repeat center right;
+    background-size: 16px 16px;
+    cursor: pointer;
+}
+
+div.dataTables_length {
+    float: left;
+    padding: 6px;
+}
+
+.dataTables_length select {
+    display: inline;
+    width: 100px;
+}
+
+div.dataTables_filter {
+    float: right;
+    margin-right: -22px;
+    padding: 6px;
+    padding-right: 0px;
+}
+
+.dataTables_filter input {
+    display: inline;
+    width: 150px;
+    outline: none;
+    border: 1px solid #aaa;
+    padding: 6px 4px;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 0px;
+    -webkit-appearance:none;
+}
+
+div.dataTables_info {
+    float: left;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-family: sans-serif;
+    color: #AAA;
+}
+
+.dataTables_filter label {
+    text-transform: lowercase;
+    color: #444444;
+    font-size: 1em;
+    font-family: sans-serif;
+    font-weight: normal;
+}
+
+
+/* -- pagination */
+.dataTables_paginate {
+    float: right;
+    text-align: right;
+    padding-bottom: 5px;
+}
+
+/* -- vertical center align on search page */
+.center-vertical-search {
+    line-height: 32px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* -- The first, last, next, previous, and regulate data tables paginating buttons */
+
+a.paginate_button {
+    text-transform: lowercase;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 4px;
+    border-color: rgba(51, 51, 51, 0.3);
+    border-style: solid;
+    border-width: thin;
+    cursor: pointer;
+    color: #999;
+    padding: 1px 5px;
+    margin: 0 4px;
+    min-width: 6px;
+}
+
+/* -- The currently on paginate button */
+
+a.paginate_active {
+    background-color: rgba(151, 151, 151, 0.1);
+    text-decoration: underline;
+}
+
+a.paginate_button.current {
+    background-color: rgba(151, 151, 151, 0.1)!important;
+    text-decoration: underline!important;
+}
+
+.paging_full_numbers a:active {
+    text-transform: lowercase;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 4px;
+    border-color: rgba(151, 151, 151, 0.3);
+    border-style: solid;
+    border-width: thin;
+    cursor: pointer;
+    color: #999;
+    padding: 1px 5px;
+    margin: 0 4px;
+    min-width: 6px;
+}
+
+.paging_full_numbers a.paginate_active {
+    text-transform: lowercase;
+    background-color: #ffffff;
+    display: inline-block;
+    text-decoration: underline;
+    border-radius: 4px;
+    border-color: rgba(151, 151, 151, 0.3);
+    border-style: solid;
+    border-width: thin;
+    cursor: pointer;
+    color: #999;
+    padding: 1px 5px;
+    margin: 0 4px;
+    min-width: 6px;
+}
+
+.paging_full_numbers a.paginate_button {
+    text-transform: lowercase;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 4px;
+    border-color: rgba(151, 151, 151, 0.3);
+    border-style: solid;
+    border-width: thin;
+    cursor: pointer;
+    color: #999;
+    padding: 1px 5px;
+    margin: 0 4px;
+    min-width: 6px;
+}
+
+.paging_full_numbers a.paginate_button:hover {
+    background-color: rgba(151, 151, 151, 0.1);
+    text-decoration: none;
+}

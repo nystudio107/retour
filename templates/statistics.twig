@@ -2,9 +2,9 @@
 {% import '_includes/forms' as forms %}
 
 {% includeCssResource "retour/css/Retour.css" %}
+{% includeCssResource "retour/css/RetourTables.css" %}
 {% includeJsResource "retour/js/Retour.js" %}
-{% includeJsResource "retour/js/moment.min.js" %}
-{% includeJsResource "retour/js/stupidtable.min.js" %}
+{% includeJsResource "retour/js/datatables.min.js" %}
 
 {% set title = craft.retour.getPluginName() %}
 
@@ -46,10 +46,10 @@
             <div class="tableview">
                 <table id="statistics" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
                     <thead>
-                        <th style="width: 65%" data-sort="string-ins" scope="col">{{ "404 File Not Found URL"|t }}</th>
-                        <th style="width: 5%" data-sort="int" scope="col">{{ "Hits"|t }}<span class="arrow">&darr;</span></th>
-                        <th style="width: 20%" data-sort="date" scope="col">{{ "Last Hit"|t }}</th>
-                        <th style="width: 5%" data-sort="string-ins" scope="col">{{ "Handled"|t }}</th>
+                        <th style="width: 65%" data-sort="string-ins" scope="col"><span class="sort-label">{{ "404 File Not Found URL"|t }}</span></th>
+                        <th style="width: 5%" data-sort="int" scope="col"><span class="sort-label">{{ "Hits"|t }}</span></th>
+                        <th style="width: 20%" data-sort="date" scope="col"><span class="sort-label">{{ "Last Hit"|t }}</span></th>
+                        <th style="width: 5%" data-sort="string-ins" scope="col"><span class="sort-label">{{ "Handled"|t }}</span></th>
                         <th class="thin right" style="width: 5%"></th>
                     </thead>
                     <tbody>
@@ -74,47 +74,33 @@
 {% endset %}
 
 {% set js %}
-    $(function(){
-      var moveBlanks = function(a, b) {
-        if ( a < b ){
-          if (a == "")
-            return 1;
-          else
-            return -1;
-        }
-        if ( a > b ){
-          if (b == "")
-            return -1;
-          else
-            return 1;
-        }
-        return 0;
-      };
-      var moveBlanksDesc = function(a, b) {
-        // Blanks are by definition the smallest value, so we don't have to
-        // worry about them here
-        if ( a < b )
-          return 1;
-        if ( a > b )
-          return -1;
-        return 0;
-      };
-      var table = $("table").stupidtable({
-        "date":function(a,b){
-          aDate = moment(a, "MMM, DD, YYYY, hh:mm:ss A");
-          bDate = moment(b, "MMM, DD, YYYY, hh:mm:ss A");
-          return aDate - bDate;
-        },
-        "moveBlanks": moveBlanks,
-        "moveBlanksDesc": moveBlanksDesc,
-      });
-      table.on("aftertablesort", function (event, data) {
-        var th = $(this).find("th");
-        th.find(".arrow").remove();
-        var dir = $.fn.stupidtable.dir;
-        var arrow = data.direction === dir.ASC ? "&uarr;" : "&darr;";
-        th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
-      });
-    });
+/* -- Initialize the datatable */
+
+$('#statistics').dataTable({
+  "sDom": '<"top"ilpf<"clear">>rt<"bottom"ilp<"clear">>',
+  "sPaginationType": "full_numbers",
+  "aaSorting": [[ 1, "desc" ]],
+  "aoColumns": [ null, { "sType": "num" }, { "sType": "date" }, null, null],
+  "bLengthChange": false,
+  "iDisplayLength": 50,
+  "bInfo": true,
+  "oLanguage": {
+    "sSearch": "Statistics Filter ",
+    "oPaginate": {
+      "sFirst": "«",
+      "sLast": "»",
+      "sNext": "›",
+      "sPrevious": "‹"
+      }
+    },
+  "bAutoWidth": false });
+
+/* -- Add our cancel button to the table */
+
+{% set cancelButton = resourceUrl('retour/cancel.png') %}
+var sOnClick = "onclick=\"$(document).ready(function() {var oTable = $('#statistics').dataTable();oTable.fnFilter('');});\"";
+var sMyElem = "<div class='filter-cancel-button'><img src='{{ cancelButton }}' height='16' width='16' " + sOnClick + " ></div>";
+
+$( sMyElem ).insertBefore( "#statistics_filter" );
 {% endset %}
 {% includeJs js %}
