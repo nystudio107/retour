@@ -192,9 +192,10 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
-### 1.0.14 -- 2016.07.09
+### 1.0.14 -- 2016.07.10
 
 * [Added] The Statistics and Redirects tables are now dynamically searchable and sortable
+* [Fixed] Fixed an issue that caused redirects created via the `+` from Statistics page to not save
 * [Improved] Updated the README.md
 
 ### 1.0.13 -- 2016.07.06
