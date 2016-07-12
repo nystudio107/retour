@@ -5,6 +5,7 @@
         "date": "2016-07-12T12:00:00-05:00",
         "notes": [
             "[Added] Added the ability to import the redirects from a `.htaccess` file into Retour",
+            "[Fixed] Fixed a statics db error with empty referrers",
             "[Improved] Updated the README.md"
         ]
     },

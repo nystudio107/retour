@@ -205,6 +205,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.15 -- 2016.07.12
 
 * [Added] Added the ability to import the redirects from a `.htaccess` file into Retour
+* [Fixed] Fixed a statics db error with empty referrers
 * [Improved] Updated the README.md
 
 ### 1.0.14 -- 2016.07.10
