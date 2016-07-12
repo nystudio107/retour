@@ -113,12 +113,22 @@ If you need more than one Legacy URL Pattern to redirect to a given entry, simpl
 
 ## Static Redirects
 
+### Manually Creating Static Redirects
+
 Static Redirects are useful when the Legacy URL Patterns and the new URL patterns are deterministic.  You can create them by clicking on **Retour->Redirects** and then clicking on the **+ New Static Redirect** button.
 
 * **Legacy URL Pattern** - Enter the URL pattern that Retour should match. This matches against the path, the part of the URL after the domain name. e.g.: Exact Match: `/recipes/` or RegEx Match: `.*RecipeID=(.*)`
 * **Destination URL** - Enter the destination URL that should be redirected to. This can either be a fully qualified URL or a relative URL. e.g.: Exact Match: `/new-recipes/` or RegEx Match: `/new-recipes/$1`
 * **Pattern Match Type** - What type of matching should be done with the Legacy URL Pattern. Details on RegEx matching can be found at [regexr.com](http://regexr.com) If a plugin provides a custom matching function, you can select it here.
 * **Redirect Type** - Select whether the redirect should be permanent or temporary.
+
+### Importing an Existing .htaccess file
+
+Retour also allows you to import an existing `.htaccess` file and all of the redirects it contains into Retour by clicking on **Retour->Redirects** and then clicking on the **Import .htaccess File** button.
+
+It will import redirects from `Redirect`, `RedirectMatch`, and `RewriteRule` directives in the file.  It will ignore `RewriteRule`s that are not redirects.
+
+It asks your browser to look for only `text` files to upload; if the `.htaccess` file you have isn't a `.txt` file, you can force it to allow you to upload it by choosing **Format: All Files**.
 
 ### Renamed Slug Redirects
 
@@ -191,6 +201,11 @@ Some things to do, and ideas for potential features:
 * Add the ability to mass-import redirects from a CSV file
 
 ## Retour Changelog
+
+### 1.0.15 -- 2016.07.12
+
+* [Added] Added the ability to import the redirects from a `.htaccess` file into Retour
+* [Improved] Updated the README.md
 
 ### 1.0.14 -- 2016.07.10
 

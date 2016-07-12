@@ -31,6 +31,14 @@
 
 {% set extraPageHeaderHtml %}
     <div class="buttons">
+        <div class="retour-htaccess-container">
+            <form id="htaccess-form" method="post" accept-charset="UTF-8" enctype="multipart/form-data">
+                {{ getCsrfInput() }}
+                <input type="hidden" name="action" value="retour/importHtaccess">
+                <input type="file" name="file" id="file" class="inputfile" accept=".htaccess|text/*" onchange="this.form.submit();" />
+                <label class="btn" for="file">Import .htaccess File</label>
+            </form>
+        </div>
         <a href="{{ url('retour/new') }}" class="btn submit add icon">{{ "New Static Redirect"|t }}</a>
     </div>
 {% endset %}

@@ -19,6 +19,90 @@ class RetourController extends BaseController
 /**
  * @param  array  $variables
  */
+    public function actionImportHtaccess(array $variables = array())
+    {
+        $file = \CUploadedFile::getInstanceByName('file');
+        if (!is_null($file))
+        {
+            $filename = $file->getTempName();
+            $handle = @fopen($filename, "r");
+            if ($handle)
+            {
+                $skippingRule = false;
+                while (($line = fgets($handle)) !== false)
+                {
+                    $redirectType = "";
+                    $line = ltrim($line);
+                    $redirectParts = explode(" ", $line);
+                    array_shift($redirectParts);
+                    if (strpos($line, 'Redirect') === 0)
+                    {
+                        $redirectType = "exactmatch";
+                        $srcUrl = $redirectParts[1];
+                        $destUrl = $redirectParts[2];
+                        $redirectCode = $redirectParts[0];
+                    }
+
+                    if (strpos($line, 'RedirectMatch') === 0)
+                    {
+                        $redirectType = "regexmatch";
+                        $srcUrl = $redirectParts[1];
+                        $destUrl = $redirectParts[2];
+                        $redirectCode = $redirectParts[0];
+                    }
+
+                    if (strpos($line, 'RewriteRule') === 0)
+                    {
+                        $srcUrl = $redirectParts[0];
+                        $destUrl = $redirectParts[1];
+                        $redirectCode = $redirectParts[2];
+                        $pos = strpos($redirectCode, 'R=');
+                        if ($pos !== false)
+                        {
+                            $redirectType = "regexmatch";
+                            $redirectCode = substr($redirectCode, $pos + 2, 3);
+                        }
+                    }
+
+                    if (strpos($line, 'RewriteCond') === 0)
+                        $skippingRule = true;
+
+                    if (strpos($line, 'RewriteEngine') === 0)
+                        $skippingRule = false;
+
+                    if (($redirectType != "") && (!$skippingRule))
+                    {
+
+                        $record = new Retour_StaticRedirectsRecord;
+
+                        $record->locale = craft()->language;
+                        $record->redirectMatchType = $redirectType;
+                        $record->redirectSrcUrl = $srcUrl;
+                        if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl !=""))
+                            $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
+                        $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
+                        $record->redirectDestUrl = $destUrl;
+                        $record->redirectHttpCode = $redirectCode;
+                        $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
+                        $record->associatedElementId = 0;
+
+                        $result = craft()->retour->saveStaticRedirect($record);
+
+                    }
+                }
+                if (!feof($handle))
+                    craft()->userSession->setError(Craft::t('Error: unexpected fgets() fail.'));
+                fclose($handle);
+            }
+        }
+        else
+            craft()->userSession->setError(Craft::t('Please upload a file.'));
+
+    } /* -- actionImportHtaccess */
+
+/**
+ * @param  array  $variables
+ */
     public function actionEditRedirect(array $variables = array())
     {
 
