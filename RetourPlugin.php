@@ -178,7 +178,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.15';
+        return '1.0.16';
     }
 
     /**

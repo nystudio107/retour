@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.16",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-07-14T12:00:00-05:00",
+        "notes": [
+            "[Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly"
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.15",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-07-12T12:00:00-05:00",

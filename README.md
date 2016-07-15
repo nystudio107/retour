@@ -202,6 +202,11 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.16 -- 2016.07.14
+
+* [Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly
+* [Improved] Updated the README.md
+
 ### 1.0.15 -- 2016.07.12
 
 * [Added] Added the ability to import the redirects from a `.htaccess` file into Retour
