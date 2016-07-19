@@ -107,6 +107,7 @@
 
                         {% for redir in redirects %}
                             {% set associatedEntry = craft.entries.id(redir.associatedElementId).locale(redir.locale).first %}
+                            {% if associatedEntry %}
                             <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
                                 <td><a class="go" href="{{ associatedEntry.cpEditUrl }}">{{ redir.redirectSrcUrl }}</a></td>
                                 <td>{{ redir.redirectDestUrl }}</td>
@@ -115,6 +116,7 @@
                                 <td>{{ redir.hitCount }}</td>
                                 <td>{{ redir.hitLastTime |datetime }}</td>
                             </tr>
+                            {% endif %}
                         {% endfor %}
 
                     </tbody>
