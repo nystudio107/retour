@@ -5,6 +5,7 @@
         "date": "2016-07-14T12:00:00-05:00",
         "notes": [
             "[Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly"
+            "[Fixed] Fixed missing locale prefix for localized entries in the FieldType"
             "[Improved] Updated the README.md"
         ]
     },

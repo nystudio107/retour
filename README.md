@@ -207,6 +207,7 @@ Some things to do, and ideas for potential features:
 ### 1.0.16 -- 2016.07.14
 
 * [Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly
+* [Fixed] Fixed missing locale prefix for localized entries in the FieldType
 * [Improved] Updated the README.md
 
 ### 1.0.15 -- 2016.07.12
