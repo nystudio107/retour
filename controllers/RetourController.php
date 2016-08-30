@@ -32,25 +32,32 @@ class RetourController extends BaseController
                 while (($line = fgets($handle)) !== false)
                 {
                     $redirectType = "";
+                    RetourPlugin::log("parsing line: " . $line, LogLevel::Info, false);
                     $line = ltrim($line);
+                    $line = preg_replace('/\s+/', ' ', $line);
                     $redirectParts = explode(" ", $line);
+                    RetourPlugin::log("line parts: " . print_r($redirectParts, true), LogLevel::Info, false);
                     array_shift($redirectParts);
-                    if (strpos($line, 'Redirect') === 0)
+
+                    if ((!empty($redirectParts[0])) && (!empty($redirectParts[1])) && (!empty($redirectParts[2])))
                     {
-                        $redirectType = "exactmatch";
-                        $srcUrl = $redirectParts[1];
-                        $destUrl = $redirectParts[2];
-                        $redirectCode = $redirectParts[0];
+                        if (strpos($line, 'RedirectMatch') === 0)
+                        {
+                            $redirectType = "regexmatch";
+                            $srcUrl = $redirectParts[1];
+                            $destUrl = $redirectParts[2];
+                            $redirectCode = $redirectParts[0];
+                        }
+                        else if (strpos($line, 'Redirect') === 0)
+                        {
+                            $redirectType = "exactmatch";
+                            $srcUrl = $redirectParts[1];
+                            $destUrl = $redirectParts[2];
+                            $redirectCode = $redirectParts[0];
+                        }
                     }
 
-                    if (strpos($line, 'RedirectMatch') === 0)
-                    {
-                        $redirectType = "regexmatch";
-                        $srcUrl = $redirectParts[1];
-                        $destUrl = $redirectParts[2];
-                        $redirectCode = $redirectParts[0];
-                    }
-
+/* -- We should just ignore RewriteRule's completely 
                     if (strpos($line, 'RewriteRule') === 0)
                     {
                         $srcUrl = $redirectParts[0];
@@ -69,7 +76,7 @@ class RetourController extends BaseController
 
                     if (strpos($line, 'RewriteEngine') === 0)
                         $skippingRule = false;
-
+*/
                     if (($redirectType != "") && (!$skippingRule))
                     {
 

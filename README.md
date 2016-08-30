@@ -204,10 +204,13 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
-### 1.0.16 -- 2016.07.14
+### 1.0.16 -- 2016.08.30
 
 * [Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly
 * [Fixed] Fixed missing locale prefix for localized entries in the FieldType
+* [Fixed] Fixed an issue where FieldType redirects had an errant / prepended to them
+* [Improved] Better importing of `.htaccess` files
+* [Improved] Better error handling when importing malformed `.htaccess` files
 * [Improved] Updated the README.md
 
 ### 1.0.15 -- 2016.07.12

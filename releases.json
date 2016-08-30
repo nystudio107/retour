@@ -2,10 +2,13 @@
     {
         "version": "1.0.16",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2016-07-14T12:00:00-05:00",
+        "date": "2016-08-30T12:00:00-05:00",
         "notes": [
-            "[Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly"
-            "[Fixed] Fixed missing locale prefix for localized entries in the FieldType"
+            "[Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly",
+            "[Fixed] Fixed missing locale prefix for localized entries in the FieldType",
+            "[Fixed] Fixed an issue where FieldType redirects had an errant / prepended to them",
+            "[Improved] Better importing of `.htaccess` files",
+            "[Improved] Better error handling when importing malformed `.htaccess` files",
             "[Improved] Updated the README.md"
         ]
     },
