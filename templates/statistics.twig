@@ -60,7 +60,7 @@
                                 <td style="width: 5%">{{ stat.hitCount }}</td>
                                 <td style="width: 20%">{{ stat.hitLastTime |datetime }}</td>
                                 <td style="width: 6%">{% if stat.handledByRetour %}<span style="color: green;">&#x2714;</span>{% else %}<span style="color: red;">&#x2716;</span>{% endif %}</td>
-                                <td style="width: 5%">{% if not stat.handledByRetour %}<a href="{{ url('retour/new?defaultRedirectSrcUrl=' ~ stat.redirectSrcUrl) }}" class="add icon" title="{{ 'Add'|t }}"></a>{% endif %}</td>
+                                <td style="width: 5%">{% if not stat.handledByRetour %}<a href="{{ url('retour/new', {'defaultRedirectSrcUrl': stat.redirectSrcUrl}) }}" class="add icon" title="{{ 'Add'|t }}"></a>{% endif %}</td>
                             </tr>
                         {% endfor %}
 

@@ -385,7 +385,7 @@ class RetourService extends BaseApplicationComponent
  */
     public function getRedirectByRedirectSrcUrl($srcUrl, $locale)
     {
-        $result = Retour_RedirectsRecord::model()->findByAttributes(array('redirectSrcUrl' => $srcUrl, 'locale' => $locale));
+        $result = Retour_RedirectsRecord::model()->findByAttributes(array('redirectSrcUrlParsed' => $srcUrl, 'locale' => $locale));
         return $result;
     } /* -- getRedirectByredirectSrcUrl */
 
@@ -431,7 +431,7 @@ class RetourService extends BaseApplicationComponent
 
 /* -- Don't try to create a redirect if one already exists for the redirectSrcUrl */
 
-            if (!$this->getRedirectByRedirectSrcUrl($redirectsModel->redirectSrcUrl, $redirectsModel->locale))
+            if (!$this->getRedirectByRedirectSrcUrl($redirectsModel->redirectSrcUrlParsed, $redirectsModel->locale))
             {
                 $result = new Retour_RedirectsRecord;
                 $result->setAttributes($redirectsModel->getAttributes(), false);

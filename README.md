@@ -211,6 +211,8 @@ Some things to do, and ideas for potential features:
 * [Fixed] Fixed an issue where FieldType redirects had an errant / prepended to them
 * [Improved] Better importing of `.htaccess` files
 * [Improved] Better error handling when importing malformed `.htaccess` files
+* [Fixed] Trailing /'s are no longer stripped from URLs added via the `+` icon from the Statistics page
+* [Fixed] Fixed an issue that would prevent RegEx's from matching as they should in FieldTypes
 * [Improved] Updated the README.md
 
 ### 1.0.15 -- 2016.07.12
