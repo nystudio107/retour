@@ -10,7 +10,7 @@
             "[Improved] Better importing of `.htaccess` files",
             "[Improved] Better error handling when importing malformed `.htaccess` files",
             "[Fixed] Trailing /'s are no longer stripped from URLs added via the `+` icon from the Statistics page",
-            "[Fixed] Fixed an issue that would prevent RegEx's from matching as they should in FieldTypes"
+            "[Fixed] Fixed an issue that would prevent RegEx's from matching as they should in FieldTypes",
             "[Improved] Updated the README.md"
         ]
     },
