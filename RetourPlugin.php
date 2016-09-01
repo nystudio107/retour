@@ -36,6 +36,7 @@ class RetourPlugin extends BasePlugin
 /* -- See if we should redirect */
 
                     $url = urldecode(craft()->request->getRequestUri());
+                    $url = UrlHelper::stripQueryString($url);
                     $redirect = craft()->retour->findRedirectMatch($url);
 
 /* -- Redirect if we found a match, otherwise let Craft handle it */
@@ -178,7 +179,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.16';
+        return '1.0.17';
     }
 
     /**

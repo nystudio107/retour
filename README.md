@@ -204,6 +204,11 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.17 -- 2016.08.31
+
+* [Improved] Query strings are now stripped from the incoming URI before redirect detection is done
+* [Improved] Updated the README.md
+
 ### 1.0.16 -- 2016.08.30
 
 * [Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly

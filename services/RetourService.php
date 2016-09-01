@@ -226,6 +226,7 @@ class RetourService extends BaseApplicationComponent
                     break;
             }
         }
+        RetourPlugin::log("Not handled: " . $url, LogLevel::Info, false);
         return $result;
     } /* -- lookupRedirect */
 
