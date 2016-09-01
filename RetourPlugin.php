@@ -36,10 +36,11 @@ class RetourPlugin extends BasePlugin
 /* -- See if we should redirect */
 
                     $url = urldecode(craft()->request->getRequestUri());
-                    $url = UrlHelper::stripQueryString($url);
-                    $redirect = craft()->retour->findRedirectMatch($url);
+                    $noQueryUrl = UrlHelper::stripQueryString($url);
 
-/* -- Redirect if we found a match, otherwise let Craft handle it */
+/* -- Redirect if we find a match, otherwise let Craft handle it */
+
+                    $redirect = craft()->retour->findRedirectMatch($url);
 
                     if (isset($redirect))
                     {
@@ -49,7 +50,22 @@ class RetourPlugin extends BasePlugin
                         craft()->request->redirect($redirect['redirectDestUrl'], true, $redirect['redirectHttpCode']);
                     }
                     else
-                        craft()->retour->incrementStatistics($url, false);
+                    {
+
+/* -- Now try it without the query string, too, otherwise let Craft handle it */
+
+                        $redirect = craft()->retour->findRedirectMatch($noQueryUrl);
+
+                        if (isset($redirect))
+                        {
+                            craft()->retour->incrementStatistics($url, true);
+                            $event->handled = true;
+                            RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
+                            craft()->request->redirect($redirect['redirectDestUrl'], true, $redirect['redirectHttpCode']);
+                        }
+                        else
+                            craft()->retour->incrementStatistics($url, false);
+                    }
                 }
             }
         };
