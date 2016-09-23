@@ -264,7 +264,7 @@ class RetourPlugin extends BasePlugin
 
 /* -- Show our "Welcome to Retour" message */
 
-+       if (!craft()->isConsole())
+        if (!craft()->isConsole())
             craft()->request->redirect(UrlHelper::getCpUrl('retour/welcome'));
     }
 
