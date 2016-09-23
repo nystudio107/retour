@@ -206,6 +206,7 @@ Some things to do, and ideas for potential features:
 
 ### 1.0.18 -- 2016.09.23
 
+* [Added] Added a config.php setting `createUriChangeRedirects` so that the URI-change redirects can be disabled on a per-environment basis
 * [Improved] Don't redirect to the welcome page if we're being installed via Console command
 * [Improved] Updated the README.md
 
