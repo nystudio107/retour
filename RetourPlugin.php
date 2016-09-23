@@ -103,7 +103,7 @@ class RetourPlugin extends BasePlugin
         craft()->on('entries.onBeforeSaveEntry', function(Event $e)
         {
             $this->originalUris = array();
-            if(!$e->params['isNewEntry'])
+            if(!$e->params['isNewEntry'] && craft()->config->get("createStaticRedirects", "retour"))
             {
                 $entry = $e->params['entry'];
 
@@ -117,7 +117,7 @@ class RetourPlugin extends BasePlugin
 
         craft()->on('entries.onSaveEntry', function(Event $e)
         {
-            if (!$e->params['isNewEntry'])
+            if (!$e->params['isNewEntry'] && craft()->config->get("createStaticRedirects", "retour"))
             {
                 $entry = $e->params['entry'];
                 $newUris = craft()->retour->getLocalizedUris($entry);
