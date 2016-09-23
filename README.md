@@ -204,6 +204,11 @@ Some things to do, and ideas for potential features:
 
 ## Retour Changelog
 
+### 1.0.18 -- 2016.09.23
+
+* [Improved] Don't redirect to the welcome page if we're being installed via Console command
+* [Improved] Updated the README.md
+
 ### 1.0.17 -- 2016.08.31
 
 * [Improved] Query strings are now stripped from the incoming URI before redirect detection is done

@@ -1,5 +1,14 @@
 [
     {
+        "version": "1.0.18",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2016-09-23T12:00:00-05:00",
+        "notes": [
+            "[Improved] Don't redirect to the welcome page if we're being installed via Console command",
+            "[Improved] Updated the README.md"
+        ]
+    },
+    {
         "version": "1.0.17",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2016-08-31T12:00:00-05:00",

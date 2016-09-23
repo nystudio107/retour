@@ -195,7 +195,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.17';
+        return '1.0.18';
     }
 
     /**
@@ -264,7 +264,8 @@ class RetourPlugin extends BasePlugin
 
 /* -- Show our "Welcome to Retour" message */
 
-        craft()->request->redirect(UrlHelper::getCpUrl('retour/welcome'));
++       if (!craft()->isConsole())
+            craft()->request->redirect(UrlHelper::getCpUrl('retour/welcome'));
     }
 
     /**
