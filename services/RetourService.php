@@ -34,15 +34,13 @@ class RetourService extends BaseApplicationComponent
         $result = craft()->db->createCommand()
             ->select('*')
             ->from('retour_redirects')
-            ->order('hitCount DESC');
+            ->order('hitCount DESC')
+            ->limit($limit)
+            ->queryAll();
 
-        if ($limit) {
-            $result = $result->limit($limit);
+        if (!$limit) {
+            $this->cachedEntryRedirects = $result;
         }
-
-        $result->queryAll();
-
-        $this->cachedEntryRedirects = $result;
 
         return $result;
     } /* -- getAllEntryRedirects */
@@ -61,15 +59,13 @@ class RetourService extends BaseApplicationComponent
         $result = craft()->db->createCommand()
             ->select('*')
             ->from('retour_static_redirects')
-            ->order('hitCount DESC');
+            ->order('hitCount DESC')
+            ->limit($limit)
+            ->queryAll();
 
-        if ($limit) {
-            $result = $result->limit($limit);
+        if (!$limit) {
+            $this->cachedStaticRedirects = $result;
         }
-
-        $result->queryAll();
-
-        $this->cachedStaticRedirects = $result;
 
         return $result;
     } /* -- getAllStaticRedirects */
