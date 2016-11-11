@@ -23,7 +23,7 @@ class RetourService extends BaseApplicationComponent
 /**
  * @return Array All of the entry redirects
  */
-    public function getAllEntryRedirects()
+    public function getAllEntryRedirects($limit = null)
     {
 
 /* -- Cache it in our class; no need to fetch it more than once */
@@ -35,6 +35,7 @@ class RetourService extends BaseApplicationComponent
             ->select('*')
             ->from('retour_redirects')
             ->order('hitCount DESC')
+            ->limit($limit)
             ->queryAll();
 
         $this->cachedEntryRedirects = $result;
@@ -45,7 +46,7 @@ class RetourService extends BaseApplicationComponent
 /**
  * @return Array All of the static redirects
  */
-    public function getAllStaticRedirects()
+    public function getAllStaticRedirects($limit = null)
     {
 
 /* -- Cache it in our class; no need to fetch it more than once */
@@ -57,6 +58,7 @@ class RetourService extends BaseApplicationComponent
             ->select('*')
             ->from('retour_static_redirects')
             ->order('hitCount DESC')
+            ->limit($limit)
             ->queryAll();
 
         $this->cachedStaticRedirects = $result;
