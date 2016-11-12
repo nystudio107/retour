@@ -15,4 +15,6 @@ return array(
  * Controls whether Retour automatically creates static redirects when an entry's URI changes.
  */
     "createStaticRedirects" => true,
+    "staticRedirectDisplayLimit" => 100,
+    "dynamicRedirectDisplayLimit" => 100,
 );
