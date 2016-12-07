@@ -206,7 +206,7 @@ class RetourService extends BaseApplicationComponent
 /* -- Otherwise try to look up a plugin's method by and call it for the match */
 
                 default:
-                    $plugin = craft()->plugins->getPlugin($redirectMatchType);
+                    $plugin = $redirectMatchType ? craft()->plugins->getPlugin($redirectMatchType) : null;
                     if ($plugin)
                     {
                         if (method_exists($plugin, "retourMatch"))
