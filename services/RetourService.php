@@ -173,7 +173,8 @@ class RetourService extends BaseApplicationComponent
         $result = null;
         foreach ($redirects as $redirect)
         {
-            switch ($redirect['redirectMatchType'])
+            $redirectMatchType = isset($redirect['redirectMatchType']) ? $redirect['redirectMatchType'] : null;
+            switch ($redirectMatchType)
             {
 
 /* -- Do a straight up match */
@@ -182,7 +183,7 @@ class RetourService extends BaseApplicationComponent
                     if (strcasecmp($redirect['redirectSrcUrlParsed'], $url) === 0)
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
-                        RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+                        RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
                         $this->saveRedirectToCache($url, $redirect);
                         return $redirect;
                     }
@@ -195,7 +196,7 @@ class RetourService extends BaseApplicationComponent
                     if (preg_match($matchRegEx, $url) === 1)
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
-                        RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+                        RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
 
 /* -- If we're not associated with an EntryID, handle capture group replacement */
 
@@ -211,7 +212,7 @@ class RetourService extends BaseApplicationComponent
 /* -- Otherwise try to look up a plugin's method by and call it for the match */
 
                 default:
-                    $plugin = craft()->plugins->getPlugin($redirect['redirectMatchType']);
+                    $plugin = $redirectMatchType ? craft()->plugins->getPlugin($redirectMatchType) : null;
                     if ($plugin)
                     {
                         if (method_exists($plugin, "retourMatch"))
@@ -223,7 +224,7 @@ class RetourService extends BaseApplicationComponent
                             if ($result)
                             {
                                 $error = $this->incrementRedirectHitCount($redirect);
-                                RetourPlugin::log($redirect['redirectMatchType'] . " result: " . print_r($error, true), LogLevel::Info, false);
+                                RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
                                 $this->saveRedirectToCache($url, $redirect);
                                 return $redirect;
                             }
