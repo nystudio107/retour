@@ -85,7 +85,7 @@ class RetourService extends BaseApplicationComponent
             ->select('*')
             ->from('retour_stats')
             ->order('hitCount DESC')
-            ->limit(1000)
+            ->limit(craft()->config->get("statsDisplayLimit", "retour"))
             ->queryAll();
 
         $this->cachedStatistics = $result;
