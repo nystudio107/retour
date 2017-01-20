@@ -28,7 +28,8 @@ class RetourPlugin extends BasePlugin
 
         craft()->onException = function(\CExceptionEvent $event)
         {
-            if (($event->exception instanceof \CHttpException) && ($event->exception->statusCode == 404))
+            if ((($event->exception instanceof \CHttpException) && ($event->exception->statusCode == 404))  ||
+                (($event->exception->getPrevious() instanceof \CHttpException) && ($event->exception->getPrevious()->statusCode == 404)))
             {
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview())
                 {
