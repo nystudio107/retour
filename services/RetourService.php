@@ -430,9 +430,9 @@ class RetourService extends BaseApplicationComponent
         if (isset($redirectsModel))
         {
 
-/* -- Don't try to create a redirect if one already exists for the redirectSrcUrl */
+/* -- Don't try to create a redirect if one already exists for the redirectSrcUrlParsed, or if empty */
 
-            if (!$this->getRedirectByRedirectSrcUrl($redirectsModel->redirectSrcUrlParsed, $redirectsModel->locale))
+            if ($redirectsModel->redirectSrcUrlParsed && !$this->getRedirectByRedirectSrcUrl($redirectsModel->redirectSrcUrlParsed, $redirectsModel->locale))
             {
                 $result = new Retour_RedirectsRecord;
                 $result->setAttributes($redirectsModel->getAttributes(), false);
