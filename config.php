@@ -17,6 +17,12 @@ return array(
     "createUriChangeRedirects" => true,
 
 /**
+ * How many stats should be stored
+ */
+
+    "statsStoredLimit" => 10000,
+
+/**
  * How many stats to display in the Admin CP
  */
 

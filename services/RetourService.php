@@ -239,7 +239,7 @@ class RetourService extends BaseApplicationComponent
 
 /**
  * [saveStaticRedirect description]
- * @param  Retour_StaticRedirectsRecord $record the static redirect record to save
+ * @param  [type] $record [description]
  * @return [type]         [description]
  */
     public function saveStaticRedirect($record)
