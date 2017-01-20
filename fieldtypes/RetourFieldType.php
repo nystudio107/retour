@@ -134,6 +134,10 @@ class RetourFieldType extends BaseFieldType
         }
         $urlParts = parse_url($this->element->url);
         $url = $urlParts['path'] ? $urlParts['path'] : $this->element->url;
+        if (craft()->config->get('addTrailingSlashesToUrls'))
+        {
+            $url = rtrim($url, '/') . '/';
+        }
         $result->redirectDestUrl = $url;
         $result->associatedElementId = $this->element->id;
         if ($this->model->translatable)

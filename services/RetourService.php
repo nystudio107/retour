@@ -319,6 +319,22 @@ class RetourService extends BaseApplicationComponent
  */
     public function trimStatistics()
     {
+        $affectedRows = 0;
+/* -- This should be translated into AR
+        $affectedRows = craft()->db->createCommand("
+            DELETE FROM `retour_stats`
+            WHERE id <= (
+                SELECT id
+                FROM (
+                  SELECT id
+                  FROM `retour_stats`
+                  ORDER BY id DESC
+                  LIMIT 1 OFFSET 42
+                ) foo
+            )
+        ")->execute();
+*/
+        RetourPlugin::log("Trimmed " . $affectedRows . " from retour_stats table", LogLevel::Info, false);
 
     } /* -- trimStatistics */
 

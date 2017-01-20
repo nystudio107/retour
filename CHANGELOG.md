@@ -2,6 +2,7 @@
 
 ## 1.0.18 -- 2017.01.20
 
+* [Fixed] The `addTrailingSlashesToUrls` is now respected for dynamic entry redirects
 * [Improved] Merged pull request 'Fix retourMatch hook'
 * [Added] Added a `statsDisplayLimit` setting to `config.php` to control how many stats should be displayed in the AdminCP
 * [Improved] Merged pull request 'Limit returned results to template'
