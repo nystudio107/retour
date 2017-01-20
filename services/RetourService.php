@@ -314,6 +314,15 @@ class RetourService extends BaseApplicationComponent
     } /* -- incrementRedirectHitCount */
 
 /**
+ * Trim the retour_stats db table based on the statsStoredLimit config.php setting
+ * @return void
+ */
+    public function trimStatistics()
+    {
+
+    } /* -- trimStatistics */
+
+/**
  * @param  $url The 404 url
  */
     public function incrementStatistics($url, $handled = false)
@@ -363,6 +372,9 @@ class RetourService extends BaseApplicationComponent
                         ), 'id=:id', array(':id' => $stat['id']));
             }
         }
+
+// After incrementing a statistic, trim the retour_stats db table
+        $this->trimStatistics();
     } /* -- incrementStatistics */
 
 /**
