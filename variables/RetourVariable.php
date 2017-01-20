@@ -16,14 +16,14 @@ namespace Craft;
 class RetourVariable
 {
 
-    function getEntryRedirects()
+    function getEntryRedirects($limit = null)
     {
-        return craft()->retour->getAllEntryRedirects();
+        return craft()->retour->getAllEntryRedirects($limit);
     } /* -- getEntryRedirects */
 
-    function getStaticRedirects()
+    function getStaticRedirects($limit = null)
     {
-        return craft()->retour->getAllStaticRedirects();
+        return craft()->retour->getAllStaticRedirects($limit);
     } /* -- getStaticRedirects */
 
     function getStatistics()

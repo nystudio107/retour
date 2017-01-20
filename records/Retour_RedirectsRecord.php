@@ -30,7 +30,7 @@ class Retour_RedirectsRecord extends BaseRecord
    protected function defineAttributes()
     {
         return array(
-            'redirectSrcUrl'        => array(AttributeType::String, 'default' => ''),
+            'redirectSrcUrl'        => array(AttributeType::String, 'default' => '', 'column' => ColumnType::Text),
             'redirectSrcUrlParsed'  => array(AttributeType::String, 'default' => ''),
             'redirectMatchType'     => array(AttributeType::String, 'default' => 'match'),
             'redirectDestUrl'       => array(AttributeType::String, 'default' => ''),
