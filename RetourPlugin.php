@@ -104,7 +104,7 @@ class RetourPlugin extends BasePlugin
         craft()->on('entries.onBeforeSaveEntry', function(Event $e)
         {
             $this->originalUris = array();
-            if(!$e->params['isNewEntry'])
+            if(!$e->params['isNewEntry'] && craft()->config->get("createUriChangeRedirects", "retour"))
             {
                 $entry = $e->params['entry'];
 
@@ -118,7 +118,7 @@ class RetourPlugin extends BasePlugin
 
         craft()->on('entries.onSaveEntry', function(Event $e)
         {
-            if (!$e->params['isNewEntry'])
+            if (!$e->params['isNewEntry'] && craft()->config->get("createUriChangeRedirects", "retour"))
             {
                 $entry = $e->params['entry'];
                 $newUris = craft()->retour->getLocalizedUris($entry);
@@ -196,7 +196,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.17';
+        return '1.0.18';
     }
 
     /**
@@ -265,7 +265,8 @@ class RetourPlugin extends BasePlugin
 
 /* -- Show our "Welcome to Retour" message */
 
-        craft()->request->redirect(UrlHelper::getCpUrl('retour/welcome'));
+        if (!craft()->isConsole())
+            craft()->request->redirect(UrlHelper::getCpUrl('retour/welcome'));
     }
 
     /**
