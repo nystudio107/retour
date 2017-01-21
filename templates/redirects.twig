@@ -51,7 +51,7 @@
 
         <h2>{{ "Static Redirects" |t }}</h2>
 
-        {% set redirects = craft.retour.getStaticRedirects() %}
+        {% set redirects = craft.retour.getStaticRedirects(craft.config.get('staticRedirectDisplayLimit', 'retour')) %}
         {% if redirects|length %}
             <div class="tableview">
                 <table id="static-redirects" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
@@ -91,7 +91,7 @@
 
         <h2>{{ "Dynamic Entry Redirects" |t }}</h2>
 
-        {% set redirects = craft.retour.getEntryRedirects() %}
+        {% set redirects = craft.retour.getEntryRedirects(craft.config.get('dynamicRedirectDisplayLimit', 'retour')) %}
         {% if redirects|length %}
             <div class="tableview">
                 <table id="entry-redirects" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">

@@ -15,4 +15,27 @@ return array(
  * Controls whether Retour automatically creates static redirects when an entry's URI changes.
  */
     "createUriChangeRedirects" => true,
+
+/**
+ * How many stats should be stored
+ */
+
+    "statsStoredLimit" => 10000,
+
+/**
+ * How many stats to display in the Admin CP
+ */
+
+    "statsDisplayLimit" => 1000,
+
+/**
+ * How many static redirects to display in the Admin CP
+ */
+
+    "staticRedirectDisplayLimit" => 100,
+
+/**
+ * How many dynamic redirects to display in the Admin CP
+ */
+    "dynamicRedirectDisplayLimit" => 100,
 );
