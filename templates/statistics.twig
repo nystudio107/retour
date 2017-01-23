@@ -46,7 +46,8 @@
             <div class="tableview">
                 <table id="statistics" class="data fullwidth" style="table-layout: fixed; width: 100%; overflow: hidden;">
                     <thead>
-                        <th style="width: 65%" data-sort="string-ins" scope="col"><span class="sort-label">{{ "404 File Not Found URL"|t }}</span></th>
+                        <th style="width: 34%" data-sort="string-ins" scope="col"><span class="sort-label">{{ "404 File Not Found URL"|t }}</span></th>
+                        <th style="width: 34%" data-sort="string-ins" scope="col"><span class="sort-label">{{ "Last Referrer URL"|t }}</span></th>
                         <th style="width: 5%" data-sort="int" scope="col"><span class="sort-label">{{ "Hits"|t }}</span></th>
                         <th style="width: 20%" data-sort="date" scope="col"><span class="sort-label">{{ "Last Hit"|t }}</span></th>
                         <th style="width: 5%" data-sort="string-ins" scope="col"><span class="sort-label">{{ "Handled"|t }}</span></th>
@@ -56,7 +57,8 @@
 
                         {% for stat in stats %}
                             <tr data-id="{{ stat.id }}" data-name="{{ stat.redirectSrcUrl }}">
-                                <td style="width: 68%" ><a class="go" href="{{ url(stat.redirectSrcUrl) }}" title="last referrer: {{ stat.referrerUrl }}">{{ stat.redirectSrcUrl }}</a></td>
+                                <td style="width: 34%" ><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
+                                <td style="width: 34%" >{% if stat.referrerUrl %}<a class="go" href="{{ url(stat.referrerUrl) }}">{{ stat.referrerUrl }}</a>{% endif %}</td>
                                 <td style="width: 5%">{{ stat.hitCount }}</td>
                                 <td style="width: 20%">{{ stat.hitLastTime |datetime }}</td>
                                 <td style="width: 6%">{% if stat.handledByRetour %}<span style="color: green;">&#x2714;</span>{% else %}<span style="color: red;">&#x2716;</span>{% endif %}</td>
@@ -80,7 +82,7 @@ $('#statistics').dataTable({
   "sDom": '<"top"ilpf<"clear">>rt<"bottom"ilp<"clear">>',
   "sPaginationType": "full_numbers",
   "aaSorting": [[ 1, "desc" ]],
-  "aoColumns": [ null, { "sType": "num" }, { "sType": "date" }, null, null],
+  "aoColumns": [ null, null, { "sType": "num" }, { "sType": "date" }, null, null],
   "bLengthChange": false,
   "iDisplayLength": 50,
   "bInfo": true,
