@@ -31,6 +31,7 @@ class RetourPlugin extends BasePlugin
             if ((($event->exception instanceof \CHttpException) && ($event->exception->statusCode == 404))  ||
                 (($event->exception->getPrevious() instanceof \CHttpException) && ($event->exception->getPrevious()->statusCode == 404)))
             {
+                RetourPlugin::log("A 404 exception occurred", LogLevel::Info, false);
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview())
                 {
 
@@ -38,6 +39,7 @@ class RetourPlugin extends BasePlugin
 
                     $url = urldecode(craft()->request->getRequestUri());
                     $noQueryUrl = UrlHelper::stripQueryString($url);
+                    RetourPlugin::log("404 URL: ". $url, LogLevel::Info, false);
 
 /* -- Redirect if we find a match, otherwise let Craft handle it */
 
