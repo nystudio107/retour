@@ -1,5 +1,16 @@
 [
     {
+        "version": "1.0.19",
+        "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
+        "date": "2017-01-25T12:00:00-05:00",
+        "notes": [
+            "[Added] Added a referrer column in the Stats table",
+            "[Added] Added additional logging in `devMode`",
+            "[Improved] No more default value for `redirectSrcUrl` column",
+            "[Improved] Updated CHANGELOG.md"
+        ]
+    },
+    {
         "version": "1.0.18",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
         "date": "2017-01-20T12:00:00-05:00",

@@ -1,5 +1,12 @@
 # Retour Changelog
 
+## 1.0.19 -- 2017.01.25
+
+* [Added] Added a referrer column in the Stats table
+* [Added] Added additional logging in `devMode`
+* [Improved] No more default value for `redirectSrcUrl` column
+* [Improved] Updated CHANGELOG.md
+
 ## 1.0.18 -- 2017.01.20
 
 * [Fixed] The `addTrailingSlashesToUrls` is now respected for dynamic entry redirects
