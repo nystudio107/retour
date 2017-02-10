@@ -1,5 +1,9 @@
 # Retour Changelog
 
+## 1.0.20 -- 2017.02.20
+
+[Improved] Add the URL to the stats title attribute, for cases where the display is truncated
+
 ## 1.0.19 -- 2017.02.10
 
 * [Added] Added a referrer column in the Stats table
