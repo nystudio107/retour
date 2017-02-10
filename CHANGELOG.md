@@ -1,10 +1,10 @@
 # Retour Changelog
 
-## 1.0.19 -- 2017.01.25
+## 1.0.19 -- 2017.02.10
 
 * [Added] Added a referrer column in the Stats table
 * [Added] Added additional logging in `devMode`
-* [Improved] No more default value for `redirectSrcUrl` column
+* [Improved] No more default value for `redirectSrcUrl` column (could cause SQL exceptions in newer versions of MySQL)
 * [Improved] Updated CHANGELOG.md
 
 ## 1.0.18 -- 2017.01.20
