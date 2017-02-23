@@ -133,7 +133,6 @@ class RetourPlugin extends BasePlugin
                     {
                         $record = new Retour_StaticRedirectsRecord;
 
-
     /* -- Set the record attributes for our new auto-redirect */
 
                         $record->locale = $entry->locale;
