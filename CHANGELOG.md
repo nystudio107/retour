@@ -4,6 +4,7 @@
 ### Added
 * Add the URL to the stats title attribute, for cases where the display is truncated
 * Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedrUls()`
+* Updated README.md to note that importing `.htaccess` ignores `RewriteRule`
 
 ## 1.0.19 - 2017.02.10
 
