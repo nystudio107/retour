@@ -77,7 +77,7 @@ People using the Apache webserver are familiar with the `.htaccess` file, and ma
     around the restrictions that come with per-directory context and
     mod_rewrite. Consult the Rewrite Guide for more detail on this subject.
 
-As you can see, avoiding the use of `.htaccess` completely is best if at all possible, and especially avoid it for RewriteRule directives, such as 404 rewrites.
+As you can see, avoiding the use of `.htaccess` completely is best if at all possible, and especially avoid it for `RewriteRule` directives, such as 404 rewrites.
 
 ## Dynamic Entry Redirects
 
@@ -126,7 +126,7 @@ Static Redirects are useful when the Legacy URL Patterns and the new URL pattern
 
 Retour also allows you to import an existing `.htaccess` file and all of the redirects it contains into Retour by clicking on **Retour->Redirects** and then clicking on the **Import .htaccess File** button.
 
-It will import redirects from `Redirect`, `RedirectMatch`, and `RewriteRule` directives in the file.  It will ignore `RewriteRule`s that are not redirects.
+It will import redirects from `Redirect` and `RedirectMatch` directives in the file.  It will **ignore** `RewriteRule`s because they don't necessarily have a 1:1 mapping, you can have several `RewriteRule`s that are strung together to figure out the final redirect.
 
 It asks your browser to look for only `text` files to upload; if the `.htaccess` file you have isn't a `.txt` file, you can force it to allow you to upload it by choosing **Format: All Files**.
 
