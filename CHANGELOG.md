@@ -1,10 +1,13 @@
 # Retour Changelog
 
-## 1.0.24 - 2017.02.24
+## 1.0.20 - 2017.03.10
 ### Added
 * Add the URL to the stats title attribute, for cases where the display is truncated
 * Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedrUls()`
 * Updated README.md to note that importing `.htaccess` ignores `RewriteRule`
+
+### Changed
+* Fixed some deprecated meta information in `RetourPlugin.php`
 
 ## 1.0.19 - 2017.02.10
 

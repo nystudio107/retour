@@ -221,7 +221,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getDeveloperUrl()
     {
-        return 'http://nystudio107.com';
+        return 'https://nystudio107.com';
     }
 
     /**
