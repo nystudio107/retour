@@ -133,6 +133,11 @@ class RetourPlugin extends BasePlugin
                     {
                         $record = new Retour_StaticRedirectsRecord;
 
+                        if (craft()->config->get('addTrailingSlashesToUrls'))
+                        {
+                            $oldUri = rtrim($oldUri, '/') . '/';
+                            $newUri = rtrim($newUri, '/') . '/';
+                        }
 
     /* -- Set the record attributes for our new auto-redirect */
 
