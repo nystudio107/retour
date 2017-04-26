@@ -180,12 +180,15 @@ class RetourService extends BaseApplicationComponent
 /* -- Do a straight up match */
 
                 case "exactmatch":
-                    if (strcasecmp($redirect['redirectSrcUrlParsed'], $url) === 0 && CRAFT_LOCALE == $redirect['locale'])
+                    if (strcasecmp($redirect['redirectSrcUrlParsed'], $url) === 0)
                     {
-                        $error = $this->incrementRedirectHitCount($redirect);
-                        RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
-                        $this->saveRedirectToCache($url, $redirect);
-                        return $redirect;
+                        if (($this->shouldMatchLocale() && $this->getLocale() == $redirect['locale']) || !$this->shouldMatchLocale()) 
+                        {
+                            $error = $this->incrementRedirectHitCount($redirect);
+                            RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
+                            $this->saveRedirectToCache($url, $redirect);
+                            return $redirect;
+                        }
                     }
                     break;
 
@@ -193,19 +196,22 @@ class RetourService extends BaseApplicationComponent
 
                 case "regexmatch":
                     $matchRegEx = "`" . $redirect['redirectSrcUrlParsed'] . "`i";
-                    if (preg_match($matchRegEx, $url) === 1 && CRAFT_LOCALE == $redirect['locale'])
+                    if (preg_match($matchRegEx, $url) === 1)
                     {
-                        $error = $this->incrementRedirectHitCount($redirect);
-                        RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
-
-/* -- If we're not associated with an EntryID, handle capture group replacement */
-
-                        if ($redirect['associatedElementId'] == 0)
+                        if (($this->shouldMatchLocale() && $this->getLocale() == $redirect['locale']) || !$this->shouldMatchLocale()) 
                         {
-                            $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
+                            $error = $this->incrementRedirectHitCount($redirect);
+                            RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
+
+    /* -- If we're not associated with an EntryID, handle capture group replacement */
+
+                            if ($redirect['associatedElementId'] == 0)
+                            {
+                                $redirect['redirectDestUrl'] = preg_replace($matchRegEx, $redirect['redirectDestUrl'], $url);
+                            }
+                            $this->saveRedirectToCache($url, $redirect);
+                            return $redirect;
                         }
-                        $this->saveRedirectToCache($url, $redirect);
-                        return $redirect;
                     }
                     break;
 
@@ -578,5 +584,21 @@ public function getLocalizedUris($element=null)
 
         return $result;
     } /* -- getMatchesList */
+
+/**
+ * @return  Whether locale should be compared against
+ */
+    function shouldMatchLocale()
+    {
+        return defined(CRAFT_LOCALE);
+    } /* -- shouldMatchLocale */
+
+/**
+ * @return  Get locale
+ */
+    function getLocale()
+    {
+        return CRAFT_LOCALE;
+    } /* -- getLocale */
 
 }
