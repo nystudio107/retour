@@ -590,7 +590,7 @@ public function getLocalizedUris($element=null)
  */
     function shouldMatchLocale()
     {
-        return defined(CRAFT_LOCALE);
+        return defined("CRAFT_LOCALE");
     } /* -- shouldMatchLocale */
 
 /**
