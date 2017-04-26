@@ -58,7 +58,8 @@
                     <thead>
                         <th style="width: 25%" scope="col"><span class="sort-label">{{ "Legacy URL Pattern"|t }}</span></th>
                         <th style="width: 25%" scope="col"><span class="sort-label">{{ "Redirect To"|t }}</span></th>
-                        <th style="width: 15%" scope="col"><span class="sort-label">{{ "Pattern Match Type"|t }}</span></th>
+                        <th style="width: 5%" scope="col"><span class="sort-label">{{ "Locale"|t }}</span></th>
+                        <th style="width: 10%" scope="col"><span class="sort-label">{{ "Pattern Match Type"|t }}</span></th>
                         <th style="width: 10%" scope="col"><span class="sort-label">{{ "Redirect Type"|t }}</span></th>
                         <th style="width: 5%" scope="col"><span class="sort-label">{{ "Hits"|t }}</span></th>
                         <th style="width: 16%" scope="col"><span class="sort-label">{{ "Last Hit"|t }}</span></th>
@@ -70,6 +71,7 @@
                             <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
                                 <td><a class="go" href="{{ url("retour/edit/" ~ redir.id) }}">{{ redir.redirectSrcUrl }}</a></td>
                                 <td>{{ redir.redirectDestUrl }}</td>
+                                <td>{{ redir.locale }}</td>
                                 <td>{{ matchesList[redir.redirectMatchType] }}</td>
                                 <td>{{ redir.redirectHttpCode }}</td>
                                 <td>{{ redir.hitCount }}</td>
@@ -98,7 +100,8 @@
                     <thead>
                         <th style="width: 25%" scope="col"><span class="sort-label">{{ "Legacy URL Pattern"|t }}</span></th>
                         <th style="width: 25%" scope="col"><span class="sort-label">{{ "Redirect To"|t }}</span></th>
-                        <th style="width: 15%" scope="col"><span class="sort-label">{{ "Pattern Match Type"|t }}</span></th>
+                        <th style="width: 5%" scope="col"><span class="sort-label">{{ "Locale"|t }}</span></th>
+                        <th style="width: 10%" scope="col"><span class="sort-label">{{ "Pattern Match Type"|t }}</span></th>
                         <th style="width: 10%" scope="col"><span class="sort-label">{{ "Redirect Type"|t }}</span></th>
                         <th style="width: 5%" scope="col"><span class="sort-label">{{ "Hits"|t }}</span></th>
                         <th style="width: 20%" scope="col"><span class="sort-label">{{ "Last Hit"|t }}</span></th>
@@ -111,6 +114,7 @@
                             <tr data-id="{{ redir.id }}" data-name="{{ redir.redirectSrcUrl }}">
                                 <td><a class="go" href="{{ associatedEntry.cpEditUrl }}">{{ redir.redirectSrcUrl }}</a></td>
                                 <td>{{ redir.redirectDestUrl }}</td>
+                                <td>{{ redir.locale }}</td>
                                 <td>{{ matchesList[redir.redirectMatchType] }}</td>
                                 <td>{{ redir.redirectHttpCode }}</td>
                                 <td>{{ redir.hitCount }}</td>
@@ -144,7 +148,7 @@ $('#static-redirects').dataTable({
   "sDom": '<"top"ilpf<"clear">>rt<"bottom"ilp<"clear">>',
   "sPaginationType": "full_numbers",
   "aaSorting": [[ 4, "desc" ]],
-  "aoColumns": [ null, null, null, { "sType": "num" }, { "sType": "num" }, { "sType": "date" }, null],
+  "aoColumns": [ null, null, null, null, { "sType": "num" }, { "sType": "num" }, { "sType": "date" }, null],
   "bLengthChange": false,
   "iDisplayLength": 20,
   "bInfo": true,
@@ -173,7 +177,7 @@ $('#entry-redirects').dataTable({
   "sDom": '<"top"ilpf<"clear">>rt<"bottom"ilp<"clear">>',
   "sPaginationType": "full_numbers",
   "aaSorting": [[ 4, "desc" ]],
-  "aoColumns": [ null, null, null, { "sType": "num" }, { "sType": "num" }, { "sType": "date" }],
+  "aoColumns": [ null, null, null, null, { "sType": "num" }, { "sType": "num" }, { "sType": "date" }],
   "bLengthChange": false,
   "iDisplayLength": 20,
   "bInfo": true,

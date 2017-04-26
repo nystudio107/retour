@@ -180,7 +180,7 @@ class RetourService extends BaseApplicationComponent
 /* -- Do a straight up match */
 
                 case "exactmatch":
-                    if (strcasecmp($redirect['redirectSrcUrlParsed'], $url) === 0)
+                    if (strcasecmp($redirect['redirectSrcUrlParsed'], $url) === 0 && CRAFT_LOCALE == $redirect['locale'])
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
                         RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
@@ -193,7 +193,7 @@ class RetourService extends BaseApplicationComponent
 
                 case "regexmatch":
                     $matchRegEx = "`" . $redirect['redirectSrcUrlParsed'] . "`i";
-                    if (preg_match($matchRegEx, $url) === 1)
+                    if (preg_match($matchRegEx, $url) === 1 && CRAFT_LOCALE == $redirect['locale'])
                     {
                         $error = $this->incrementRedirectHitCount($redirect);
                         RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
