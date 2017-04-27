@@ -203,7 +203,7 @@ class RetourService extends BaseApplicationComponent
                             $error = $this->incrementRedirectHitCount($redirect);
                             RetourPlugin::log($redirectMatchType . " result: " . print_r($error, true), LogLevel::Info, false);
 
-    /* -- If we're not associated with an EntryID, handle capture group replacement */
+/* -- If we're not associated with an EntryID, handle capture group replacement */
 
                             if ($redirect['associatedElementId'] == 0)
                             {
