@@ -8,6 +8,7 @@
 
 ### Changed
 * Fixed some deprecated meta information in `RetourPlugin.php`
+* Fixed some typos in `README.md`
 
 ## 1.0.19 - 2017.02.10
 
