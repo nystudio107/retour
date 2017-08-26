@@ -2,7 +2,8 @@
 /**
  * Retour plugin for Craft CMS
  *
- * Redirect URLs to retain your website's SEO gravitas when migrating a website or restructuring it.
+ * Redirect URLs to retain your website's SEO gravitas when migrating a website
+ * or restructuring it.
  *
  * @author    Andrew Welch
  * @copyright Copyright (c) 2016 nystudio107
@@ -16,7 +17,7 @@ namespace Craft;
 class RetourPlugin extends BasePlugin
 {
 
-    protected $originalUris = [];
+    protected $originalUris = array();
 
     /**
      * @return mixed
@@ -24,39 +25,35 @@ class RetourPlugin extends BasePlugin
     public function init()
     {
 
-        /* -- Listen for exceptions */
-
+        // Listen for exceptions
         craft()->onException = function (\CExceptionEvent $event) {
             if ((($event->exception instanceof \CHttpException) && ($event->exception->statusCode == 404)) ||
                 (($event->exception->getPrevious() instanceof \CHttpException) && ($event->exception->getPrevious()->statusCode == 404))) {
                 RetourPlugin::log("A 404 exception occurred", LogLevel::Info, false);
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview()) {
 
-                    /* -- See if we should redirect */
-
+                    // See if we should redirect
                     $url = urldecode(craft()->request->getRequestUri());
                     $noQueryUrl = UrlHelper::stripQueryString($url);
-                    RetourPlugin::log("404 URL: ".$url, LogLevel::Info, false);
+                    RetourPlugin::log("404 URL: " . $url, LogLevel::Info, false);
 
-                    /* -- Redirect if we find a match, otherwise let Craft handle it */
-
+                    // Redirect if we find a match, otherwise let Craft handle it
                     $redirect = craft()->retour->findRedirectMatch($url);
 
                     if (isset($redirect)) {
                         craft()->retour->incrementStatistics($url, true);
                         $event->handled = true;
-                        RetourPlugin::log("Redirecting ".$url." to ".$redirect['redirectDestUrl'], LogLevel::Info, false);
+                        RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
                         craft()->request->redirect($redirect['redirectDestUrl'], true, $redirect['redirectHttpCode']);
                     } else {
 
-                        /* -- Now try it without the query string, too, otherwise let Craft handle it */
-
+                        // Now try it without the query string, too, otherwise let Craft handle it
                         $redirect = craft()->retour->findRedirectMatch($noQueryUrl);
 
                         if (isset($redirect)) {
                             craft()->retour->incrementStatistics($url, true);
                             $event->handled = true;
-                            RetourPlugin::log("Redirecting ".$url." to ".$redirect['redirectDestUrl'], LogLevel::Info, false);
+                            RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
                             craft()->request->redirect($redirect['redirectDestUrl'], true, $redirect['redirectHttpCode']);
                         } else {
                             craft()->retour->incrementStatistics($url, false);
@@ -66,16 +63,14 @@ class RetourPlugin extends BasePlugin
             }
         };
 
-        /* -- Listen for structure changes so we can regenerated our FieldType's URLs */
-
+        // Listen for structure changes so we can regenerated our FieldType's URLs
         craft()->on('structures.onMoveElement', function (Event $e) {
             $element = $e->params['element'];
             $elemType = $element->getElementType();
             if ($element) {
                 if ($elemType == ElementType::Entry) {
 
-                    /* -- Check the field layout, so that we only do this for FieldLayouts that have our Retour fieldtype in them */
-
+                    // Check the field layout, so that we only do this for FieldLayouts that have our Retour fieldtype
                     $fieldLayouts = $element->fieldLayout->getFields();
                     foreach ($fieldLayouts as $fieldLayout) {
                         $field = craft()->fields->getFieldById($fieldLayout->fieldId);
@@ -89,10 +84,9 @@ class RetourPlugin extends BasePlugin
             }
         });
 
-        /* -- Listen for entries whose slug changes */
-
+        // Listen for entries whose slug changes
         craft()->on('entries.onBeforeSaveEntry', function (Event $e) {
-            $this->originalUris = [];
+            $this->originalUris = array();
             if (!$e->params['isNewEntry'] && craft()->config->get("createUriChangeRedirects", "retour")) {
                 $entry = $e->params['entry'];
 
@@ -114,18 +108,18 @@ class RetourPlugin extends BasePlugin
                     if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != "")) {
                         $record = new Retour_StaticRedirectsRecord;
 
-                        /* -- Set the record attributes for our new auto-redirect */
 
+                        // Set the record attributes for our new auto-redirect
                         $record->locale = $entry->locale;
                         $record->redirectMatchType = 'exactmatch';
                         $record->redirectSrcUrl = $oldUri;
                         if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl != "")) {
-                            $record->redirectSrcUrl = '/'.ltrim($record->redirectSrcUrl, '/');
+                            $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
                         }
                         $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
                         $record->redirectDestUrl = $newUri;
                         if (($record->redirectMatchType == "exactmatch") && ($record->redirectDestUrl != "")) {
-                            $record->redirectDestUrl = '/'.ltrim($record->redirectDestUrl, '/');
+                            $record->redirectDestUrl = '/' . ltrim($record->redirectDestUrl, '/');
                         }
                         $record->redirectHttpCode = '301';
                         $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
@@ -181,7 +175,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.20';
+        return '1.0.19';
     }
 
     /**
@@ -205,7 +199,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getDeveloperUrl()
     {
-        return 'https://nystudio107.com';
+        return 'http://nystudio107.com';
     }
 
     /**
@@ -218,13 +212,13 @@ class RetourPlugin extends BasePlugin
 
     public function registerCpRoutes()
     {
-        return [
-            'retour/settings' => ['action' => 'retour/editSettings'],
-            'retour/clearStats' => ['action' => 'retour/clearStatistics'],
-            'retour/new' => ['action' => 'retour/editRedirect'],
-            'retour/edit/(?P<redirectId>\d+)' => ['action' => 'retour/editRedirect'],
-            'retour/htaccess' => ['action' => 'retour/importHtaccess'],
-        ];
+        return array(
+            'retour/settings'                 => array('action' => 'retour/editSettings'),
+            'retour/clearStats'               => array('action' => 'retour/clearStatistics'),
+            'retour/new'                      => array('action' => 'retour/editRedirect'),
+            'retour/edit/(?P<redirectId>\d+)' => array('action' => 'retour/editRedirect'),
+            'retour/htaccess'                 => array('action' => 'retour/importHtaccess'),
+        );
     }
 
     /**
@@ -237,9 +231,7 @@ class RetourPlugin extends BasePlugin
      */
     public function onAfterInstall()
     {
-
-        /* -- Show our "Welcome to Retour" message */
-
+        // Show our "Welcome to Retour" message
         if (!craft()->isConsole()) {
             craft()->request->redirect(UrlHelper::getCpUrl('retour/welcome'));
         }
@@ -262,9 +254,8 @@ class RetourPlugin extends BasePlugin
      */
     protected function defineSettings()
     {
-        return [
-            'pluginNameOverride' => AttributeType::String
-        ];
+        return array(
+            'pluginNameOverride' => AttributeType::String,
+        );
     }
-
 }

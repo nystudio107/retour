@@ -16,36 +16,64 @@ namespace Craft;
 class RetourVariable
 {
 
-    function getEntryRedirects($limit = null)
+    /**
+     * @param null $limit
+     *
+     * @return mixed
+     */
+    public function getEntryRedirects($limit = null)
     {
         return craft()->retour->getAllEntryRedirects($limit);
-    } /* -- getEntryRedirects */
+    }
 
-    function getStaticRedirects($limit = null)
+    /**
+     * @param null $limit
+     *
+     * @return mixed
+     */
+    public function getStaticRedirects($limit = null)
     {
         return craft()->retour->getAllStaticRedirects($limit);
-    } /* -- getStaticRedirects */
+    }
 
-    function getStatistics()
+    /**
+     * @return mixed
+     */
+    public function getStatistics()
     {
         return craft()->retour->getAllStatistics();
-    } /* -- getStatistics */
+    }
 
-    function getRecentStatistics($days, $handled)
+    /**
+     * @param $days
+     * @param $handled
+     *
+     * @return mixed
+     */
+    public function getRecentStatistics($days, $handled)
     {
         return craft()->retour->getRecentStatistics($days, $handled);
-    } /* -- getRecentStatistics */
+    }
 
-    function getMatchesList()
+    /**
+     * @return mixed
+     */
+    public function getMatchesList()
     {
         return craft()->retour->getMatchesList();
-    } /* -- getMatchesList */
+    }
 
-    function getPluginName()
+    /**
+     * @return mixed
+     */
+    public function getPluginName()
     {
         return craft()->retour->getPluginName();
-    } /* -- getPluginName */
+    }
 
+    /**
+     * @return int
+     */
     public function getHttpStatus()
     {
         return http_response_code();
