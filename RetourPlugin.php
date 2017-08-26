@@ -31,7 +31,6 @@ class RetourPlugin extends BasePlugin
                 (($event->exception->getPrevious() instanceof \CHttpException) && ($event->exception->getPrevious()->statusCode == 404))) {
                 RetourPlugin::log("A 404 exception occurred", LogLevel::Info, false);
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview()) {
-
                     // See if we should redirect
                     $url = urldecode(craft()->request->getRequestUri());
                     $noQueryUrl = UrlHelper::stripQueryString($url);
@@ -46,7 +45,6 @@ class RetourPlugin extends BasePlugin
                         RetourPlugin::log("Redirecting " . $url . " to " . $redirect['redirectDestUrl'], LogLevel::Info, false);
                         craft()->request->redirect($redirect['redirectDestUrl'], true, $redirect['redirectHttpCode']);
                     } else {
-
                         // Now try it without the query string, too, otherwise let Craft handle it
                         $redirect = craft()->retour->findRedirectMatch($noQueryUrl);
 
@@ -69,7 +67,6 @@ class RetourPlugin extends BasePlugin
             $elemType = $element->getElementType();
             if ($element) {
                 if ($elemType == ElementType::Entry) {
-
                     // Check the field layout, so that we only do this for FieldLayouts that have our Retour fieldtype
                     $fieldLayouts = $element->fieldLayout->getFields();
                     foreach ($fieldLayouts as $fieldLayout) {
@@ -175,7 +172,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.19';
+        return '1.0.20';
     }
 
     /**

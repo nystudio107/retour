@@ -7,6 +7,7 @@
             "[Added] Add the URL to the stats title attribute, for cases where the display is truncated",
             "[Added] Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedUrls()`",
             "[Improved] Updated README.md to note that importing `.htaccess` ignores `RewriteRule`",
+            "[Improved] Refactored and cleaned up the code",
             "[Fixed] Fixed some deprecated meta information in `RetourPlugin.php`",
             "[Fixed] Fixed some typos in `README.md`"
         ]

@@ -7,6 +7,7 @@
 * Updated README.md to note that importing `.htaccess` ignores `RewriteRule`
 
 ### Changed
+* Refactored and cleaned up the code
 * Fixed some deprecated meta information in `RetourPlugin.php`
 * Fixed some typos in `README.md`
 
