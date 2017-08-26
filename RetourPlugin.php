@@ -108,6 +108,11 @@ class RetourPlugin extends BasePlugin
                     if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != "")) {
                         $record = new Retour_StaticRedirectsRecord;
 
+                        if (craft()->config->get('addTrailingSlashesToUrls'))
+                        {
+                            $oldUri = rtrim($oldUri, '/') . '/';
+                            $newUri = rtrim($newUri, '/') . '/';
+                        }
 
                         // Set the record attributes for our new auto-redirect
                         $record->locale = $entry->locale;
