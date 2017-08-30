@@ -354,6 +354,12 @@ class RetourService extends BaseApplicationComponent
             $referrer = "";
         }
 
+        // Make sure the referrerUrl does not exceed the max length of its table column.
+        $attrConfigs = Retour_RedirectsRecord::model()->getAttributeConfigs();
+        $maxLength = isset($attrConfigs['referrerUrl']['maxLength']) ? $attrConfigs['referrerUrl']['maxLength'] : 255;
+        $trimMarker = '...';
+        $referrer = mb_strimwidth($referrer, 0, ($maxLength-strlen($trimMarker)), $trimMarker, craft()->charset);
+
         // See if a stats record exists already
         $result = craft()->db->createCommand()
             ->select('*')
