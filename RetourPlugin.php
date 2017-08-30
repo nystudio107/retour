@@ -33,6 +33,10 @@ class RetourPlugin extends BasePlugin
                 if (craft()->request->isSiteRequest() && !craft()->request->isLivePreview()) {
                     // See if we should redirect
                     $url = urldecode(craft()->request->getRequestUri());
+                    // Strip the query string if `alwaysStripQueryString` is set
+                    if (craft()->config->get("alwaysStripQueryString", "retour")) {
+                        $url = UrlHelper::stripQueryString($url);
+                    }
                     $noQueryUrl = UrlHelper::stripQueryString($url);
                     RetourPlugin::log("404 URL: " . $url, LogLevel::Info, false);
 
@@ -105,8 +109,7 @@ class RetourPlugin extends BasePlugin
                     if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != "")) {
                         $record = new Retour_StaticRedirectsRecord;
 
-                        if (craft()->config->get('addTrailingSlashesToUrls'))
-                        {
+                        if (craft()->config->get('addTrailingSlashesToUrls')) {
                             $oldUri = rtrim($oldUri, '/') . '/';
                             $newUri = rtrim($newUri, '/') . '/';
                         }

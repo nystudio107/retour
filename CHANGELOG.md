@@ -2,9 +2,12 @@
 
 ## 1.0.20 - 2017.08.30
 ### Added
+* Retour will automatically trim the `retour_stats` table to the last 10,000 redirects, sorted by date (configurable via `statsStoredLimit` in `config.php`)
 * Add the URL to the stats title attribute, for cases where the display is truncated
 * Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedrUls()`
 * Updated README.md to note that importing `.htaccess` ignores `RewriteRule`
+* Added a `alwaysStripQueryString` setting to `config.php` (defaults to `false`)
+* Added a `stripQueryStringFromStats` setting to `config.php` (defaults to `true`)
 
 ### Changed
 * Refactored and cleaned up the code

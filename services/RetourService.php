@@ -354,6 +354,11 @@ class RetourService extends BaseApplicationComponent
             $referrer = "";
         }
 
+        // Strip the query string if `stripQueryStringFromStats` is set
+        if (craft()->config->get("stripQueryStringFromStats", "retour")) {
+            $url = UrlHelper::stripQueryString($url);
+        }
+
         // Make sure the referrerUrl does not exceed the max length of its table column.
         $attrConfigs = Retour_RedirectsRecord::model()->getAttributeConfigs();
         $maxLength = isset($attrConfigs['referrerUrl']['maxLength']) ? $attrConfigs['referrerUrl']['maxLength'] : 255;
@@ -405,21 +410,26 @@ class RetourService extends BaseApplicationComponent
     public function trimStatistics()
     {
         $affectedRows = 0;
-        /* This should be translated into AR
-                $affectedRows = craft()->db->createCommand("
-                    DELETE FROM `retour_stats`
-                    WHERE id <= (
-                        SELECT id
-                        FROM (
-                          SELECT id
-                          FROM `retour_stats`
-                          ORDER BY id DESC
-                          LIMIT 1 OFFSET 42
-                        ) foo
-                    )
-                ")->execute();
-        */
-        RetourPlugin::log("Trimmed " . $affectedRows . " from retour_stats table", LogLevel::Info, false);
+        $table = craft()->db->addTablePrefix('retour_stats');
+        $quotedTable = craft()->db->quoteTableName($table);
+        $limit = craft()->config->get("statsStoredLimit", "retour");
+
+        // As per https://stackoverflow.com/questions/578867/sql-query-delete-all-records-from-the-table-except-latest-n
+        if (!empty($limit) && $limit) {
+            $affectedRows = craft()->db->createCommand("
+            DELETE FROM $quotedTable
+            WHERE id <= (
+                SELECT id
+                FROM (
+                  SELECT id
+                  FROM $quotedTable
+                  ORDER BY hitLastTime DESC
+                  LIMIT 1 OFFSET $limit
+                ) foo
+            )
+        ")->execute();
+            RetourPlugin::log("Trimmed " . $affectedRows . " from retour_stats table", LogLevel::Info, false);
+        }
     }
 
     /**
