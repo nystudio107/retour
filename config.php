@@ -20,19 +20,16 @@ return array(
     /**
      * How many stats should be stored
      */
-
     "statsStoredLimit" => 10000,
 
     /**
      * How many stats to display in the Admin CP
      */
-
     "statsDisplayLimit" => 1000,
 
     /**
      * How many static redirects to display in the Admin CP
      */
-
     "staticRedirectDisplayLimit"  => 100,
 
     /**
