@@ -418,14 +418,14 @@ class RetourService extends BaseApplicationComponent
         if (!empty($limit) && $limit) {
             $affectedRows = craft()->db->createCommand("
             DELETE FROM $quotedTable
-            WHERE id <= (
+            WHERE id NOT IN (
+              SELECT id
+              FROM (
                 SELECT id
-                FROM (
-                  SELECT id
-                  FROM $quotedTable
-                  ORDER BY hitLastTime DESC
-                  LIMIT 1 OFFSET $limit
-                ) foo
+                FROM $quotedTable
+                ORDER BY hitLastTime DESC
+                LIMIT $limit
+              ) foo
             )
         ")->execute();
             RetourPlugin::log("Trimmed " . $affectedRows . " from retour_stats table", LogLevel::Info, false);
