@@ -2,7 +2,7 @@
     {
         "version": "1.0.20",
         "downloadUrl": "https://github.com/nystudio107/retour/archive/master.zip",
-        "date": "2017-03-10T12:00:00-05:00",
+        "date": "2017-08-30T12:00:00-05:00",
         "notes": [
             "[Added] Add the URL to the stats title attribute, for cases where the display is truncated",
             "[Added] Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedUrls()`",

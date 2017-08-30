@@ -1,6 +1,6 @@
 # Retour Changelog
 
-## 1.0.20 - 2017.03.10
+## 1.0.20 - 2017.08.30
 ### Added
 * Add the URL to the stats title attribute, for cases where the display is truncated
 * Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedrUls()`
