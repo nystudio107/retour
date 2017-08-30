@@ -24,28 +24,13 @@ class Retour_StatsRecord extends BaseRecord
     }
 
     /**
-     * @access protected
-     * @return array
-     */
-   protected function defineAttributes()
-    {
-        return array(
-            'redirectSrcUrl'        => array(AttributeType::String, 'default' => ''),
-            'referrerUrl'           => array(AttributeType::String, 'default' => ''),
-            'hitCount'              => array(AttributeType::Number, 'default' => 0),
-            'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
-            'handledByRetour'       => array(AttributeType::Bool, 'default' => false ),
-        );
-    }
-
-    /**
      * @return array
      */
     public function defineIndexes()
     {
         return array(
             array('columns' => array('hitCount', 'id')),
-            array('columns' => array('redirectSrcUrl'), 'unique' => true)
+            array('columns' => array('redirectSrcUrl'), 'unique' => true),
         );
     }
 
@@ -54,7 +39,21 @@ class Retour_StatsRecord extends BaseRecord
      */
     public function defineRelations()
     {
+        return array();
+    }
+
+    /**
+     * @access protected
+     * @return array
+     */
+    protected function defineAttributes()
+    {
         return array(
+            'redirectSrcUrl'  => array(AttributeType::String, 'default' => ''),
+            'referrerUrl'     => array(AttributeType::String, 'default' => ''),
+            'hitCount'        => array(AttributeType::Number, 'default' => 0),
+            'hitLastTime'     => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb()),
+            'handledByRetour' => array(AttributeType::Bool, 'default' => false),
         );
     }
 }

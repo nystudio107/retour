@@ -10,7 +10,9 @@
  * @package   Retour
  * @since     1.0.0
  */
+
 namespace Craft;
+
 class RetourWidget extends BaseWidget
 {
     /**
@@ -20,6 +22,7 @@ class RetourWidget extends BaseWidget
     {
         return craft()->retour->getPluginName() . " " . Craft::t("Stats");
     }
+
     /**
      * @return mixed
      */
@@ -28,9 +31,11 @@ class RetourWidget extends BaseWidget
         // Include our Javascript & CSS
         craft()->templates->includeCssResource('retour/css/widgets/RetourWidget.css');
         craft()->templates->includeJsResource('retour/js/widgets/RetourWidget.js');
-        /* -- Variables to pass down to our rendered template */
+
+        // Variables to pass down to our rendered template
         $variables = array();
         $variables['settings'] = $this->getSettings();
+
         return craft()->templates->render('retour/widgets/RetourWidget_Body', $variables);
     }
 
@@ -39,7 +44,30 @@ class RetourWidget extends BaseWidget
      */
     public function getIconPath()
     {
-        return craft()->path->getPluginsPath().'retour/resources/icon.svg';
+        return craft()->path->getPluginsPath() . 'retour/resources/icon.svg';
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSettingsHtml()
+    {
+        // Variables to pass down to our rendered template
+        $variables = array();
+        $variables['settings'] = $this->getSettings();
+
+        return craft()->templates->render('retour/widgets/RetourWidget_Settings', $variables);
+    }
+
+    /**
+     * @param mixed $settings The Widget's settings
+     *
+     * @return mixed
+     */
+    public function prepSettings($settings)
+    {
+        // Modify $settings here...
+        return $settings;
     }
 
     /**
@@ -50,30 +78,5 @@ class RetourWidget extends BaseWidget
         return array(
             'numberOfDays' => array(AttributeType::String, 'label' => 'Some Setting', 'default' => '3'),
         );
-    }
-    /**
-     * @return mixed
-     */
-    public function getSettingsHtml()
-    {
-
-/* -- Variables to pass down to our rendered template */
-
-        $variables = array();
-        $variables['settings'] = $this->getSettings();
-        return craft()->templates->render('retour/widgets/RetourWidget_Settings',$variables);
-    }
-
-    /**
-     * @param mixed $settings  The Widget's settings
-     *
-     * @return mixed
-     */
-    public function prepSettings($settings)
-    {
-
-/* -- Modify $settings here... */
-
-        return $settings;
     }
 }

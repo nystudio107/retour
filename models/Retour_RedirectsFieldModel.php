@@ -23,7 +23,7 @@ class Retour_RedirectsFieldModel extends Retour_RedirectsModel
     protected function defineAttributes()
     {
         return array_merge(parent::defineAttributes(), array(
-            'redirectChangeable'        => array(AttributeType::Bool, 'default' => 1),
+            'redirectChangeable' => array(AttributeType::Bool, 'default' => 1),
         ));
     }
-} /* -- Retour_RedirectsFieldModel */
+}

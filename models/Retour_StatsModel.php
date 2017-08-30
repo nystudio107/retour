@@ -5,8 +5,9 @@
  * Retour_Stats Model
  *
  * --snip--
- * Models are containers for data. Just about every time information is passed between services, controllers, and
- * templates in Craft, it’s passed via a model.
+ * Models are containers for data. Just about every time information is passed
+ * between services, controllers, and templates in Craft, it’s passed via a
+ * model.
  *
  * https://craftcms.com/docs/plugins/models
  * --snip--
@@ -30,12 +31,11 @@ class Retour_StatsModel extends BaseModel
     protected function defineAttributes()
     {
         return array_merge(parent::defineAttributes(), array(
-            'redirectSrcUrl'        => array(AttributeType::String, 'default' => ''),
-            'referrerUrl'           => array(AttributeType::String, 'default' => ''),
-            'hitCount'              => array(AttributeType::Number, 'default' => 0),
-            'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
-            'handledByRetour'       => array(AttributeType::Bool, 'default' => false ),
+            'redirectSrcUrl'  => array(AttributeType::String, 'default' => ''),
+            'referrerUrl'     => array(AttributeType::String, 'default' => '', 'maxLength' => 2000),),
+            'hitCount'        => array(AttributeType::Number, 'default' => 0),
+            'hitLastTime'     => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb()),
+            'handledByRetour' => array(AttributeType::Bool, 'default' => false),
         ));
     }
-
 }
