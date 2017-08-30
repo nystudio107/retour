@@ -9,6 +9,7 @@
 ### Changed
 * Refactored and cleaned up the code
 * Fixed some deprecated meta information in `RetourPlugin.php`
+* The `referrerUrl` has a maximum length of 2000 now
 * Fixed some typos in `README.md`
 
 ## 1.0.19 - 2017.02.10

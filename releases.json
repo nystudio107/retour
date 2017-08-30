@@ -10,6 +10,7 @@
             "[Improved] Updated README.md to note that importing `.htaccess` ignores `RewriteRule`",
             "[Improved] Refactored and cleaned up the code",
             "[Fixed] Fixed some deprecated meta information in `RetourPlugin.php`",
+            "[Improved] The `referrerUrl` has a maximum length of 2000 now",
             "[Fixed] Fixed some typos in `README.md`"
         ]
     },
