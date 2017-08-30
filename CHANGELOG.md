@@ -1,13 +1,28 @@
 # Retour Changelog
 
-## 1.0.19 -- 2017.02.10
+## 1.0.20 - 2017.08.30
+### Added
+* Retour will automatically trim the `retour_stats` table to the last 10,000 redirects, sorted by date (configurable via `statsStoredLimit` in `config.php`)
+* Add the URL to the stats title attribute, for cases where the display is truncated
+* Respect `addTrailingSlashesToUrls` in the URLs returned from `getLocalizedrUls()`
+* Updated README.md to note that importing `.htaccess` ignores `RewriteRule`
+* Added a `alwaysStripQueryString` setting to `config.php` (defaults to `false`)
+* Added a `stripQueryStringFromStats` setting to `config.php` (defaults to `true`)
+
+### Changed
+* Refactored and cleaned up the code
+* Fixed some deprecated meta information in `RetourPlugin.php`
+* The `referrerUrl` has a maximum length of 2000 now
+* Fixed some typos in `README.md`
+
+## 1.0.19 - 2017.02.10
 
 * [Added] Added a referrer column in the Stats table
 * [Added] Added additional logging in `devMode`
 * [Improved] No more default value for `redirectSrcUrl` column (could cause SQL exceptions in newer versions of MySQL)
 * [Improved] Updated CHANGELOG.md
 
-## 1.0.18 -- 2017.01.20
+## 1.0.18 - 2017.01.20
 
 * [Fixed] The `addTrailingSlashesToUrls` is now respected for dynamic entry redirects
 * [Improved] Merged pull request 'Fix retourMatch hook'
@@ -18,12 +33,12 @@
 * [Improved] Don't redirect to the welcome page if we're being installed via Console command
 * [Improved] Moved the changelog to CHANGELOG.md
 
-## 1.0.17 -- 2016.08.31
+## 1.0.17 - 2016.08.31
 
 * [Improved] Query strings are now stripped from the incoming URI before redirect detection is done
 * [Improved] Updated the README.md
 
-## 1.0.16 -- 2016.08.30
+## 1.0.16 - 2016.08.30
 
 * [Fixed] FieldTypes in multi-locale setups that are not translatable are now handled properly
 * [Fixed] Fixed missing locale prefix for localized entries in the FieldType
@@ -34,19 +49,19 @@
 * [Fixed] Fixed an issue that would prevent RegEx's from matching as they should in FieldTypes
 * [Improved] Updated the README.md
 
-## 1.0.15 -- 2016.07.12
+## 1.0.15 - 2016.07.12
 
 * [Added] Added the ability to import the redirects from a `.htaccess` file into Retour
 * [Fixed] Fixed a statics db error with empty referrers
 * [Improved] Updated the README.md
 
-## 1.0.14 -- 2016.07.10
+## 1.0.14 - 2016.07.10
 
 * [Added] The Statistics and Redirects tables are now dynamically searchable and sortable
 * [Fixed] Fixed an issue that caused redirects created via the `+` from Statistics page to not save
 * [Improved] Updated the README.md
 
-## 1.0.13 -- 2016.07.06
+## 1.0.13 - 2016.07.06
 
 * [Added] Adds support for locales in the automatic redirect that is created when a slug is changed for an entry
 * [Improved] Retour will no longer let you save a static redirect with an empty destinationURL
@@ -54,7 +69,7 @@
 * [Improved] Added a rant about `.htaccess` to the docs
 * [Improved] Updated the README.md
 
-## 1.0.12 -- 2016.07.04
+## 1.0.12 - 2016.07.04
 
 * [Added] If you hover over a 404 File Not Found URL on the Statistics page, you'll now see the last referrer for the 404 URL
 * [Added] Added a + button on the Statistics page that lets you quickly add a 404'd URL as a redirect
@@ -63,20 +78,20 @@
 * [Improved] The widget now handles very long URLs more gracefully
 * [Improved] Updated the README.md
 
-## 1.0.11 -- 2016.06.21
+## 1.0.11 - 2016.06.21
 
 * [Fixed] Fixed an issue with URLs that have umlauts in them
 * [Fixed] Fixed an issue with URLs that are longer than 255 characters for the redirect statistics
 * [Improved] Statistics are now limited to the top 1,000 hits
 * [Improved] Updated the README.md
 
-## 1.0.10 -- 2016.06.15
+## 1.0.10 - 2016.06.15
 
 * [Added] Retour will attempt to prevent redirect loops when saving a new redirect by deleting any existing redirects that have the destUrl as their srcUrl
 * [Added] Added a 410 - Gone redirect http code for permanently removed resources
 * [Improved] Updated the README.md
 
-## 1.0.9 -- 2016.06.04
+## 1.0.9 - 2016.06.04
 
 * [Added] Retour will now automatically create a static redirect for you if you rename an entry's slug
 * [Improved] Retour checks to ensure that no two redirects have the same redirectSrcUrl
@@ -84,7 +99,7 @@
 * [Improved] If you save a redirect, either static or dynamic, with an empty Legacy URL Pattern, retour now deletes it
 * [Improved] Updated the README.md
 
-## 1.0.8 -- 2016.05.30
+## 1.0.8 - 2016.05.30
 
 * [Improved] Revamped Retour to key off of the ElementID rather than the EntryID
 * [Fixed] Fixed an issue with Retour and MySQL running in strict mode (which is the default in 5.7+)
@@ -92,54 +107,54 @@
 * [Fixed] A '/' isn't prepended to empty src URLs anymore
 * [Improved] Updated the README.md
 
-## 1.0.7 -- 2016.05.07
+## 1.0.7 - 2016.05.07
 
 * [Improved] getRequestUri() is now explicitly used, and we immediately terminate the request upon redirect
 * [Improved] We now pass in 0 instead of null for the cache duration
 * [Improved] We now explicitly check for CHttpException
 * [Improved] Updated the README.md
 
-## 1.0.6 -- 2016.04.29
+## 1.0.6 - 2016.04.29
 
 * [Fixed] Fixed a Javascript error with the FieldType Javascript
 * [Fixed] Fixed a visual display glitch with the tabs on Craft 2.4.x
 * [Improved] Updated the README.md
 
-## 1.0.5 -- 2016.04.28
+## 1.0.5 - 2016.04.28
 
 * [Added] Added a 'Clear Statistics' button to the Statistics page
 * [Fixed] Fixed a bug when using RegEx for static redirects that would cause them to not work
 * [Fixed] Fixed an issue with Craft 2.4.x
 * [Improved] Updated the README.md
 
-## 1.0.4 -- 2016.04.28
+## 1.0.4 - 2016.04.28
 
 * [Added] The tables in the Statistics and Redirects pages are now sortable by any column
 * [Improved] Fixed up the localization support for the FieldType
 * [Improved] Minor changes/fixes to the plugin
 * [Improved] Updated the README.md
 
-## 1.0.3 -- 2016.04.27
+## 1.0.3 - 2016.04.27
 
 * [Added] Added a Retour Stats widget
 * [Added] Added information on the Statistics tab as to whether Retour handled the 404 or not
 * [Improved] Updated the README.md
 
-## 1.0.2 -- 2016.04.26
+## 1.0.2 - 2016.04.26
 
 * [Fixed] Fixed faulty indexes that could cause Retour Redirect FieldTypes to not work properly
 * [Improved] Spiffy new icon
 * [Improved] Changing the display name of the plugin is now more globally applied
 * [Improved] Updated the README.md
 
-## 1.0.1 -- 2016.04.26
+## 1.0.1 - 2016.04.26
 
 * [Added] Implemented a caching layer so that once a redirect has been determined, subsequent redirects are cached and immediately returned
 * [Added] Added the ability to delete static redirects
 * [Added] Added Composer support
 * [Improved] Updated the README.md
 
-## 1.0.0 -- 2016.04.25
+## 1.0.0 - 2016.04.25
 
 * Initial release
 

@@ -57,7 +57,7 @@
 
                         {% for stat in stats %}
                             <tr data-id="{{ stat.id }}" data-name="{{ stat.redirectSrcUrl }}">
-                                <td style="width: 34%" ><a class="go" href="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
+                                <td style="width: 34%" ><a class="go" href="{{ url(stat.redirectSrcUrl) }}" title="{{ url(stat.redirectSrcUrl) }}">{{ stat.redirectSrcUrl }}</a></td>
                                 <td style="width: 34%" >{% if stat.referrerUrl %}<a class="go" href="{{ url(stat.referrerUrl) }}">{{ stat.referrerUrl }}</a>{% endif %}</td>
                                 <td style="width: 5%">{{ stat.hitCount }}</td>
                                 <td style="width: 20%">{{ stat.hitLastTime |datetime }}</td>

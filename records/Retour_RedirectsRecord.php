@@ -24,34 +24,13 @@ class Retour_RedirectsRecord extends BaseRecord
     }
 
     /**
-     * @access protected
-     * @return array
-     */
-   protected function defineAttributes()
-    {
-        return array(
-            'redirectSrcUrl'        => array(AttributeType::String, 'column' => ColumnType::Text),
-            'redirectSrcUrlParsed'  => array(AttributeType::String, 'default' => ''),
-            'redirectMatchType'     => array(AttributeType::String, 'default' => 'match'),
-            'redirectDestUrl'       => array(AttributeType::String, 'default' => ''),
-            'redirectHttpCode'      => array(AttributeType::Number, 'default' => 301),
-            'hitCount'              => array(AttributeType::Number, 'default' => 0),
-            'hitLastTime'           => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb() ),
-            'locale'                => array(AttributeType::Locale, 'required' => true)
-            /* defined in defineRelations()
-            'associatedElementId'     => array(AttributeType::Number, 'default' => 0),
-            */
-        );
-    }
-
-    /**
      * @return array
      */
     public function defineIndexes()
     {
         return array(
             array('columns' => array('locale', 'associatedElementId')),
-            array('columns' => array('redirectSrcUrlParsed'), 'unique' => true)
+            array('columns' => array('redirectSrcUrlParsed'), 'unique' => true),
         );
     }
 
@@ -62,7 +41,28 @@ class Retour_RedirectsRecord extends BaseRecord
     {
         return array(
             'locale'            => array(static::BELONGS_TO, 'LocaleRecord', 'locale', 'required' => true, 'onDelete' => static::CASCADE, 'onUpdate' => static::CASCADE),
-            'associatedElement' => array(static::BELONGS_TO, 'ElementRecord', 'required' => true, 'onDelete' => static::CASCADE)
+            'associatedElement' => array(static::BELONGS_TO, 'ElementRecord', 'required' => true, 'onDelete' => static::CASCADE),
+        );
+    }
+
+    /**
+     * @access protected
+     * @return array
+     */
+    protected function defineAttributes()
+    {
+        return array(
+            'redirectSrcUrl'       => array(AttributeType::String, 'column' => ColumnType::Text),
+            'redirectSrcUrlParsed' => array(AttributeType::String, 'default' => ''),
+            'redirectMatchType'    => array(AttributeType::String, 'default' => 'match'),
+            'redirectDestUrl'      => array(AttributeType::String, 'default' => ''),
+            'redirectHttpCode'     => array(AttributeType::Number, 'default' => 301),
+            'hitCount'             => array(AttributeType::Number, 'default' => 0),
+            'hitLastTime'          => array(AttributeType::DateTime, 'default' => DateTimeHelper::currentTimeForDb()),
+            'locale'               => array(AttributeType::Locale, 'required' => true)
+            /* defined in defineRelations()
+            'associatedElementId'     => array(AttributeType::Number, 'default' => 0),
+            */
         );
     }
 }
