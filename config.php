@@ -20,7 +20,7 @@ return array(
     /**
      * How many stats should be stored
      */
-    "statsStoredLimit" => 10000,
+    "statsStoredLimit" => 1000,
 
     /**
      * How many stats to display in the Admin CP
