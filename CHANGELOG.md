@@ -1,5 +1,9 @@
 # Retour Changelog
 
+## 1.0.21 - 2017.08.31
+### Changed
+* Fixed a hardcoded table name in the `referrerUrl` migration
+
 ## 1.0.20 - 2017.08.30
 ### Added
 * Retour will automatically trim the `retour_stats` table to the last 10,000 redirects, sorted by date (configurable via `statsStoredLimit` in `config.php`)

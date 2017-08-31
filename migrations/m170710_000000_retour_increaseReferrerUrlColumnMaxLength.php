@@ -14,7 +14,7 @@ class m170710_000000_retour_increaseReferrerUrlColumnMaxLength extends BaseMigra
     public function safeUp()
     {
 
-        $this->execute('ALTER TABLE craft_retour_stats MODIFY COLUMN referrerUrl VARCHAR(2000) DEFAULT "";');
+        $this->alterColumn('retour_stats', 'referrerUrl', array(ColumnType::Varchar, 'maxLength' => 2000));
 
         RetourPlugin::log('The max length of column referrerUrl has been increased to 2000 ', LogLevel::Info, true);
 
