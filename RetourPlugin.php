@@ -180,7 +180,7 @@ class RetourPlugin extends BasePlugin
      */
     public function getVersion()
     {
-        return '1.0.20';
+        return '1.0.21';
     }
 
     /**
