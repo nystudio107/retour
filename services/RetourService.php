@@ -270,7 +270,7 @@ class RetourService extends BaseApplicationComponent
         $result = craft()->db->createCommand()
             ->select('*')
             ->from('retour_static_redirects')
-            ->order('hitCount DESC');
+            ->order('redirectMatchType ASC, hitCount DESC');
 
         if ($limit) {
             $result = $result->limit($limit);
