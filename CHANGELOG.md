@@ -4,6 +4,7 @@
 ### Changed
 * Fixed an issue in the `Retour_StatsModel`
 * Exact matches are now checked before RegEx matches for static redirects
+* Fixed the documentation that was incorrect about being able to add multiple FieldTypes to a single entry
 
 ## 1.0.21 - 2017.08.31
 ### Changed
