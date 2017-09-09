@@ -1,5 +1,10 @@
 # Retour Changelog
 
+## 1.0.22 - 2017.09.12
+### Changed
+* Fixed an issue in the `Retour_StatsModel`
+* Exact matches are now checked before RegEx matches for static redirects
+
 ## 1.0.21 - 2017.08.31
 ### Changed
 * Fixed a hardcoded table name in the `referrerUrl` migration
