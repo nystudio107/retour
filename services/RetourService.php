@@ -374,8 +374,8 @@ class RetourService extends BaseApplicationComponent
 
         if (empty($result)) {
             $stats = new Retour_StatsRecord;
-            $stats->redirectSrcUrl = $url;
-            $stats->referrerUrl = $referrer;
+            $stats->redirectSrcUrl = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $url);
+            $stats->referrerUrl = preg_replace('/[\x{10000}-\x{10FFFF}]/u', "\xEF\xBF\xBD", $referrer);
             $stats->hitCount = 1;
             $stats->hitLastTime = DateTimeHelper::currentUTCDateTime();
             $stats->handledByRetour = $handled;
