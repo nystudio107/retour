@@ -270,7 +270,7 @@ class RetourService extends BaseApplicationComponent
         $result = craft()->db->createCommand()
             ->select('*')
             ->from('retour_static_redirects')
-            ->order('hitCount DESC');
+            ->order('redirectMatchType ASC, hitCount DESC');
 
         if ($limit) {
             $result = $result->limit($limit);
@@ -374,8 +374,8 @@ class RetourService extends BaseApplicationComponent
 
         if (empty($result)) {
             $stats = new Retour_StatsRecord;
-            $stats->redirectSrcUrl = $url;
-            $stats->referrerUrl = $referrer;
+            $stats->redirectSrcUrl = StringHelper::encodeMb4($url);
+            $stats->referrerUrl = StringHelper::encodeMb4($referrer);
             $stats->hitCount = 1;
             $stats->hitLastTime = DateTimeHelper::currentUTCDateTime();
             $stats->handledByRetour = $handled;

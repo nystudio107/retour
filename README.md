@@ -107,10 +107,6 @@ Create a Retour Redirect field as you would any other field; then set the defaul
 
 **Note:** if you add a Retour Redirect FieldType to an existing Section, or you import data from a foreign source into a Section with a Retour Redirect FieldType, the default values you set for the Retour Redirect FieldType will not be propagated to the entry yet.  To cause that to happen, go to **Settings->Sections** then click on the Section to edit it, and hit **Save**.  This will cause all of the entries in that section to be re-saved, and Retour will fill in the default field values.
 
-### Multiple Redirects to the Same Entry
-
-If you need more than one Legacy URL Pattern to redirect to a given entry, simply create a new Retour Redirect field (so that you get a new set of default options) and add it to your Entry Type layout.  You can add as many as you like.
-
 ## Static Redirects
 
 ### Manually Creating Static Redirects

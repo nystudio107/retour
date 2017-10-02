@@ -1,5 +1,12 @@
 # Retour Changelog
 
+## 1.0.22 - 2017.10.02
+### Changed
+* Fixed an issue in the `Retour_StatsModel`
+* Exact matches are now checked before RegEx matches for static redirects
+* Fixed the documentation that was incorrect about being able to add multiple FieldTypes to a single entry
+* Replace 4-byte UTF-8 characters in `Retour_Statistics` before saving them, to avoid db errors
+
 ## 1.0.21 - 2017.08.31
 ### Changed
 * Fixed a hardcoded table name in the `referrerUrl` migration
