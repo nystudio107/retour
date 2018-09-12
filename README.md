@@ -4,6 +4,8 @@ Retour allows you to intelligently redirect legacy URLs, so that you don't lose 
 
 ![Screenshot](resources/screenshots/retour01.png)
 
+Related: [Retour for Craft 3.x](https://github.com/nystudio107/craft-retour)
+
 ## Installation
 
 To install Retour, follow these steps:
