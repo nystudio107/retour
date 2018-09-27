@@ -529,7 +529,7 @@ class RetourService extends BaseApplicationComponent
                     if (craft()->config->get('addTrailingSlashesToUrls')) {
                         $url = rtrim($url, '/') . '/';
                     }
-                    $unsortedLocalizedUrls[$row['locale']] = $url;
+                    $unsortedLocalizedUris[$row['locale']] = $url;
                 }
 
                 $locales = craft()->i18n->getSiteLocales();

@@ -18,6 +18,11 @@ return array(
     "createUriChangeRedirects" => true,
 
     /**
+     * Controls whether Retour automatically creates static redirects when an category's URI changes.
+     */
+    "createUriChangeRedirectsCategories" => true,
+
+    /**
      * How many stats should be stored
      */
     "statsStoredLimit" => 1000,
