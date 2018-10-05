@@ -123,6 +123,30 @@
                     value: values.redirectHttpCode,
                 }) }}
             </div>
+            
+            {% set locales = craft.i18n.getSiteLocales %}
+            {% if locales|length %}
+            {% set localeOptions = {} %}
+            {% for locale in locales %}
+                {% set localeId = locale.id %}
+                {% set localeName = locale.name %}
+                {% set localeOptions = localeOptions | merge({ (localeId) : localeName}) %}
+            {% endfor %}
+            <div class="field">
+                <div class="heading">
+                    <label for= "redirectLocale">{{ "Redirect Local"|t}}</label>
+                    <div class="instructions"><p>{{ "Select the locale for this redirect." |t |raw}}</p></div>
+                </div>
+                {{ forms.selectField({
+                    fieldClass: 'nomarginfield',
+                    class: 'selectField',
+                    id: "redirectLocale",
+                    options: localeOptions,
+                    name: "redirectLocale",
+                    value: values.locale,
+                }) }}
+            </div>
+            {% endif %}
 
 <!-- Needed for for Craft < 2.5 -->
 

@@ -141,8 +141,10 @@ class RetourController extends BaseController
             $record = new Retour_StaticRedirectsRecord;
         }
 
+
         // Set the record attributes, defaulting to the existing values for whatever is missing from the post data
-        $record->locale = craft()->language;
+
+        $record->locale = craft()->request->getPost('redirectLocale', craft()->language);
         $record->redirectMatchType = craft()->request->getPost('redirectMatchType', $record->redirectMatchType);
         $record->redirectSrcUrl = craft()->request->getPost('redirectSrcUrl', $record->redirectSrcUrl);
         if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl != "")) {
