@@ -187,7 +187,8 @@ In your main plugin class file, simply add this function:
      *                    'hitCount' => the number of times this redirect has been matched, and the redirect done in the browser
      *                    'hitLastTime' => the date and time of the when this redirect was matched
      *                    'locale' => the locale of this redirect
-     *                )
+     *                ),
+     *                'url' => the url to match
      *            );
      * @return bool Return true if it's a match, false otherwise
      */

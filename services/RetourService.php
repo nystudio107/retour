@@ -236,6 +236,7 @@ class RetourService extends BaseApplicationComponent
                             $args = array(
                                 array(
                                     'redirect' => &$redirect,
+                                    'url' => $url,
                                 ),
                             );
                             $result = call_user_func_array(array($plugin, "retourMatch"), $args);
