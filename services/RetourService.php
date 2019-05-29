@@ -305,7 +305,9 @@ class RetourService extends BaseApplicationComponent
                 if ($record->save()) {
                     $error = craft()->cache->flush();
                     RetourPlugin::log("Cache flushed: " . print_r($error, true), LogLevel::Info, false);
-                    craft()->userSession->setNotice(Craft::t('Retour Redirect saved.'));
+                    if (!craft()->isConsole()) {
+                        craft()->userSession->setNotice(Craft::t('Retour Redirect saved.'));
+                    }
                     $error = "";
 
                     // To prevent redirect loops, see if any static redirects have our destUrl as their srcUrl
@@ -319,7 +321,9 @@ class RetourService extends BaseApplicationComponent
                 } else {
                     $error = $record->getErrors();
                     RetourPlugin::log(print_r($error, true), LogLevel::Info, false);
-                    craft()->userSession->setError(Craft::t('Couldn’t save Retour Redirect.'));
+                    if (!craft()->isConsole()) {
+                        craft()->userSession->setError(Craft::t('Couldn’t save Retour Redirect.'));
+                    }
                 }
             }
         }
