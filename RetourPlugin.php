@@ -103,38 +103,103 @@ class RetourPlugin extends BasePlugin
                 $entry = $e->params['entry'];
                 $newUris = craft()->retour->getLocalizedUris($entry);
 
-                foreach ($newUris as $newUri) {
+                foreach ($newUris as $i => $newUri) {
                     $oldUri = current($this->originalUris);
                     next($this->originalUris);
                     if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != "")) {
-                        $record = new Retour_StaticRedirectsRecord;
+                        $this->createRedirect($oldUri, $newUri, $entry);
 
-                        if (craft()->config->get('addTrailingSlashesToUrls')) {
-                            $oldUri = rtrim($oldUri, '/') . '/';
-                            $newUri = rtrim($newUri, '/') . '/';
+                        // loop trough the child entries
+                        foreach ($entry->getChildren() as $child) {
+                            $localizedChilds = $newUris = craft()->retour->getLocalizedUris($child);
+                            $oldChildUri = $localizedChilds[$i];
+                            $newChildSlug = explode('/', $oldChildUri);
+                            $newChildSlug = end($newChildSlug);
+                            $newChildUri = $newUri . '/' . $newChildSlug;
+                            if ((strcmp($oldChildUri, $newChildUri) != 0) && ($oldUri != "")) {
+                                $this->createRedirect($oldChildUri, $newChildUri, $child);
+                            }
                         }
-
-                        // Set the record attributes for our new auto-redirect
-                        $record->locale = $entry->locale;
-                        $record->redirectMatchType = 'exactmatch';
-                        $record->redirectSrcUrl = $oldUri;
-                        if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl != "")) {
-                            $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
-                        }
-                        $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
-                        $record->redirectDestUrl = $newUri;
-                        if (($record->redirectMatchType == "exactmatch") && ($record->redirectDestUrl != "")) {
-                            $record->redirectDestUrl = '/' . ltrim($record->redirectDestUrl, '/');
-                        }
-                        $record->redirectHttpCode = '301';
-                        $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
-                        $record->associatedElementId = 0;
-
-                        $result = craft()->retour->saveStaticRedirect($record);
                     }
                 }
             }
         });
+
+        // Listen for categories whose slug changes
+        craft()->on('categories.onBeforeSaveCategory', function (Event $e) {
+            $this->originalUris = array();
+            if (!$e->params['isNewCategory'] && craft()->config->get("createUriChangeRedirectsCategories", "retour")) {
+                $category = $e->params['category'];
+
+                $thisSection = $category->getGroup();
+                if ($thisSection->hasUrls) {
+                    $this->originalUris = craft()->retour->getLocalizedUris($category);
+                }
+            }
+        });
+
+        craft()->on('categories.onSaveCategory', function (Event $e) {
+            if (!$e->params['isNewCategory'] && craft()->config->get("createUriChangeRedirectsCategories", "retour")) {
+                $category = $e->params['category'];
+                $newUris = craft()->retour->getLocalizedUris($category);
+
+                foreach ($newUris as $i => $newUri) {
+                    $oldUri = current($this->originalUris);
+                    next($this->originalUris);
+                    if ((strcmp($oldUri, $newUri) != 0) && ($oldUri != "")) {
+                        $this->createRedirect($oldUri, $newUri, $category);
+                    }
+                    // loop trough the child categories
+                    foreach ($category->getChildren() as $child) {
+                        $localizedChilds = $newUris = craft()->retour->getLocalizedUris($child);
+                        $oldChildUri = $localizedChilds[$i];
+                        $newChildSlug = explode('/', $oldChildUri);
+                        $newChildSlug = end($newChildSlug);
+                        $newChildUri = $newUri . '/' . $newChildSlug;
+                        if ((strcmp($oldChildUri, $newChildUri) != 0) && ($oldUri != "")) {
+                            $this->createRedirect($oldChildUri, $newChildUri, $child);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Create a redirect record
+     *
+     * @param $oldUri
+     * @param $newUri
+     * @param $element
+     * @return array
+     */
+    private function createRedirect($oldUri, $newUri, $element): array
+    {
+        $record = new Retour_StaticRedirectsRecord;
+
+        if (craft()->config->get('addTrailingSlashesToUrls')) {
+            $oldUri = rtrim($oldUri, '/') . '/';
+            $newUri = rtrim($newUri, '/') . '/';
+        }
+
+        // Set the record attributes for our new auto-redirect
+        $record->locale = $element->locale;
+        $record->redirectMatchType = 'exactmatch';
+        $record->redirectSrcUrl = $oldUri;
+        if (($record->redirectMatchType == "exactmatch") && ($record->redirectSrcUrl != "")) {
+            $record->redirectSrcUrl = '/' . ltrim($record->redirectSrcUrl, '/');
+        }
+        $record->redirectSrcUrlParsed = $record->redirectSrcUrl;
+        $record->redirectDestUrl = $newUri;
+        if (($record->redirectMatchType == "exactmatch") && ($record->redirectDestUrl != "")) {
+            $record->redirectDestUrl = '/' . ltrim($record->redirectDestUrl, '/');
+        }
+        $record->redirectHttpCode = '301';
+        $record->hitLastTime = DateTimeHelper::currentUTCDateTime();
+        $record->associatedElementId = 0;
+
+        $result = craft()->retour->saveStaticRedirect($record);
+        return [$oldUri, $newUri];
     }
 
     /**
